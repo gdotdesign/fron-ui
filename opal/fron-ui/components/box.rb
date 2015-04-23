@@ -5,8 +5,7 @@ module UI
     tag 'ui-box'
 
     style padding: -> { (Config.spacing * 1.75).em },
-          borderRadius: -> { Config.border_radius.em },
-          display: :block,
+          borderRadius: -> { (Config.border_radius * 2).em },
           background: -> { Config.colors.background }
   end
 end

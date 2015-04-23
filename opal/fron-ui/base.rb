@@ -37,7 +37,9 @@ module Fron
 
           def render
             text = @rules.map { |tag, data| "#{tag} { #{render_rule(data)} }" }.join("\n")
-            style.text = `autoprefixer().process(#{text}).toString()`
+            return if @cache == text
+            @cache = text
+            style.text = `#{autoprefixer}.process(#{text}).toString()`
           end
         end
       end

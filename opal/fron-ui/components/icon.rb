@@ -4,10 +4,11 @@ module UI
 
     stylesheet '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
 
-    style pointerEvents: :none,
-          display: 'flex !important',
+    style display: 'flex !important',
           justifyContent: :center,
-          alignItems: :center
+          alignItems: :center,
+          '&:not([clickable])' => { pointerEvents: :none },
+          '&[clickable]' => { cursor: :pointer }
 
     def glyph=(value)
       self[:class] = "fa fa-#{value}"

@@ -11,23 +11,23 @@ class Projects < UI::Box
     def_delegators :span, :text=, :text
 
     component :span, :span
-    component :icon, UI::Icon, glyph: :remove
+    component :button, 'ui-action' do
+      component :icon, UI::Icon, glyph: :remove
+    end
 
     style span: { flex: 1 },
           padding: -> { UI::Config.spacing.em },
           color: -> { UI::Config.colors.font },
           fontFamily: -> { UI::Config.font_family }
+
+    on :click, 'ui-action', :remove!
   end
 
   tag 'ui-projects'
 
   style input: { flex: 1 },
-        display: :flex,
-        flexDirection: :column,
-        height: 300.px,
-        'ui-list' => {
-          flex: 1,
-        }
+        flex: 1,
+        'ui-list' => { flex: 1 }
 
   component :title, UI::Title, text: 'Projects'
   component :container, UI::Container do
@@ -48,20 +48,24 @@ class Projects < UI::Box
   end
 end
 
-class Main < Fron::Component
+class Main < UI::Container
   stylesheet '//fonts.googleapis.com/css?family=Open+Sans:400,600,700'
-  style fontSize: 14.px
+  style fontSize: 14.px,
+        position: :absolute,
+        padding: -> { UI::Config.spacing.em },
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
 
-  component :conatiner, UI::Container do
-    component :projects, Projects
+  component :projects, Projects
 
-    component :box, UI::Box do
-      component :container, UI::Container, direction: :column do
-        component :button, UI::Button, text: 'Hello There!'
-        component :button, UI::Button, text: 'Danger!', type: :danger
-        component :button, UI::Button, text: 'Success!', type: :success
-        component :button, UI::Checkbox
-      end
+  component :box, UI::Box do
+    component :container, UI::Container, direction: :column do
+      component :button, UI::Button, text: 'Hello There!'
+      component :button, UI::Button, text: 'Danger!', type: :danger
+      component :button, UI::Button, text: 'Success!', type: :success
+      component :button, UI::Checkbox
     end
   end
 end
