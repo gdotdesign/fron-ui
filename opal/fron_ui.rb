@@ -3,12 +3,14 @@ require 'ostruct'
 require 'fron'
 require 'color'
 
-require_tree 'fron-ui'
+require 'fron-ui/config'
+require 'fron-ui/base'
+
+require_tree 'fron-ui/vendor'
+require_tree 'fron-ui/behaviors'
+require_tree 'fron-ui/components'
 
 module UI
-  Config = OpenStruct.new main_color: 'orangeRed',
-                          font_family: 'sans, sans-serif'
-
   class << self
     def readable_color(background)
       color = Color::RGB.by_css(background)
