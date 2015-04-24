@@ -1,8 +1,7 @@
 module UI
   class Base < Fron::Component
-    style '&[disabled]' => {
-            pointerEvents: :none,
-            userSelect: :none }
+    style '&[disabled]' => { pointerEvents: :none,
+                             userSelect: :none }
 
     # Disabled state
     #
@@ -37,8 +36,6 @@ module Fron
 
           def render
             text = @rules.map { |tag, data| "#{tag} { #{render_rule(data)} }" }.join("\n")
-            return if @cache == text
-            @cache = text
             style.text = `#{autoprefixer}.process(#{text}).toString()`
           end
         end

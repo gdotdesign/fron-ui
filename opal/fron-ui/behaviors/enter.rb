@@ -12,7 +12,7 @@ module Behaviors
     #
     # @param registry [Array] The registry
     def self.enter(item)
-      method = item.first
+      method = item[:args].first
       on :keydown do |event|
         send(method, event) if event.key == :enter
       end

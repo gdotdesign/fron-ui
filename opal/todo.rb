@@ -34,6 +34,9 @@ class Todos < UI::Box
   style input: { flex: 1 },
         minHeight: 500.px,
         flex: 1,
+        'ui-title' => {
+          textAlign: :center
+        },
         'ui-list' => {
           flex: 1,
           '&:empty:after' => {
