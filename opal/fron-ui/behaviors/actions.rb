@@ -1,21 +1,21 @@
-module Behaviors
-  module Actions
-    IS_TOUCH = `'ontouchstart' in window && !window._phantom`
+module UI
+  module Behaviors
+    module Actions
+      IS_TOUCH = `'ontouchstart' in window && !window._phantom`
 
-    METHOD = IS_TOUCH ? :touchstart : :click
+      METHOD = IS_TOUCH ? :touchstart : :click
 
-    def self.included(base)
-      base.on METHOD, '[action]', :handle_action
-    end
+      def self.included(base)
+        base.on METHOD, '[action]', :handle_action
+      end
 
-    private
+      private
 
-    def handle_action(event)
-      event.preventDefault
-      event.stopPropagation
-      event.stopImmediatePropagation
-      method = event.target[:action]
-      send method, event if respond_to? method
+      def handle_action(event)
+        event.stop
+        method = event.target[:action]
+        send method, event if respond_to? method
+      end
     end
   end
 end

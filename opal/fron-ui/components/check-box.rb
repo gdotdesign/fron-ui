@@ -1,19 +1,17 @@
 module UI
-  class Checkbox < Fron::Component
+  class Checkbox < Action
     extend Forwardable
 
     tag 'ui-checkbox'
 
     def_delegators :@input, :checked, :checked=
 
-    component :input, :input, type: :checkbox
-    component :label, :label do
+    component :input, :input, tabindex: -1, type: :checkbox
+    component :label, :label, tabindex: -1 do
       component :icon, UI::Icon, glyph: :check
     end
 
     style display: 'inline-block',
-          borderRadius: -> { Config.border_radius.em },
-          overflow: 'hidden',
           height: -> { Config.size.em },
           width: -> { Config.size.em },
           input: {
@@ -26,14 +24,12 @@ module UI
             }
           },
           label: {
-            borderStyle: :solid,
-            borderWidth: -> { (Config.size / 13).em },
-            boxSizing: 'border-box',
-            borderColor: -> { Config.colors.primary },
-            color: -> { Config.colors.primary },
+            borderRadius: -> { Config.border_radius.em },
+            transition: 'opacity 320ms, transform 320ms',
+            background: -> { Config.colors.primary },
+            color: -> { UI.readable_color(Config.colors.primary) },
             justifyContent: :center,
             alignItems: :center,
-            transition: '320ms',
             cursor: :pointer,
             height: :inherit,
             display: :flex,
@@ -41,9 +37,20 @@ module UI
             'ui-icon.fa' => {
               transform: 'scale(0.4) rotate(45deg)',
               transition: :inherit,
+              fontSize: 0.8.em,
               opacity: 0
             }
+          },
+          '&:focus label' => {
+            boxShadow: -> { Config.focus_box_shadow }
           }
+
+    keydown [:enter, :space], :toggle
+
+    def action
+      self.checked = !checked
+      trigger :change
+    end
 
     # Initializes the check box
     def initialize

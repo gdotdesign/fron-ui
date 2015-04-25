@@ -20,6 +20,10 @@ module UI
         remove_attribute :disabled
       end
     end
+
+    def flex=(value)
+      @style.flex = value
+    end
   end
 end
 

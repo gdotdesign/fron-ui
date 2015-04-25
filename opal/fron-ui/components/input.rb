@@ -10,6 +10,10 @@ module UI
           lineHeight: -> { Config.size.em },
           fontSize: :inherit,
           border: 0,
+          '&:focus' => {
+            boxShadow: -> { Config.focus_box_shadow },
+            outline: :none
+          },
           '&::placeholder' => {
             fontWeight: 600
           }

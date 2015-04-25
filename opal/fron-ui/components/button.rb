@@ -1,6 +1,6 @@
 module UI
   # Simple Button Component
-  class Button < Base
+  class Button < Action
     tag 'ui-button'
 
     style fontFamily: -> { Config.font_family },
@@ -10,19 +10,21 @@ module UI
           whiteSpace: :nowrap,
           textAlign: :center,
           userSelect: :none,
-          cursor: :pointer,
           height: -> { Config.size.em },
           lineHeight: -> { Config.size.em },
           fontWeight: '600',
           overflow: :hidden,
           textOverflow: :ellipsis,
+          '&[type]:focus' => {
+            boxShadow: -> { Config.focus_box_shadow }
+          },
           '&[shape=square]' => {
             justifyContent: :center,
             alignItems: :center,
             display: :flex,
             height: -> { Config.size.em },
             minWidth: -> { Config.size.em },
-            padding: '0',
+            padding: '0'
           },
           '&[disabled]' => {
             opacity: 0.4
@@ -35,7 +37,6 @@ module UI
 
     def initialize
       super
-      self[:tabindex] = 0
       self[:type] ||= :primary
     end
   end

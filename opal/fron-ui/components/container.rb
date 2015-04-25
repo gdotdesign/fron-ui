@@ -3,6 +3,7 @@ module UI
     tag 'ui-container'
 
     style display: :flex,
+          color: -> { Config.colors.font },
           '&[direction=column]' => {
             flexDirection: :column,
 
