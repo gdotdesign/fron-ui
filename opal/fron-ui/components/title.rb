@@ -2,12 +2,12 @@ module UI
   class Title < Fron::Component
     tag 'ui-title'
 
-    style color: -> { Config.colors.font },
-          fontFamily: -> { Config.font_family },
+    style color: -> { colors.font },
+          fontFamily: -> { theme.font_family },
           borderBottomStyle: :solid,
-          borderBottomWidth: -> { Config.border_size.em },
-          borderBottomColor: -> { Config.colors.border },
-          paddingBottom: -> { (Config.spacing / 3).em },
+          borderBottomWidth: -> { theme.border_size.em },
+          borderBottomColor: -> { colors.border },
+          paddingBottom: -> { (theme.spacing / 3).em },
           fontSize: '1.5em',
           fontWeight: 600
 

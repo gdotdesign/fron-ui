@@ -5,6 +5,7 @@ require 'components/todos'
 require 'components/main'
 require 'components/options'
 
-UI::Config.font_family = 'Open Sans'
+Fron::Sheet.helper.theme.font_family = 'Open Sans'
 
 DOM::Document.body << Main.new
+

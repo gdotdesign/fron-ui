@@ -10,8 +10,9 @@ class Todos < UI::Box
 
   style minHeight: 500.px,
         'ui-container:last-of-type' => {
-          borderTop: -> { "#{(UI::Config.border_size * 1.5).em} solid #{UI::Config.colors.border}" },
-          paddingTop: -> { UI::Config.spacing.em }
+          borderTop: -> { "#{(theme.border_size * 1.5).em} solid #{colors.border}" },
+          paddingTop: -> { theme.spacing.em },
+          fontWeight: '600'
         }
 
   component :title, UI::Title, text: 'Todos', align: :center

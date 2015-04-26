@@ -2,9 +2,11 @@ module UI
   class Action < Fron::Component
     include Behaviors::Keydown
 
+    tag 'ui-action'
+
     style cursor: :pointer,
           '&:focus, &:hover' => {
-            color: ->  { Config.colors.focus },
+            color: ->  { colors.focus },
             outline: :none
           }
 

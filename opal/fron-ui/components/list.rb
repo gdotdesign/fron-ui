@@ -6,11 +6,11 @@ module UI
           '> *' => {
             display: :block,
             '&.even' => {
-              background: -> { Config.colors.background_lighter }
+              background: -> { colors.background_lighter }
             }
           },
           '&.empty:after' => {
-            padding: -> { (UI::Config.spacing * 3).em },
+            padding: -> { (theme.spacing * 3).em },
             content: 'attr(empty_message)',
             textAlign: :center,
             display: :block,

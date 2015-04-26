@@ -28,21 +28,16 @@ module UI
 end
 
 module Fron
-  module Behaviors
-    # Style
-    module Style
-      # Sheet
-      module Sheet
-        class << self
-          def autoprefixer
-            @autoprefixer ||= `autoprefixer()`
-          end
+  # Sheet
+  module Sheet
+    class << self
+      def autoprefixer
+        @autoprefixer ||= `autoprefixer()`
+      end
 
-          def render
-            text = @rules.map { |tag, data| "#{tag} { #{render_rule(data)} }" }.join("\n")
-            style.text = `#{autoprefixer}.process(#{text}).toString()`
-          end
-        end
+      def render
+        text = @rules.map { |tag, data| "#{tag} { #{render_rule(data)} }" }.join("\n")
+        style.text = `#{autoprefixer}.process(#{text}).toString()`
       end
     end
   end

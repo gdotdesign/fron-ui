@@ -3,16 +3,16 @@ module UI
     tag 'ui-container'
 
     style display: :flex,
-          color: -> { Config.colors.font },
+          color: -> { colors.font },
           '&[direction=column]' => {
             flexDirection: :column,
 
             '> * + *' => {
-              marginTop: -> { Config.spacing.em }
+              marginTop: -> { theme.spacing.em }
             }
           },
           '&[direction=row] > * + *' => {
-            marginLeft: -> { Config.spacing.em }
+            marginLeft: -> { theme.spacing.em }
           }
 
     def initialize

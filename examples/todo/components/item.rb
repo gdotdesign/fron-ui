@@ -17,9 +17,9 @@ class Todos < UI::Box
       component :icon,     UI::Icon, glyph: :remove
     end
 
-    style fontFamily: -> { UI::Config.font_family },
-          padding: -> { UI::Config.spacing.em },
-          color: -> { UI::Config.colors.font },
+    style fontFamily: -> { theme.font_family },
+          padding: -> { theme.spacing.em },
+          color: -> { colors.font },
           'span' => {
             flex: 1
           },

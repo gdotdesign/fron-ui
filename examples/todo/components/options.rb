@@ -7,7 +7,8 @@ class Todos < UI::Box
     component :active, UI::Action, text: 'Active', value: :active
     component :completed, UI::Action, text: 'Completed', value: :completed
 
-    style '> *:not(.selected)' => { opacity: 0.4 }
+    style '> *:not(.selected)' => { opacity: 0.4 },
+          'ui-action:focus' => { opacity: 1 }
 
     def initialize
       super

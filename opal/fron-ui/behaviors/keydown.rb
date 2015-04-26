@@ -6,7 +6,7 @@ module UI
       end
 
       def self.keydown(item)
-        on :keydown do |event|
+        on :keyup do |event|
           break unless item[:args].first.include?(event.key)
           event.stop
           send item[:args][1]

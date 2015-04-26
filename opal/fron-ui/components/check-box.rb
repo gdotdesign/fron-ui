@@ -12,8 +12,8 @@ module UI
     end
 
     style display: 'inline-block',
-          height: -> { Config.size.em },
-          width: -> { Config.size.em },
+          height: -> { theme.size.em },
+          width: -> { theme.size.em },
           input: {
             display: :none,
             '&:checked + label' => {
@@ -24,10 +24,10 @@ module UI
             }
           },
           label: {
-            borderRadius: -> { Config.border_radius.em },
+            borderRadius: -> { theme.border_radius.em },
             transition: 'opacity 320ms, transform 320ms',
-            background: -> { Config.colors.primary },
-            color: -> { UI.readable_color(Config.colors.primary) },
+            background: -> { colors.primary },
+            color: -> { readable_color(colors.primary) },
             justifyContent: :center,
             alignItems: :center,
             cursor: :pointer,
@@ -42,7 +42,7 @@ module UI
             }
           },
           '&:focus label' => {
-            boxShadow: -> { Config.focus_box_shadow }
+            boxShadow: -> { theme.focus_box_shadow }
           }
 
     keydown [:enter, :space], :toggle

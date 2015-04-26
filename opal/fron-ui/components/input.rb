@@ -1,17 +1,17 @@
 module UI
   class Input < Base
-    tag 'input'
+    tag 'input[type=text]'
 
-    style padding: -> { "0 #{Config.spacing.em}" },
-          borderRadius: -> { Config.border_radius.em },
-          fontFamily: -> { Config.font_family },
-          color: -> { Config.colors.font },
-          height: -> { Config.size.em },
-          lineHeight: -> { Config.size.em },
+    style padding: -> { "0 #{theme.spacing.em}" },
+          borderRadius: -> { theme.border_radius.em },
+          fontFamily: -> { theme.font_family },
+          color: -> { colors.font },
+          height: -> { theme.size.em },
+          lineHeight: -> { theme.size.em },
           fontSize: :inherit,
           border: 0,
           '&:focus' => {
-            boxShadow: -> { Config.focus_box_shadow },
+            boxShadow: -> { theme.focus_box_shadow },
             outline: :none
           },
           '&::placeholder' => {
