@@ -1,4 +1,5 @@
 module UI
+  # Action
   class Action < Fron::Component
     include Behaviors::Keydown
 

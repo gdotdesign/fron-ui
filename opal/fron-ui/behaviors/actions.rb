@@ -1,5 +1,6 @@
 module UI
   module Behaviors
+    # Actions
     module Actions
       IS_TOUCH = `'ontouchstart' in window && !window._phantom`
 

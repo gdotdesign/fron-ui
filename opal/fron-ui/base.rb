@@ -1,4 +1,5 @@
 module UI
+  # Base Component
   class Base < Fron::Component
     style '&[disabled]' => { pointerEvents: :none,
                              userSelect: :none }

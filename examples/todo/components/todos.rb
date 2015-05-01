@@ -10,7 +10,7 @@ class Todos < UI::Box
 
   style minHeight: 500.px,
         'ui-container:last-of-type' => {
-          borderTop: -> { "#{(theme.border_size * 1.5).em} solid #{colors.border}" },
+          borderTop: -> { "#{theme.border_size.em} solid #{colors.border}" },
           paddingTop: -> { theme.spacing.em },
           fontWeight: '600'
         }
@@ -56,6 +56,12 @@ class Todos < UI::Box
 
   def render!
     @footer.count.text = "#{count - done_count} items left"
+    render_items
+    @list.render
+    save
+  end
+
+  def render_items
     items.each(&:show)
     case @footer.options.selected.value
     when :active
@@ -65,8 +71,6 @@ class Todos < UI::Box
     else
       []
     end.each(&:hide)
-    @list.render
-    save
   end
 
   def add_item(text, checked = false)

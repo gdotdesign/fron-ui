@@ -1,5 +1,6 @@
 module UI
   module Behaviors
+    # Render
     module Render
       def self.included(base)
         base.register self, [:render]

@@ -1,5 +1,6 @@
 # Todo List
 class Todos < UI::Box
+  # Options
   class Options < UI::Container
     include UI::Behaviors::SelectableChildren
 

@@ -1,4 +1,5 @@
 module UI
+  # Checkbox Component
   class Checkbox < Action
     extend Forwardable
 

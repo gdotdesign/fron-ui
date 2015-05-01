@@ -1,5 +1,6 @@
 module UI
   module Behaviors
+    # Selectable Children
     module SelectableChildren
       def self.included(other)
         other.on :click, :on_select

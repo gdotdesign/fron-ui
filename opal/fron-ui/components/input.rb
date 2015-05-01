@@ -1,4 +1,5 @@
 module UI
+  # Input
   class Input < Base
     tag 'input[type=text]'
 

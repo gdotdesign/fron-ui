@@ -1,7 +1,5 @@
 # Main Component
 class Main < Fron::Component
-  stylesheet '//fonts.googleapis.com/css?family=Open+Sans:400,600,700'
-
   style fontFamily: -> { theme.font_family },
         padding: -> { theme.spacing.em },
         paddingTop: -> { (theme.spacing * 2).em },

@@ -7,4 +7,4 @@ gem 'execjs', '~> 2.4.0'
 
 # Gemspec deps
 gem 'fron', path: '../fron'
-gem 'color', github: 'gdotdesign/color', branch: "1.6.1"
+gem 'color', github: 'gdotdesign/color', branch: '1.6.1'

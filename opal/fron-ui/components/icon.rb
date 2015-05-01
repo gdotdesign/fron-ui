@@ -1,4 +1,5 @@
 module UI
+  # Icon
   class Icon < Fron::Component
     tag 'ui-icon'
 

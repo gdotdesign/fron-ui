@@ -1,4 +1,5 @@
 module UI
+  # List
   class List < Base
     tag 'ui-list'
 
@@ -9,11 +10,15 @@ module UI
               background: -> { colors.background_lighter }
             }
           },
-          '&.empty:after' => {
-            padding: -> { (theme.spacing * 3).em },
-            content: 'attr(empty_message)',
+          '&.empty' => {
+            padding: -> { theme.spacing.em },
             textAlign: :center,
-            display: :block,
+            display: :flex,
+            justifyContent: :center,
+            alignItems: :center
+          },
+          '&.empty:after' => {
+            content: 'attr(empty_message)',
             fontSize: 2.em,
             opacity: 0.25
           }

@@ -1,5 +1,6 @@
 module UI
   module Behaviors
+    # Keydown
     module Keydown
       def self.included(base)
         base.register self, [:keydown]

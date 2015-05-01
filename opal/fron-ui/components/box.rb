@@ -1,6 +1,7 @@
 require 'fron-ui/components/container'
 
 module UI
+  # Box component
   class Box < Container
     tag 'ui-box'
 

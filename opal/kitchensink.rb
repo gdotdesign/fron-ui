@@ -2,6 +2,7 @@ require 'fron_ui'
 
 UI::Config.font_family = 'Open Sans'
 
+# Main
 class Main < UI::Container
   stylesheet '//fonts.googleapis.com/css?family=Open+Sans:400,600,700'
   style fontSize: 14.px,

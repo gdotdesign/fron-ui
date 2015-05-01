@@ -1,8 +1,10 @@
 module UI
+  # Container
   class Container < Base
     tag 'ui-container'
 
     style display: :flex,
+          fontFamily: -> { theme.font_family },
           color: -> { colors.font },
           '&[direction=column]' => {
             flexDirection: :column,

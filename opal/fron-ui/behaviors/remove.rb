@@ -1,5 +1,6 @@
 module UI
   module Behaviors
+    # Remove
     module Remove
       def self.included(other)
         other.meta_def :remove_confirmation do |message|
