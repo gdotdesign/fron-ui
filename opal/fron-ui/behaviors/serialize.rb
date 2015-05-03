@@ -9,7 +9,7 @@ module UI
       end
 
       def data
-        find_all('[name]').each_with_object(@data) do |item, memo|
+        find_all('[name]').each_with_object(@data || {}) do |item, memo|
           memo[item[:name]] = item.value
         end
       end

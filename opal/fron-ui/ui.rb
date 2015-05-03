@@ -7,7 +7,7 @@ Fron::Sheet.helpers do
 
   def theme
     @theme ||= OpenStruct.new font_family: 'sans, sans-serif',
-                              focus_box_shadow: '0 0 1px 2px #90CAF9',
+                              focus_box_shadow: '0 0 0.07em 0.14em #90CAF9',
                               border_radius: 0.15,
                               border_size: 0.2,
                               spacing: 0.75,

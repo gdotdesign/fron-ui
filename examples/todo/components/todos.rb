@@ -15,7 +15,7 @@ class Todos < UI::Box
   keydown :enter, :add
 
   # Styles
-  style minHeight: 500.px,
+  style minHeight: 35.em,
         'ui-container:last-of-type' => {
           borderTop: -> { "#{theme.border_size.em} solid #{colors.border}" },
           paddingTop: -> { theme.spacing.em },

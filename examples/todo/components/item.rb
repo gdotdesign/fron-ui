@@ -2,8 +2,8 @@ class Todos < UI::Box
   # Todo Item
   class Item < UI::Container
     # Includes
+    include UI::Behaviors::Confirmation
     include UI::Behaviors::Actions
-    include UI::Behaviors::Remove
     include Record
 
     # Extends

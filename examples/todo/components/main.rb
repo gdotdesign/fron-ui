@@ -6,7 +6,7 @@ class Main < Fron::Component
         paddingTop: -> { (theme.spacing * 2).em },
         margin: '0 auto',
         fontSize: 14.px,
-        width: 600.px,
+        width: 42.em,
         small: {
           padding: -> { theme.spacing.em },
           textAlign: :center,

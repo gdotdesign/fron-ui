@@ -1,7 +1,7 @@
 module UI
   module Behaviors
-    # Remove
-    module Remove
+    # Confirmation
+    module Confirmation
       def self.included(other)
         other.meta_def :confirmation do |name, message|
           other.define_method "confirm_#{name}" do |*args|

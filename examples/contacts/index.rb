@@ -4,13 +4,47 @@ class List < UI::List
   include UI::Behaviors::SelectableChildren
 
   tag 'ui-list'
+end
 
-  style '.selected' => {
-          color: :red
+class Image < Fron::Component
+  tag 'ui-image'
+
+  component :img, :img
+
+  style display: 'inline-block',
+        background: -> { colors.background_lighter },
+        img: {
+          borderRadius: :inherit,
+          width: :inherit,
+          height: :inherit,
+          transition: '320ms',
+          opacity: 0,
+          '&.loaded' => {
+            opacity: 1,
+          }
         }
+
+  def initialize
+    super
+    @img.on :load do loaded end
+  end
+
+  def loaded
+    @img.add_class :loaded
+  end
+
+  def src=(value)
+    return if !value || @img[:src] == value
+    @img.remove_class :loaded
+    timeout 320 do
+      @img[:src] = value
+    end
+  end
 end
 
 class Item < UI::Container
+  include ::Record
+
   tag 'ui-item'
 
   component :image, :img
@@ -18,31 +52,132 @@ class Item < UI::Container
 
   style padding: -> { theme.spacing.em },
         lineHeight: 2.em,
+        transition: 'border 200ms',
+        borderLeft: '0em solid transparent',
         img: {
           borderRadius: -> { theme.border_radius.em },
           width: 2.em,
           height: 2.em
+        },
+        '&.selected' => {
+          borderLeft: -> { "0.4em solid #{colors.primary}" }
         }
 
-  def render(data = {})
-    @image[:src] = 'http://www.gravatar.com/avatar/' + `md5(#{data[:email] || ''})` + '?s=100'
+  def render
+    @image.src = 'http://www.gravatar.com/avatar/' + `md5(#{data[:email] || ''})` + '?s=100&d=identicon'
     @name.text = data[:name] || ' '
   end
 end
 
 class Sidebar < UI::Box
-  include UI::Behaviors::Actions
-  include UI::Behaviors::Render
+  extend Forwardable
 
   tag 'ui-sidebar'
 
   component :title, UI::Title, text: 'Contacts'
-  component :list, List, empty_message: 'No contacts to display!', flex: 1
+  component :input, UI::Input, placeholder: 'Search...'
+  component :list, List, empty_message: 'No contacts to display!', flex: 1, base: Item
   component :button, UI::Button, text: 'Add new contact!', action: :add
+
+  def_delegators :list, :items, :items=, :selected
+
+  def select(id)
+    @list.select @list.children.find { |item| item.data[:id] == id }
+  end
+end
+
+class Details < UI::Box
+  include UI::Behaviors::Confirmation
+  include UI::Behaviors::Serialize
+  include UI::Behaviors::Actions
+
+  tag 'ui-details'
+
+  style 'ui-image' => { margin: -> { theme.spacing.em },
+                        borderRadius: 0.5.em,
+                        height: 15.em,
+                        width: 15.em },
+        'ui-container' => { padding: -> { theme.spacing.em } },
+        'ui-container ui-container' => { maxWidth: 30.em },
+        'ui-label' => { fontWeight: 600 },
+        'input' => { fontSize: 1.2.em },
+        '&.empty' => {
+          '> ui-container, > ui-button' => {
+            display: :none
+          },
+          '&:after' => {
+            content: "'No contact selected!'",
+            padding: -> { (theme.spacing * 3).em },
+            textAlign: :center,
+            fontSize: 2.em,
+            opacity: 0.25
+          }
+        }
+
+  component :title, UI::Title, text: 'Contact Details'
+
+  component :box, UI::Container, flex: 1 do
+    component :image, Image
+    component :form, UI::Container, direction: :column, flex: 1 do
+      component :label, UI::Label, text: 'Full Name:'
+      component :input, UI::Input, placeholder: 'Tony Stark', name: :name
+      component :label, UI::Label, text: 'E-mail:'
+      component :input, UI::Input, placeholder: 'tony@stark-industries.com', name: :email
+      component :label, UI::Label, text: 'Address:'
+      component :input, UI::Input, placeholder: '10880 Malibu Point, Malibu, Calif', name: :address
+      component :label, UI::Label, text: 'Phone:'
+      component :input, UI::Input, placeholder: '+1-202-555-0160', name: :phone
+    end
+  end
+
+  component :button, UI::Button, type: 'danger', text: 'Remove Contact', action: :confirm_destroy!
+
+  confirmation :destroy!, 'Are you sure you want to remove this contact?'
+
+  on :change, :update
+
+  def destroy!
+    Main.storage.remove data[:id]
+    trigger :refresh
+    load({})
+    render
+  end
+
+  def update
+    Main.storage.set data[:id], data
+    render
+    trigger :refresh
+  end
+
+  def render
+    toggle_class :empty, data[:id].nil?
+    @box.image.src = 'http://www.gravatar.com/avatar/' + `md5(#{data[:email] || ''})` + '?s=200&d=identicon'
+  end
+end
+
+class Main < UI::Container
+  include UI::Behaviors::Actions
+  include UI::Behaviors::Render
+
+  extend Forwardable
+
+  component :sidebar, Sidebar, flex: '0 0 20em', direction: :column
+  component :details, Details, flex: 1, direction: :column
+
+  style fontSize: 14.px,
+        width: 67.5.em,
+        margin: '0 auto',
+        height: 57.5.em,
+        padding: -> { theme.spacing.em },
+        boxSizing: 'border-box'
 
   render :render!
 
+  def_delegators :class, :storage
+
   on :selected_change, :select
+  on :input, 'ui-sidebar input', :render
+  on :refresh, :render
 
   def initialize
     super
@@ -51,105 +186,25 @@ class Sidebar < UI::Box
 
   def add
     id = SecureRandom.uuid
-    key = "contacts:#{id}"
-    storage.set key, {}
+    storage.set id, { id: id }
     render!
-    @list.find("[key='#{key}']").trigger :click
-  end
-
-  def load
-    @list.empty
-    keys = storage.keys.select { |key| key.start_with?(:contacts) }
-    keys.each do |key|
-      item = Item.new
-      item.render storage.get(key).to_h
-      item[:key] = key
-      item >> @list
-    end
+    @sidebar.select id
   end
 
   def select
-    trigger :select, contact_key: @list.selected[:key]
+    @selected = @sidebar.selected.data[:id]
+    @details.load storage.get(@selected)
+    @details.render
   end
 
   def render!
-    load
-    @list.render
+    @sidebar.items = storage.all.select { |item| item[:name].to_s.match Regexp.new(@sidebar.input.value || '.*', 'i') }
+    @sidebar.select @selected
+    @details.render
   end
 
-  def storage
-    Fron::Storage::LocalStorage
-  end
-end
-
-class Details < UI::Box
-  include UI::Behaviors::Serialize
-  tag 'ui-details'
-
-  style img: { borderRadius: 0.5.em,
-               height: 200.px,
-               width: 200.px },
-        'ui-container ui-container' => { maxWidth: 30.em }
-
-  component :title, UI::Title, text: 'Contact Details'
-
-  component :box, UI::Container do
-    component :image, :img
-    component :form, UI::Container, direction: :column, flex: 1 do
-      component :input, UI::Input, placeholder: 'Name...', name: :name
-      component :input, UI::Input, placeholder: 'Email...', name: :email
-    end
-  end
-
-  on :change, :save
-
-  def save
-    storage.set @key, data
-    render
-  end
-
-  def set(key)
-    load defaults.merge!(storage.get(key))
-    @key = key
-    render
-  end
-
-  def render
-    @box.image[:src] = 'http://www.gravatar.com/avatar/' + `md5(#{data[:email] || ''})` + '?s=200'
-  end
-
-  def defaults
-    {
-      name: nil,
-      email: nil
-    }
-  end
-
-  def storage
-    Fron::Storage::LocalStorage
-  end
-end
-
-class Main < UI::Container
-  component :sidebar, Sidebar, flex: '0 0 20em', direction: :column
-  component :details, Details, flex: 1, direction: :column
-
-  style fontSize: 14.px,
-        width: 960.px,
-        margin: '0 auto',
-        height: 800.px,
-        padding: -> { theme.spacing.em },
-        boxSizing: 'border-box'
-
-  on :select, :select
-  on :change, :render
-
-  def render
-    @sidebar.render
-  end
-
-  def select(event)
-    @details.set event.contact_key
+  def self.storage
+    @storage ||= Storage.new 'contacts'
   end
 end
 
