@@ -1,5 +1,6 @@
 # Main Component
 class Main < Fron::Component
+  # Styles
   style fontFamily: -> { theme.font_family },
         padding: -> { theme.spacing.em },
         paddingTop: -> { (theme.spacing * 2).em },
@@ -14,6 +15,7 @@ class Main < Fron::Component
           opacity: 0.5
         }
 
+  # Components
   component :todos, Todos, direction: :column
   component :small, :small, text: 'Example application for Fron-UI.'
 end

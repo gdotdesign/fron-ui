@@ -1,3 +1,5 @@
+require 'fron-ui/components/action'
+
 module UI
   # Simple Button Component
   class Button < Action

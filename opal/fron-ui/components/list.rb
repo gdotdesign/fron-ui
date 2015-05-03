@@ -1,39 +1,30 @@
 module UI
   # List
-  class List < Base
+  class List < Collection
     tag 'ui-list'
 
     style overflow: :auto,
           '> *' => {
             display: :block,
-            '&.even' => {
+            '&:nth-child(even)' => {
               background: -> { colors.background_lighter }
             }
           },
-          '&.empty' => {
+          '&:empty' => {
             padding: -> { theme.spacing.em },
             textAlign: :center,
             display: :flex,
             justifyContent: :center,
             alignItems: :center
           },
-          '&.empty:after' => {
+          '&:empty:after' => {
             content: 'attr(empty_message)',
             fontSize: 2.em,
             opacity: 0.25
           }
 
-    def render
-      toggle_class :empty, visible_items.empty?
-      visible_items.each_with_index do |item, index|
-        item.remove_class :odd
-        item.remove_class :even
-        item.add_class index.even? ? :even : :odd
-      end
-    end
-
-    def visible_items
-      children.select(&:visible?)
+    def flex=(value)
+      @style.flex = value
     end
   end
 end

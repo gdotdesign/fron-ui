@@ -1,28 +1,32 @@
 class Todos < UI::Box
   # Todo Item
   class Item < UI::Container
+    # Includes
     include UI::Behaviors::Actions
     include UI::Behaviors::Remove
+    include Record
 
+    # Extends
     extend Forwardable
 
+    # Tag
     tag 'ui-item'
 
+    # Delegators
     def_delegators :span, :text=, :text
     def_delegators :checkbox, :checked, :checked=
 
+    # Components
     component :checkbox, UI::Checkbox
-    component :span,     :span
-    component :action,   UI::Action, action: :remove! do
-      component :icon,     UI::Icon, glyph: :remove
+    component :span, UI::Label, flex: 1
+    component :action, UI::Action, action: :confirm_destroy! do
+      component :icon, UI::Icon, glyph: :remove
     end
 
+    # Styles
     style fontFamily: -> { theme.font_family },
           padding: -> { theme.spacing.em },
           color: -> { colors.font },
-          'span' => {
-            flex: 1
-          },
           'ui-checkbox' => {
             height: 1.4.em,
             width: 1.4.em
@@ -31,21 +35,31 @@ class Todos < UI::Box
             textDecoration: 'line-through'
           }
 
-    on :change, :render
+    on :change, :update
 
-    remove_confirmation 'Are you sure?'
+    confirmation :destroy!, 'Are you sure?'
 
+    # Destroys the element in the storage
+    # and trigger refresh.
+    def destroy!
+      Todos.storage.remove data[:id]
+      trigger :refresh
+    end
+
+    # Updates the elemen tin the storage
+    # and triggers refresh.
+    def update
+      Todos.storage.set data[:id], data.merge(done: done?)
+      trigger :refresh
+    end
+
+    # Renders the element
     def render
+      self.checked = data[:done]
+      self.text = data[:text]
       toggle_class :done, done?
     end
 
     alias_method :done?, :checked
-
-    def data
-      {
-        done: done?,
-        text: text
-      }
-    end
   end
 end

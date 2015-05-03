@@ -1,13 +1,20 @@
 # Todo List
 class Todos < UI::Box
+  # Includes
   include UI::Behaviors::Keydown
   include UI::Behaviors::Actions
   include UI::Behaviors::Render
 
+  # Extends
+  extend Forwardable
+
+  # Tag definition
   tag 'ui-todos'
 
-  keydown [:enter], :add
+  # When pressing enter add a new item
+  keydown :enter, :add
 
+  # Styles
   style minHeight: 500.px,
         'ui-container:last-of-type' => {
           borderTop: -> { "#{theme.border_size.em} solid #{colors.border}" },
@@ -15,6 +22,7 @@ class Todos < UI::Box
           fontWeight: '600'
         }
 
+  # Component definitions
   component :title, UI::Title, text: 'Todos', align: :center
 
   component :header, UI::Container do
@@ -24,85 +32,72 @@ class Todos < UI::Box
     end
   end
 
-  component :list, UI::List, flex: 1, empty_message: 'No items to display!'
+  component :list, UI::List, flex: 1, empty_message: 'No items to display!', base: Item
 
   component :footer, UI::Container do
     component :count, UI::Label, flex: 1
     component :options, Options
   end
 
-  on :change, :render
-  on :domchange, :render
+  # Delegate storage to class
+  def_delegators :class, :storage
+
+  # Render on checkbox change
+  on :refresh, :render
+  # Render when filters change
   on :selected_change, :render
 
+  # Set render method
   render :render!
 
+  # Initializes the list
   def initialize
     super
-    load
     render
   end
 
-  def load
-    items = storage.get :items
-    items.each do |data|
-      add_item data[:text], data[:done]
-    end
-  end
-
-  def save
-    storage.set :items, items.map(&:data)
-  end
-
+  # Renders the component
   def render!
-    @footer.count.text = "#{count - done_count} items left"
-    render_items
-    @list.render
-    save
+    items = storage.all.to_a
+    render_items items
+    done_count = items.count { |item| item[:done] }
+    @footer.count.text = "#{items.count - done_count} items left"
   end
 
-  def render_items
-    items.each(&:show)
-    case @footer.options.selected.value
-    when :active
-      items.select(&:done?)
-    when :completed
-      items.reject(&:done?)
-    else
-      []
-    end.each(&:hide)
+  # Render items based on the selected filter
+  def render_items(items)
+    @list.items = case @footer.options.selected.value
+                  when :active
+                    items.reject { |item| item[:done] }
+                  when :completed
+                    items.select { |item| item[:done] }
+                  else
+                    items
+                  end.sort_by { |item| item[:text] }
   end
 
-  def add_item(text, checked = false)
-    item = Item.new
-    item.text = text
-    item.checked = checked
-    item.render
-    item >> @list
-  end
-
+  # Adds a new item
   def add
-    return if @header.input.value.to_s.strip.empty?
-    add_item @header.input.value
+    return if value.empty?
+    id = SecureRandom.uuid
+    storage.set id, { text: value, done: false, id: id }
     @header.input.value = ''
     render
   end
 
   private
 
-  def done_count
-    items.count(&:done?)
+  # Returns the value of the input field
+  #
+  # @return [String] The value
+  def value
+    @header.input.value.to_s.strip
   end
 
-  def count
-    items.count
-  end
-
-  def items
-    @list.children
-  end
-
-  def storage
-    Fron::Storage::LocalStorage
+  # Returns the prefixed storage
+  #
+  # @return [Storage] The storage
+  def self.storage
+    @storage ||= Storage.new :todos
   end
 end
