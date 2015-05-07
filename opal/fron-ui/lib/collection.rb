@@ -1,31 +1,3 @@
-class Storage
-  def initialize(prefix)
-    @prefix = prefix
-  end
-
-  def get(key, data)
-    storage.get("#{@prefix}:#{key}").to_h
-  end
-
-  def set(key, data)
-    storage.set("#{@prefix}:#{key}", data)
-  end
-
-  def remove(key)
-    storage.remove("#{@prefix}:#{key}")
-  end
-
-  def all
-    storage.keys
-           .select { |key| key.start_with?(@prefix) }
-           .map { |key| storage.get(key).to_h }
-  end
-
-  def storage
-    Fron::Storage::LocalStorage
-  end
-end
-
 # Record module
 module Record
   def self.included(other)
@@ -48,6 +20,7 @@ end
 # A collection component reflects the underlying data (Array) with
 # children.
 class Collection < Fron::Component
+  # Record
   class Record < Fron::Component
     include ::Record
   end
@@ -72,12 +45,12 @@ class Collection < Fron::Component
   end
 
   def diff_items(data)
-    raise 'Not array given for collection!' unless data.is_a?(Array)
+    fail 'Not array given for collection!' unless data.is_a?(Array)
 
     # Get IDS
     new_ids = data.map do |item|
       # Raise error if the item doesn't have a key
-      raise "No key(#{key}) found or nil for #{item}!" unless item[key]
+      fail "No key(#{key}) found or nil for #{item}!" unless item[key]
       item[key]
     end
     old_ids = @items.map { |model| model.data[key] }
@@ -101,7 +74,7 @@ class Collection < Fron::Component
     end
 
     # Keep the order of the original items
-    @items.sort_by! { |item| data.find_index { |model| model[key] == item.data[key] }}
+    @items.sort_by! { |item| data.find_index { |model| model[key] == item.data[key] } }
     render_items
   end
 
@@ -124,7 +97,7 @@ class Collection < Fron::Component
   end
 
   def create_item(data)
-    raise 'Base class does not include ::Record!' if @base && !@base.include?(::Record)
+    fail 'Base class does not include ::Record!' if @base && !@base.include?(::Record)
     item = (@base || Record).new
     item.data = data
     item

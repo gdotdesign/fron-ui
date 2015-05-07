@@ -1,5 +1,6 @@
 module UI
   module Behaviors
+    # Serialize
     module Serialize
       def load(data)
         @data = data

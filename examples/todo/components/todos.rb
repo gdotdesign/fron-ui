@@ -80,7 +80,7 @@ class Todos < UI::Box
   def add
     return if value.empty?
     id = SecureRandom.uuid
-    storage.set id, { text: value, done: false, id: id }
+    storage.set id, text: value, done: false, id: id
     @header.input.value = ''
     render
   end

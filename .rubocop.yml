@@ -3,3 +3,15 @@ LineLength:
 
 FileName:
   Enabled: false
+
+CommandLiteral:
+  Enabled: false
+
+MethodLength:
+  Enabled: false
+
+AbcSize:
+  Enabled: false
+
+Documentation:
+  Enabled: false

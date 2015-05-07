@@ -1,11 +1,14 @@
 require 'fron_ui'
 
+# List
 class List < UI::List
   include UI::Behaviors::SelectableChildren
 
   tag 'ui-list'
 end
 
+# Image
+# TODO: move to components
 class Image < Fron::Component
   tag 'ui-image'
 
@@ -20,13 +23,13 @@ class Image < Fron::Component
           transition: '320ms',
           opacity: 0,
           '&.loaded' => {
-            opacity: 1,
+            opacity: 1
           }
         }
 
   def initialize
     super
-    @img.on :load do loaded end
+    @img.on(:load) { loaded }
   end
 
   def loaded
@@ -42,6 +45,7 @@ class Image < Fron::Component
   end
 end
 
+# Item
 class Item < UI::Container
   include ::Record
 
@@ -69,6 +73,7 @@ class Item < UI::Container
   end
 end
 
+# Sidebar
 class Sidebar < UI::Box
   extend Forwardable
 
@@ -86,6 +91,7 @@ class Sidebar < UI::Box
   end
 end
 
+# Details
 class Details < UI::Box
   include UI::Behaviors::Confirmation
   include UI::Behaviors::Serialize
@@ -155,6 +161,7 @@ class Details < UI::Box
   end
 end
 
+# Main
 class Main < UI::Container
   include UI::Behaviors::Actions
   include UI::Behaviors::Render
@@ -186,7 +193,7 @@ class Main < UI::Container
 
   def add
     id = SecureRandom.uuid
-    storage.set id, { id: id }
+    storage.set id, id: id
     render!
     @sidebar.select id
   end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Collection do
   let(:data) { [{ id: 0 }, { id: 1 }] }
-  let(:new_data) { [{ id: 2 }, { id: 0 }, { id: 3 } ] }
+  let(:new_data) { [{ id: 2 }, { id: 0 }, { id: 3 }] }
 
   before do
     subject.items = data

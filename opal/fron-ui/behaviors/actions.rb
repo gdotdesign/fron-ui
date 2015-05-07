@@ -13,9 +13,10 @@ module UI
       private
 
       def handle_action(event)
-        event.stop
         method = event.target[:action]
-        send method, event if respond_to? method
+        return unless respond_to?(method)
+        event.stop
+        send method, event
       end
     end
   end
