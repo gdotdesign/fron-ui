@@ -11,7 +11,7 @@ Fron::Sheet.helpers do
                               border_radius: 0.15,
                               border_size: 0.2,
                               spacing: 0.75,
-                              size: 2.6
+                              size: 2.2
   end
 
   def colors

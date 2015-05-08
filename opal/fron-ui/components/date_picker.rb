@@ -24,7 +24,6 @@ module UI
             paddingRight: -> { (theme.size * 1.25).em }
           },
           'table td[date]' => { cursor: :pointer,
-                                background: -> { colors.background },
                                 '&:hover' => { background: -> { colors.primary },
                                                color: -> { readable_color(colors.primary) },
                                                fontWeight: 600 } },

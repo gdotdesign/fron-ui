@@ -18,6 +18,9 @@ module UI
     end
 
     style minWidth: 18.em,
+          padding: -> { (theme.spacing * 1.25).em },
+          borderRadius: -> { theme.border_radius.em },
+          background: -> { colors.input },
           'ui-label' => { textAlign: :center,
                           fontWeight: 700 },
           'ui-icon' => { width: -> { (theme.spacing * 2).em } },

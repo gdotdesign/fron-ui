@@ -1,12 +1,20 @@
 module UI
-  class Dropdown < Box
+  class Dropdown < Container
     tag 'ui-dropdown[direction=column]'
 
     style position: :absolute,
+          transition: 'opacity 320ms, transform 320ms',
+          transform: 'translateY(0.5em)',
           boxShadow: '0 5px 10px -5px rgba(0,0,0,0.75)',
-          background: -> { colors.input },
+          pointerEvents: :none,
           zIndex: 100,
+          opacity: 0,
           left: 0,
+          '&.open' => {
+            transform: 'translateY(0)',
+            pointerEvents: :auto,
+            opacity: 1
+          },
           '&[position=top]' => {
             marginBottom: -> { (theme.spacing / 2).em },
             bottom: '100%'
@@ -18,22 +26,17 @@ module UI
 
     on :mousedown, :stop
 
-    def initialize
-      super
-      hide
-    end
-
     def stop(event)
       event.prevent_default
     end
 
     def open
-      show
+      add_class 'open'
       self[:position] = parent && (parent.top - DOM::Window.scroll_y) > `window.innerHeight / 2` ? :top : :bottom
     end
 
     def close
-      hide
+      remove_class 'open'
     end
   end
 end

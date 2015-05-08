@@ -38,7 +38,7 @@ module UI
             'ui-icon.fa' => {
               transform: 'scale(0.4) rotate(45deg)',
               transition: :inherit,
-              fontSize: 1.2.em,
+              fontSize: 1.em,
               opacity: 0
             }
           },

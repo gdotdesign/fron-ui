@@ -9,7 +9,10 @@ module UI
           justifyContent: :center,
           alignItems: :center,
           '&:not([clickable])' => { pointerEvents: :none },
-          '&[clickable]' => { cursor: :pointer }
+          '&[clickable]' => {
+            cursor: :pointer,
+            '&:hover' => { color: -> { colors.focus } }
+          }
 
     def glyph=(value)
       self[:class] = "fa fa-#{value}"

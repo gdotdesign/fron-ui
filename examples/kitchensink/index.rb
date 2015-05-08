@@ -36,8 +36,8 @@ class Theme < UI::Box
   component :title, UI::Title, text: 'Theme'
   component :border, UI::NumberRange, name: :border_radius, step: 0.1, value: 0.15
   component :border, UI::NumberRange, name: :spacing, step: 0.1, value: 0.75
-  component :border, UI::NumberRange, name: :size, step: 0.1, value: 2.6
-  component :border, UI::NumberRange, name: :font_size, step: 1, value: 14
+  component :border, UI::NumberRange, name: :size, step: 0.1, value: 2.2
+  component :border, UI::NumberRange, name: :font_size, step: 1, value: 16
 
   on :input, :set
   on :change, :set
@@ -85,19 +85,22 @@ class Main < UI::Container
         el[key] = value
       end
     end
-    @container.demo.empty
-    @container.demo << el
+    request_animation_frame do
+      @container.demo.empty
+      @container.demo << el
+    end
   end
 end
 
 Fron::Sheet.helper.theme.font_family = 'Open Sans'
 Fron::Sheet.stylesheet '//fonts.googleapis.com/css?family=Open+Sans:400,600,700'
-Fron::Sheet.add_rule 'body', { margin: 0 }, '0'
+Fron::Sheet.add_rule 'body', { margin: 0, fontSize: 16.px }, '0'
 
 data = [
-  { id: 'UI::Button', args: { text: 'Button..' }, options: {} },
+  { id: 'UI::Button', args: { text: 'Button...' }, options: {} },
   { id: 'UI::DatePicker' },
-  { id: 'UI::Checkbox', args: { checked: true } }
+  { id: 'UI::Checkbox', args: { checked: true } },
+  { id: 'UI::Calendar' }
 ]
 
 main = Main.new

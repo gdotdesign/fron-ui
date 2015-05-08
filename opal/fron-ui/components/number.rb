@@ -33,23 +33,25 @@ module UI
           color: -> { readable_color(colors.primary) },
           height: -> { theme.size.em },
           width: -> { (theme.size * 5).em },
+          fontWeight: 600,
           '&:after, &:before' => {
             borderStyle: :solid,
             position: :absolute,
+            marginTop: -0.25.em,
             content: "''",
-            top: 12.px,
+            top: '50%',
             height: 0,
             width: 0
           },
           '&:after' => {
             borderColor: 'transparent currentColor transparent transparent',
-            borderWidth: '5px 8.7px 5px 0',
-            left: 10.px
+            borderWidth: '0.35em 0.4em 0.35em 0',
+            left: 0.75.em
           },
           '&:before' => {
             borderColor: 'transparent transparent transparent currentColor',
-            borderWidth: '5px 0 5px 8.7px',
-            right: 10.px
+            borderWidth: '0.35em 0 0.35em 0.4em',
+            right: 0.75.em
           }
 
     # Creates a new instance
