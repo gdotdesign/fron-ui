@@ -21,7 +21,7 @@ Fron::Sheet.helpers do
                               background: '#f3f3f3',
                               background_lighter: '#f9f9f9',
                               border: '#e6e6e6',
-                              focus: '#64B5F6',
+                              focus: '#2196F3',
                               font: '#555'
   end
 end

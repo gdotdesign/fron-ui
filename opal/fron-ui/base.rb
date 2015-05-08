@@ -4,6 +4,8 @@ module UI
     style '&[disabled]' => { pointerEvents: :none,
                              userSelect: :none }
 
+    attribute_accessor :tabindex
+
     # Disabled state
     #
     # * Doesn't trigger events -> ???
