@@ -1,13 +1,29 @@
 require 'fron-ui/components/box'
 require 'fron-ui/components/input'
+require 'fron-ui/components/icon'
 
 module UI
   class DatePicker < Base
+    include UI::Behaviors::Keydown
     attr_reader :value
 
     tag 'ui-date-picker'
 
-    style 'table td[date]' => { cursor: :pointer,
+    style position: :relative,
+          display: 'inline-block',
+          '> ui-icon' => {
+            position: :absolute,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            width: -> { theme.size.em }
+          },
+          input: {
+            boxSizing: 'border-box',
+            width: '100%',
+            paddingRight: -> { (theme.size * 1.25).em }
+          },
+          'table td[date]' => { cursor: :pointer,
                                 background: -> { colors.background },
                                 '&:hover' => { background: -> { colors.primary },
                                                color: -> { readable_color(colors.primary) },
@@ -19,12 +35,32 @@ module UI
           }
 
     component :input, UI::Input
+    component :icon, UI::Icon, glyph: :calendar
     component :dropdown, UI::Dropdown do
       component :calendar, UI::Calendar
     end
 
     on :click, 'td[date]', :select
     on :change, 'input', :changed
+
+    keydown :down, :next
+    keydown :up,   :prev
+
+    def next(event)
+      if event.shift?
+        self.value = @value.next_month
+      else
+        self.value = @value + 1
+      end
+    end
+
+    def prev(event)
+      if event.shift?
+        self.value = @value.prev_month
+      else
+        self.value = @value - 1
+      end
+    end
 
     def initialize
       super

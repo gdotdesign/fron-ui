@@ -1,50 +1,92 @@
 require 'fron_ui'
 
-class UI::Panel < UI::Box
-  extend Forwardable
+class String
+  def to_class
+    split('::').inject(Object) do |mod, class_name|
+      mod.const_get(class_name)
+    end
+  end
+end
 
-  tag 'ui-panel'
+class Item < UI::Label
+  include Record
 
-  def_delegators :title, :align=
-  def_delegators :container, :children, :html, :html=, :text, :text=, :direction, :direction=
+  def render
+    self.text = @data[:id]
+  end
+end
 
-  component_delegators :container, :<<, :insertBefore, :component
+class List < UI::List
+  include UI::Behaviors::SelectableChildren
+end
 
-  component :title, UI::Title
-  component :container, UI::Container
+class Demo < UI::Box
+  style display: :flex,
+        justifyContent: :center,
+        alignItems: :center,
+        '> *' => {
+          maxHeight: '80%',
+          maxWidth: '60%'
+        }
+end
 
-  def title=(value)
-    @title.text = value
+class Theme < UI::Box
+  include UI::Behaviors::Serialize
+
+  component :title, UI::Title, text: 'Theme'
+  component :border, UI::NumberRange, name: :border_radius, step: 0.1, value: 0.15
+  component :border, UI::NumberRange, name: :spacing, step: 0.1, value: 0.75
+  component :border, UI::NumberRange, name: :size, step: 0.1, value: 2.6
+  component :border, UI::NumberRange, name: :font_size, step: 1, value: 14
+
+  on :input, :set
+  on :change, :set
+
+  def set
+    data.each do |key, value|
+      if key == :font_size
+        DOM::Document.body.style.fontSize = value.px
+      else
+        Fron::Sheet.helper.theme[key] = value
+        Fron::Sheet.render
+      end
+    end
   end
 end
 
 class Main < UI::Container
   tag 'main'
 
-  style fontSize: 14.px,
-        padding: -> { theme.spacing.em },
-        maxWidth: 960.px,
-        margin: '0 auto'
+  style padding: -> { theme.spacing.em },
+        margin: '0 auto',
+        height: '96vh'
 
-  component :box, UI::Panel, title: 'Button', direction: :row do
-    component :button, UI::Button, text: 'Primary'
-    component :button, UI::Button, text: 'Danger', type: :danger
-    component :button, UI::Button, text: 'Success', type: :success
+  component :container, UI::Container, direction: :row, flex: 1 do
+    component :sidebar, UI::Box do
+      component :title, UI::Title, text: 'Components'
+      component :list, List, base: ::Item
+    end
+
+    component :demo, Demo, flex: 1 do
+    end
+
+    component :theme, Theme
   end
 
-  component :box, UI::Panel, title: 'Checkbox', direction: :row do
-    component :checkbox, UI::Checkbox
-    component :checkbox, UI::Checkbox, checked: true
-  end
+  on :selected_change, :populate
 
-  component :icon, UI::Panel, title: 'Icons', direction: :row do
-    component :icon, UI::Icon, glyph: :plus
-    component :icon, UI::Icon, glyph: :clock
-    component :icon, UI::Icon, glyph: :remove
-  end
-
-  component :range, UI::Panel do
-    component :range, UI::NumberRange, min: 0, max: 100, step: 0.1
+  def populate(event)
+    data = event.target.selected.data
+    el = data[:id].to_class.new
+    data[:args].to_a.each do |key, value|
+      if el.respond_to?("#{key}=")
+        el.send("#{key}=", value)
+      else
+        el[key] = value
+      end
+    end
+    @container.demo.empty
+    @container.demo << el
   end
 end
 
@@ -52,4 +94,13 @@ Fron::Sheet.helper.theme.font_family = 'Open Sans'
 Fron::Sheet.stylesheet '//fonts.googleapis.com/css?family=Open+Sans:400,600,700'
 Fron::Sheet.add_rule 'body', { margin: 0 }, '0'
 
-DOM::Document.body << Main.new
+data = [
+  { id: 'UI::Button', args: { text: 'Button..' }, options: {} },
+  { id: 'UI::DatePicker' },
+  { id: 'UI::Checkbox', args: { checked: true } }
+]
+
+main = Main.new
+main.container.sidebar.list.items = data
+
+DOM::Document.body << main

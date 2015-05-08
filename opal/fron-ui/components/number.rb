@@ -101,7 +101,7 @@ module UI
     #
     # @return [Float] The value of the field
     def value
-      @value.to_s
+      @value.to_f
     end
 
     # Sets the value of the field

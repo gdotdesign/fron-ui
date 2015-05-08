@@ -22,6 +22,7 @@ Fron::Sheet.helpers do
                               background_lighter: '#f9f9f9',
                               border: '#e6e6e6',
                               focus: '#2196F3',
-                              font: '#555'
+                              font: '#555',
+                              input: '#FFF'
   end
 end

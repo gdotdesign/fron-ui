@@ -17,16 +17,17 @@ module UI
       component :tbody, :tbody
     end
 
-    style 'ui-label' => { textAlign: :center,
+    style minWidth: 18.em,
+          'ui-label' => { textAlign: :center,
                           fontWeight: 700 },
           'ui-icon' => { width: -> { (theme.spacing * 2).em } },
           'ui-container' => {
             borderBottomStyle: :solid,
-            borderBottomWidth: -> { theme.border_size.em },
-            borderBottomColor: -> { colors.border },
+            borderBottomWidth: -> { (theme.border_size / 2).em },
+            borderBottomColor: -> { colors.background },
             paddingBottom: -> { theme.spacing.em }
           },
-          table: { tableLayout: :fixed,
+          table: { borderSpacing: 0.4.em,
                    'td[date]' => { background: -> { colors.background_lighter },
                                    color: -> { colors.font } },
                    'th' => {
