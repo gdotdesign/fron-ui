@@ -19,7 +19,15 @@ module UI
 
     def initialize
       super
-      self[:direction] ||= :row
+      self[:direction] ||= :column
+    end
+
+    def direction
+      self[:direction]
+    end
+
+    def direction=(value)
+      self[:direction] = value
     end
   end
 end
