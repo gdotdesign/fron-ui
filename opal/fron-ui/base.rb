@@ -25,6 +25,20 @@ module UI
     def flex=(value)
       @style.flex = value
     end
+
+    def self.component_delegators(accessor, *methods)
+      methods.each do |name|
+        alias_method "___#{name}", name
+        define_method name do |*args, &block|
+          el = instance_variable_get("@#{accessor}")
+          if el
+            el.__send__(name, *args, &block)
+          else
+            send("___#{name}", *args, &block)
+          end
+        end
+      end
+    end
   end
 end
 
