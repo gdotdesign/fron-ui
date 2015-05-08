@@ -14,6 +14,10 @@ class Main < UI::Container
         bottom: 0
 
   component :picker, UI::DatePicker
+
+  component :box, UI::Box do
+    component :calendar, UI::Calendar
+  end
 end
 
 DOM::Document.body << Main.new
