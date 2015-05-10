@@ -16,6 +16,6 @@ class Main < Fron::Component
         }
 
   # Components
-  component :todos, Todos, direction: :column
+  component :todos, Todos
   component :small, :small, text: 'Example application for Fron-UI.'
 end

@@ -1,6 +1,7 @@
-require 'fron-ui/components/box'
 require 'fron-ui/components/input'
 require 'fron-ui/components/icon'
+require 'fron-ui/components/dropdown'
+require 'fron-ui/components/calendar'
 
 module UI
   class DatePicker < Base

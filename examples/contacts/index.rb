@@ -7,54 +7,17 @@ class List < UI::List
   tag 'ui-list'
 end
 
-# Image
-# TODO: move to components
-class Image < Fron::Component
-  tag 'ui-image'
-
-  component :img, :img
-
-  style display: 'inline-block',
-        background: -> { colors.background_lighter },
-        img: {
-          borderRadius: :inherit,
-          width: :inherit,
-          height: :inherit,
-          transition: '320ms',
-          opacity: 0,
-          '&.loaded' => {
-            opacity: 1
-          }
-        }
-
-  def initialize
-    super
-    @img.on(:load) { loaded }
-  end
-
-  def loaded
-    @img.add_class :loaded
-  end
-
-  def src=(value)
-    return if !value || @img[:src] == value
-    @img.remove_class :loaded
-    timeout 320 do
-      @img[:src] = value
-    end
-  end
-end
-
 # Item
 class Item < UI::Container
+  include UI::Behaviors::Action
   include ::Record
 
-  tag 'ui-item'
+  tag 'ui-item[tabindex=0]'
 
   component :image, :img
   component :name, UI::Label
 
-  style padding: -> { theme.spacing.em },
+  style padding: -> { (theme.spacing / 2).em },
         lineHeight: 2.em,
         transition: 'border 200ms',
         borderLeft: '0em solid transparent',
@@ -65,7 +28,15 @@ class Item < UI::Container
         },
         '&.selected' => {
           borderLeft: -> { "0.4em solid #{colors.primary}" }
+        },
+        '&:focus' => {
+          borderLeft: -> { "0.4em solid #{colors.focus}" }
         }
+
+  def initialize
+    super
+    self[:direction] = :row
+  end
 
   def render
     @image.src = 'http://www.gravatar.com/avatar/' + `md5(#{data[:email] || ''})` + '?s=100&d=identicon'
@@ -122,9 +93,9 @@ class Details < UI::Box
 
   component :title, UI::Title, text: 'Contact Details'
 
-  component :box, UI::Container, flex: 1 do
+  component :box, UI::Container, flex: 1, direction: :row do
     component :image, Image
-    component :form, UI::Container, direction: :column, flex: 1 do
+    component :form, UI::Container, flex: 1 do
       component :label, UI::Label, text: 'Full Name:'
       component :input, UI::Input, placeholder: 'Tony Stark', name: :name
       component :label, UI::Label, text: 'E-mail:'
@@ -168,8 +139,8 @@ class Main < UI::Container
 
   extend Forwardable
 
-  component :sidebar, Sidebar, flex: '0 0 20em', direction: :column
-  component :details, Details, flex: 1, direction: :column
+  component :sidebar, Sidebar, flex: '0 0 20em'
+  component :details, Details, flex: 1
 
   style fontSize: 14.px,
         width: 67.5.em,
@@ -188,6 +159,7 @@ class Main < UI::Container
 
   def initialize
     super
+    self[:direction] = :row
     render
   end
 

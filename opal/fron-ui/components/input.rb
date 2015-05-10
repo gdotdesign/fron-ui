@@ -19,4 +19,9 @@ module UI
             fontWeight: 600
           }
   end
+
+  class Textarea < Input
+    style lineHeight: -> { 1.5.em },
+          padding: -> { (theme.spacing / 2).em }
+  end
 end

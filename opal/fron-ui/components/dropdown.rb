@@ -1,3 +1,5 @@
+require 'fron-ui/components/container'
+
 module UI
   class Dropdown < Container
     tag 'ui-dropdown[direction=column]'

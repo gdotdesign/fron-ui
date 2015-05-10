@@ -31,13 +31,18 @@ class Todos < UI::Box
             height: 1.4.em,
             width: 1.4.em
           },
-          '&.done span' => {
+          '&.done ui-label' => {
             textDecoration: 'line-through'
           }
 
     on :change, :update
 
     confirmation :destroy!, 'Are you sure?'
+
+    def initialize
+      super
+      self[:direction] = :row
+    end
 
     # Destroys the element in the storage
     # and trigger refresh.

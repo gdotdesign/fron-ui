@@ -25,7 +25,7 @@ class Todos < UI::Box
   # Component definitions
   component :title, UI::Title, text: 'Todos', align: :center
 
-  component :header, UI::Container do
+  component :header, UI::Container, direction: :row do
     component :input, UI::Input, placeholder: 'Add Item...', flex: 1
     component :button, UI::Button, shape: :square, action: :add do
       component :icon, UI::Icon, glyph: :plus
@@ -34,9 +34,9 @@ class Todos < UI::Box
 
   component :list, UI::List, flex: 1, empty_message: 'No items to display!', base: Item
 
-  component :footer, UI::Container do
+  component :footer, UI::Container, direction: :row do
     component :count, UI::Label, flex: 1
-    component :options, Options
+    component :options, Options, direction: :row
   end
 
   # Delegate storage to class
