@@ -6,16 +6,8 @@ class Main < Fron::Component
         paddingTop: -> { (theme.spacing * 2).em },
         margin: '0 auto',
         fontSize: 14.px,
-        width: 42.em,
-        small: {
-          padding: -> { theme.spacing.em },
-          textAlign: :center,
-          display: :block,
-          fontSize: 1.em,
-          opacity: 0.5
-        }
+        width: 42.em
 
   # Components
   component :todos, Todos
-  component :small, :small, text: 'Example application for Fron-UI.'
 end

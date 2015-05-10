@@ -12,7 +12,7 @@ class Image < Fron::Component
           borderRadius: :inherit,
           width: :inherit,
           height: :inherit,
-          transition: '320ms',
+          transition: 'opacity 320ms',
           opacity: 0,
           '&.loaded' => {
             opacity: 1

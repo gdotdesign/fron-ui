@@ -7,7 +7,7 @@ module UI
     style position: :absolute,
           transition: 'opacity 320ms, transform 320ms',
           transform: 'translateY(0.5em)',
-          boxShadow: '0 5px 10px -5px rgba(0,0,0,0.75)',
+          boxShadow: '0 0.3em 0.625em -0.3em rgba(0,0,0,0.75)',
           pointerEvents: :none,
           zIndex: 100,
           opacity: 0,

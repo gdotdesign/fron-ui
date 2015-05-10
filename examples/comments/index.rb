@@ -102,13 +102,10 @@ class List < Collection
   style '> * + *' => { marginTop: -> { (theme.spacing * 2).em } }
 end
 
-class Main < UI::Container
+class Feed < UI::Container
   include UI::Behaviors::Actions
 
-  style maxWidth: 42.em,
-        margin: '1em auto',
-        fontSize: 16.px,
-        '> ui-container' => {
+  style '> ui-container' => {
           borderBottom: -> { "#{(theme.border_size / 1.5).em} dashed #{colors.border}" },
           paddingBottom: -> { theme.spacing.em },
           marginBottom: -> { theme.spacing.em },
@@ -170,21 +167,28 @@ class Main < UI::Container
   end
 end
 
-data = (1..3).map do
-  {
-    id: SecureRandom.uuid,
-    votes: rand(0..5),
-    date: Date.today - rand(100),
-    voted: false,
-    user: {
-      name: Lorem.name,
-      image: Lorem.avatar
-    },
-    body: Lorem.paragraphs(rand(1..2))
-  }
+class Main < UI::Container
+  tag 'main'
+
+  style margin: '2em auto',
+        maxWidth: 42.em,
+        fontSize: 16.px
+
+  data = (1..3).map do
+    {
+      id: SecureRandom.uuid,
+      votes: rand(0..5),
+      date: Date.today - rand(100),
+      voted: false,
+      user: {
+        name: Lorem.name,
+        image: Lorem.avatar
+      },
+      body: Lorem.paragraphs(rand(1..2))
+    }
+  end
+
+  component :feed, Feed, items: data
 end
 
-main = Main.new
-main.items = data
-
-DOM::Document.body << main
+DOM::Document.body << Main.new

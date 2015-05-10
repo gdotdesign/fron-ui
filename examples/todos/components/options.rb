@@ -1,6 +1,8 @@
 class Todos < UI::Box
-  # Options
-  class Options < UI::Container
+  # Filters
+  class Filters < UI::Container
+    tag 'ui-todo-filters'
+
     # Behaviors
     include UI::Behaviors::SelectableChildren
 
@@ -10,8 +12,7 @@ class Todos < UI::Box
     component :completed, UI::Action, text: 'Completed', value: :completed
 
     # Styles
-    style '> *:not(.selected)' => { opacity: 0.4 },
-          'ui-action:focus' => { opacity: 1 }
+    style '> *:not(.selected)' => { color: -> { dampen colors.font, 0.5 } }
 
     # Select the first by default
     def initialize

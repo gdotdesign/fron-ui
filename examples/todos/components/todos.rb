@@ -36,7 +36,7 @@ class Todos < UI::Box
 
   component :footer, UI::Container, direction: :row do
     component :count, UI::Label, flex: 1
-    component :options, Options, direction: :row
+    component :filters, Filters, direction: :row
   end
 
   # Delegate storage to class
@@ -66,7 +66,7 @@ class Todos < UI::Box
 
   # Render items based on the selected filter
   def render_items(items)
-    @list.items = case @footer.options.selected.value
+    @list.items = case @footer.filters.selected.value
                   when :active
                     items.reject { |item| item[:done] }
                   when :completed

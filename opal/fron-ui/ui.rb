@@ -1,4 +1,9 @@
 Fron::Sheet.helpers do
+  def rgba(color, percent)
+    color = Color::RGB.by_css(color)
+    "rgba(#{color.red}, #{color.green}, #{color.blue}, #{percent})"
+  end
+
   def dampen(color, percent)
     color = Color::RGB.by_css(color)
     '#' + color.send((lightness(color) > 0.5 ? :darken_by : :lighten_by), (1 - percent) * 100).hex

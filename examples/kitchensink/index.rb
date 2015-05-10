@@ -99,8 +99,10 @@ Fron::Sheet.add_rule 'body', { margin: 0, fontSize: 16.px }, '0'
 data = [
   { id: 'UI::Button', args: { text: 'Button...' }, options: {} },
   { id: 'UI::DatePicker' },
+  { id: 'UI::ColorPicker', args: { value: '#328B3F' } },
   { id: 'UI::Checkbox', args: { checked: true } },
-  { id: 'UI::Calendar' }
+  { id: 'UI::Calendar' },
+  { id: 'UI::ColorWheel' }
 ]
 
 main = Main.new

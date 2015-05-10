@@ -10,7 +10,7 @@ class Todos < UI::Box
     extend Forwardable
 
     # Tag
-    tag 'ui-item'
+    tag 'ui-todo-item'
 
     # Delegators
     def_delegators :span, :text=, :text

@@ -6,7 +6,7 @@ module UI
     style padding: -> { "0 #{theme.spacing.em}" },
           borderRadius: -> { theme.border_radius.em },
           fontFamily: -> { theme.font_family },
-          color: -> { colors.font },
+          color: -> { dampen readable_color(colors.input), 0.35 },
           height: -> { theme.size.em },
           lineHeight: -> { theme.size.em },
           fontSize: :inherit,
