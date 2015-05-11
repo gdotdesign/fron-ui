@@ -2,7 +2,7 @@ require 'native'
 require 'math'
 
 module UI
-  class ColorWheel < UI::Container
+  class ColorPanel < UI::Container
     tag 'ui-color-wheel[direction=row]'
 
     style background: -> { colors.input },

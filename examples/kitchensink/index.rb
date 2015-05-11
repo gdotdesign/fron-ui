@@ -11,6 +11,8 @@ end
 class Item < UI::Label
   include Record
 
+  style padding: -> { theme.spacing.em }
+
   def render
     self.text = @data[:id]
   end
@@ -102,10 +104,12 @@ data = [
   { id: 'UI::ColorPicker', args: { value: '#328B3F' } },
   { id: 'UI::Checkbox', args: { checked: true } },
   { id: 'UI::Calendar' },
-  { id: 'UI::ColorWheel' }
+  { id: 'UI::ColorPanel' },
+  { id: 'UI::Slider' }
 ]
 
 main = Main.new
 main.container.sidebar.list.items = data
+main.container.sidebar.list.select main.container.sidebar.list.children.last
 
 DOM::Document.body << main
