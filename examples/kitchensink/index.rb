@@ -34,6 +34,7 @@ end
 
 class Theme < UI::Box
   include UI::Behaviors::Serialize
+  include UI::Behaviors::Render
 
   component :title, UI::Title, text: 'Theme'
   component :border, UI::NumberRange, name: :border_radius, step: 0.1, value: 0.15
@@ -41,13 +42,24 @@ class Theme < UI::Box
   component :border, UI::NumberRange, name: :size, step: 0.1, value: 2.2
   component :border, UI::NumberRange, name: :font_size, step: 1, value: 16
 
-  on :input, :set
-  on :change, :set
+  component :color, UI::ColorPicker, name: :primary
+  component :color, UI::ColorPicker, name: :background
+  component :color, UI::ColorPicker, name: :background_lighter
+  component :color, UI::ColorPicker, name: :font
+  component :color, UI::ColorPicker, name: :input
+
+  on :input, :render
+  on :change, :render
+
+  render :set
 
   def set
     data.each do |key, value|
       if key == :font_size
         DOM::Document.body.style.fontSize = value.px
+      elsif %w(primary background font background_lighter input).include?(key)
+        Fron::Sheet.helper.colors[key] = value
+        Fron::Sheet.render
       else
         Fron::Sheet.helper.theme[key] = value
         Fron::Sheet.render
@@ -69,8 +81,7 @@ class Main < UI::Container
       component :list, List, base: ::Item
     end
 
-    component :demo, Demo, flex: 1 do
-    end
+    component :demo, Demo, flex: 1
 
     component :theme, Theme
   end

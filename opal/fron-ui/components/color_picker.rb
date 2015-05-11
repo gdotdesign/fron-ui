@@ -4,6 +4,8 @@ require 'fron-ui/components/color_panel'
 
 module UI
   class ColorPicker < Base
+    extend Forwardable
+
     tag 'ui-color-picker'
 
     component :input, UI::Input, spellcheck: false
@@ -33,6 +35,8 @@ module UI
 
     on :change, :input, :update
     on :change, 'ui-color-wheel', :update_input
+
+    def_delegators :input, :value
 
     def initialize
       super

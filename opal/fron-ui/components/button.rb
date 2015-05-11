@@ -7,7 +7,7 @@ module UI
 
     style fontFamily: -> { theme.font_family },
           display: 'inline-block',
-          padding: -> { "0 #{(theme.spacing * 1.8).em}" },
+          padding: -> { "0 #{(theme.spacing * 1.4).em}" },
           borderRadius: -> { theme.border_radius.em },
           whiteSpace: :nowrap,
           textAlign: :center,

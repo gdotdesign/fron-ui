@@ -1,3 +1,6 @@
+require 'fron-ui/components/container'
+require 'fron-ui/components/drag'
+
 require 'native'
 require 'math'
 

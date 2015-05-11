@@ -11,8 +11,8 @@ module UI
           borderBottomWidth: -> { theme.border_size.em },
           borderBottomColor: -> { colors.border },
           paddingBottom: -> { theme.spacing.em },
-          span: {
-            fontSize: '1.5em',
+          '> span' => {
+            fontSize: '1.6em',
             fontWeight: 600
           }
 

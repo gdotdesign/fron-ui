@@ -9,6 +9,7 @@ module UI
           color: -> { dampen readable_color(colors.input), 0.35 },
           height: -> { theme.size.em },
           lineHeight: -> { theme.size.em },
+          background: -> { colors.input },
           fontSize: :inherit,
           border: 0,
           '&:focus' => {

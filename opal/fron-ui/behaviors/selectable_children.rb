@@ -18,6 +18,10 @@ module UI
         trigger :selected_change
       end
 
+      def select_first
+        select children.first
+      end
+
       def selected
         children.find { |child| child.has_class :selected }
       end

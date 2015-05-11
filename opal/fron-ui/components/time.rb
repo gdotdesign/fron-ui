@@ -27,11 +27,13 @@ module UI
 
     def render
       clear_timeout @id
-      self.text = if @from_now
-                    value.fromNow
-                  else
-                    self.text = value.format(@format || 'YYYY-MM-DD')
-                  end
+      request_animation_frame do
+        self.text = if @from_now
+                      value.fromNow
+                    else
+                      self.text = value.format(@format || 'YYYY-MM-DD')
+                    end
+      end
       @id = timeout 1000 do
         render
       end
