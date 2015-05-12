@@ -9,25 +9,27 @@ module UI
           '&[direction=column]' => {
             flexDirection: :column,
 
-            '> * + *' => {
+            '&:not([compact]) > * + *' => {
               marginTop: -> { theme.spacing.em }
             }
           },
-          '&[direction=row] > * + *' => {
+          '&[direction=row]:not([compact]) > * + *' => {
             marginLeft: -> { theme.spacing.em }
           }
+
+    attribute_accessor :direction
 
     def initialize
       super
       self[:direction] ||= :column
     end
 
-    def direction
-      self[:direction]
-    end
-
-    def direction=(value)
-      self[:direction] = value
+    def compact=(value)
+      if !value
+        remove_attribute :compact
+      else
+        self[:compact] = ''
+      end
     end
   end
 end

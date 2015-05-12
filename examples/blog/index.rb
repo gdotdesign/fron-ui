@@ -53,16 +53,18 @@ class Header < UI::Container
 end
 
 class Posts < UI::Container
+  extend Forwardable
+
   tag 'posts[direction=row]'
 
   style padding: -> { (theme.spacing * 2).em },
-        paddingTop: -> { theme.spacing.em },
         'ui-container:last-of-type ui-icon' => { marginRight: -> { theme.spacing.em } },
         'ui-container:last-of-type' => {
           marginLeft: -> { (theme.spacing * 2).em }
         },
         'ui-title' => {
           display: :flex,
+          flex: '0 0 2em',
           '> span' => {
             overflow: :hidden,
             textOverflow: :ellipsis,
@@ -82,7 +84,7 @@ class Posts < UI::Container
 
   component :preview, UI::Container, flex: 1 do
     component :title, UI::Title do
-      component :button, UI::Button do
+      component :button, UI::Button, action: :edit do
         component :icon, UI::Icon, glyph: :pencil
         component :span, :span, text: 'Edit'
       end
@@ -92,15 +94,18 @@ class Posts < UI::Container
 
   on :selected_change, :select
 
+  def_delegators :box, :list
+  def_delegators :list, :selected, :select_first
+
   def refresh
-    @box.list.refresh do
-      break if @box.list.selected
-      @box.list.select_first
+    list.refresh do
+      break if selected
+      select_first
     end
   end
 
   def select
-    self.selected = @box.list.selected.data
+    self.selected = selected.data
   end
 
   def selected=(data)
@@ -113,44 +118,72 @@ class Form < UI::Container
   include UI::Behaviors::Serialize
   include ::Rest
 
+  extend Forwardable
+
   rest url: 'http://localhost:3000/posts'
 
   component :title, UI::Input, name: :title
-  component :container, UI::Container, flex: 1, direction: :row do
-    component :body, UI::Textarea, name: :body
-    component :preview, UI::Base, flex: 1
+  component :container, UI::Container, flex: 1, direction: :row, compact: true do
+    component :textarea, UI::Textarea, name: :body
+    component :preview, UI::Base, flex: 1 do
+      component :div, :div
+    end
   end
 
-  style 'ui-container' => {
+  style 'input' => {
+          fontSize: 2.em,
+          borderBottom: -> { "#{theme.border_size.em} solid #{colors.border}" }
+        },
+        'ui-container' => {
           position: :relative,
-          paddingLeft: '50%',
+          paddingLeft: '50%'
+        },
+        'base, textarea' => {
+          boxSizing: 'border-box',
+          fontSize: 16.px,
+          padding: 20.px
         },
         'base' => {
+          borderLeft: -> { "#{theme.border_size.em} solid #{colors.border}" },
           overflow: :auto,
-          padding: 20.px,
-          fontSize: 16.px,
-          boxSizing: 'border-box',
-          '> *' => {
-            margin: 0,
-            marginBottom: 0.6.em
+          div: {
+            maxWidth: 800.px,
+            margin: '0 auto',
+            '> *' => {
+              margin: 0,
+              marginBottom: 0.6.em
+            }
+          }
+        },
+        'input, textarea' => {
+          '&:focus' => {
+            boxShadow: :none
           }
         },
         textarea: {
           position: :absolute,
-          boxSizing: 'border-box',
-          fontSize: 16.px,
-          padding: 20.px,
+          resize: :none,
           top: 0,
           left: 0,
           width: '50%',
-          height: '100%',
-          '&:focus' => {
-            boxShadow: :none
-          }
+          height: '100%'
         }
 
+  def_delegators :container, :preview, :textarea
+
   on :change, :save
-  on :input, :render
+  on :keyup, :render
+
+  def initialize
+    super
+    textarea.on :scroll do
+      sync
+    end
+  end
+
+  def sync
+    preview.scroll_top = preview.scroll_height * (textarea.scroll_top / textarea.scroll_height)
+  end
 
   def load(id)
     request :get, id do |data|
@@ -166,37 +199,55 @@ class Form < UI::Container
   end
 
   def render
-    @container.preview.html = `marked(#{data[:body]})`
+    preview.div.html = `marked(#{data[:body].to_s})`
   end
 end
 
 class Main < UI::Container
   extend Forwardable
   include UI::Behaviors::Actions
+  include ::Rest
 
-  tag 'main'
+  rest url: 'http://localhost:3000/posts'
+
+  tag 'main[compact=true]'
 
   style height: '100vh',
         boxSizing: 'border-box',
         fontSize: 14.px
 
   component :header, Header
-  component :content, UI::Container, direction: :row, flex: 1 do
-    # component :posts, Posts, flex: 1
+  component :content, UI::Container, direction: :row, flex: 1, compact: true do
+    component :posts, Posts, flex: 1
     component :form, Form, flex: 1
   end
 
   def initialize
     super
-    # @content.posts.refresh
-    @content.form.load 1
+    @content.children.each(&:hide)
+    content
+  end
+
+  def content
+    @content.posts.refresh
+    @content.posts.show
+    @content.form.hide
+  end
+
+  def edit
+    load @content.posts.selected.data[:id]
+  end
+
+  def load(id)
+    @content.form.load id
+    @content.posts.hide
+    @content.form.show
   end
 
   def create
     data = { title: '', body: '' }
-    list.request :post, '', data do |item|
-      @content.form.load item[:id]
-      refresh
+    request :post, '', data do |item|
+      load item[:id]
     end
   end
 end
