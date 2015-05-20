@@ -219,7 +219,7 @@ class Main < UI::Container
   component :header, Header
   component :content, UI::Container, direction: :row, flex: 1, compact: true do
     component :posts, Posts, flex: 1
-    component :form, Form, flex: 1
+    component :form, Form, flex: 1, compact: true
   end
 
   def initialize

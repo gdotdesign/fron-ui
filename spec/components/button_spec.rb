@@ -16,6 +16,7 @@ describe UI::Button do
   end
 
   it { is_expected.to be_size_of(26, 21) }
+  it { subject[:type].should eq :primary }
 
   describe 'Bigger font size' do
     before do

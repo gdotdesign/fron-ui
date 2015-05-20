@@ -39,6 +39,16 @@
       "title": "",
       "body": "",
       "id": 8
+    },
+    {
+      "title": "Test Post",
+      "body": "this is the content....",
+      "id": 9
+    },
+    {
+      "title": "ASDasd",
+      "body": "asdasdasdasdasd",
+      "id": 10
     }
   ]
 }

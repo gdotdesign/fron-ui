@@ -8,6 +8,7 @@ module UI
 
     style position: :relative,
           background: -> { colors.input },
+          display: 'inline-block',
           'ui-drag-handle' => {
             background: -> { rgba(readable_color(colors.input), 0.5) },
             transform: 'translateX(-50%) translateY(-50%)',

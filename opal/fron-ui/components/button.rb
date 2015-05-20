@@ -30,6 +30,9 @@ module UI
           },
           '&[disabled]' => {
             opacity: 0.4
+          },
+          '> *' => {
+            pointerEvents: :none
           }
 
     Fron::Sheet.helper.colors.to_h.keys.each do |type|

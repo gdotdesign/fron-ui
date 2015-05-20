@@ -28,9 +28,8 @@ class Lorem
       (1..count).map { paragraph }.join(' ')
     end
 
-    def sentence
-      words = (0..rand(3..10)).map { WORDS.sample }.join(' ').capitalize
-      punctuation = PUNCTUATIONS.sample
+    def sentence(range = (3..10), punctuation = PUNCTUATIONS.sample)
+      words = (0..rand(range)).map { WORDS.sample }.join(' ').capitalize
       "#{words}#{punctuation}"
     end
 
