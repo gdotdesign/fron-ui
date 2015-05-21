@@ -2,4 +2,3 @@
 --protected
 --title Fron
 opal/**/*.rb
-examples/**/*.rb

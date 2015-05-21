@@ -112,18 +112,18 @@ module UI
         end
       end
     end
-  end
 
-  # Cell for the calendar body
-  class Td < Fron::Component
-    # Initialize the cell with the day
-    #
-    # @param day [Date] The day
-    def initialize(day)
-      super nil
-      return if day.is_a?(String)
-      self[:date] = day
-      self.text = day.day
+    # Cell for the calendar body
+    class Td < Fron::Component
+      # Initialize the cell with the day
+      #
+      # @param day [Date] The day
+      def initialize(day)
+        super nil
+        return if day.is_a?(String)
+        self[:date] = day
+        self.text = day.day
+      end
     end
   end
 end
