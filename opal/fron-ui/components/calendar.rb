@@ -1,21 +1,33 @@
 module UI
+  # Calendar component
+  # ==================
+  # Renders a month calendar for a given date
+  # with the following features:
+  # * Navigate to next / previous month
+  # * Yields all the days (with their cells) for extended useage
+  # * Displays the name of the rendered month (and year if it's not the same)
   class Calendar < Base
     include UI::Behaviors::Actions
+    extend Forwardable
 
     tag 'ui-calendar'
 
     component :header, UI::Container, direction: :row do
-      component :icon, UI::Icon, glyph: 'caret-left', clickable: true, action: :prev_month
+      component :icon,  UI::Icon,  glyph: 'caret-left',  clickable: true, action: :prev_month
       component :label, UI::Label, flex: 1
-      component :icon, UI::Icon, glyph: 'caret-right', clickable: true, action: :next_month
+      component :icon,  UI::Icon,  glyph: 'caret-right', clickable: true, action: :next_month
     end
 
     component :table, :table do
       component :thead, :thead do
         component :tr, :tr
       end
+
       component :tbody, :tbody
     end
+
+    def_delegators :table, :tbody, :thead
+    def_delegators :header, :label
 
     style minWidth: 18.em,
           padding: -> { (theme.spacing * 1.25).em },
@@ -46,53 +58,72 @@ module UI
                    }
                  }
 
+    # Initializes the calendar with todays date
     def initialize
       super
-      render Date.today
+      render
     end
 
+    # Renders the next month in the calendar
     def next_month
       render @date.next_month
     end
 
+    # Renders the previous month in the calendar
     def prev_month
       render @date.prev_month
     end
 
-    def render(date)
-      @date = date if date
-      @header.label.text = date.strftime date.year == Date.today.year ? '%B' : '%B %Y'
+    # Renders the calendar for the given date
+    #
+    # @param date [Date] The date
+    def render(date = Date.today)
+      @date = date
+      label.text = date.strftime date.year == Date.today.year ? '%B' : '%B %Y'
       render_header
-      render_cells(date) do |*args|
+      render_body(date) do |*args|
         yield(*args) if block_given?
       end
     end
 
+    private
+
+    # Renders the table header with the shortnames
     def render_header
-      @table.thead.tr.empty
+      thead.tr.empty
       Date.this_week.each do |day|
-        @table.thead.tr << DOM::Element.new("th #{day.strftime('%a')}")
+        thead.tr << DOM::Element.new("th #{day.strftime('%a')}")
       end
     end
 
-    def render_cells(date)
-      @table.tbody.empty
-      days = (date.beginning_of_month..date.end_of_month).to_a
-      row = DOM::Element.new('tr')
-      range = days.first.wday == 0 ? (0..5) : (0...days.first.wday - 1)
-      range.each do
-        row << DOM::Element.new('td')
-      end
-      days.each do |day|
-        if row.children.count == 7
-          @table.tbody << row
-          row = DOM::Element.new('tr')
+    # Renders the table body with the days
+    def render_body
+      tbody.empty
+
+      @date.days_for_calendar.each_slice(7) do |data|
+        row = DOM::Element.new('tr')
+        row >> tbody
+
+        data.each do |day|
+          td = Td.new(day)
+          td >> row
+          next if day.is_a?(String)
+          yield day, td
         end
-        td = DOM::Element.new("td[date=#{day}] #{day.day}")
-        row << td
-        yield day, td
       end
-      @table.tbody << row
+    end
+  end
+
+  # Cell for the calendar body
+  class Td < Fron::Component
+    # Initialize the cell with the day
+    #
+    # @param day [Date] The day
+    def initialize(day)
+      super nil
+      return if day.is_a?(String)
+      self[:date] = day
+      self.text = day.day
     end
   end
 end
