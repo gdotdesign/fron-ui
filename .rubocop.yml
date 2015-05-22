@@ -13,5 +13,9 @@ MethodLength:
 AbcSize:
   Enabled: false
 
-Documentation:
+AsciiComments:
   Enabled: false
+
+BlockDelimiters:
+	Exclude:
+		- '/spec/**/*'

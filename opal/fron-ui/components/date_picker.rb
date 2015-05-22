@@ -6,6 +6,8 @@ require 'fron-ui/components/calendar'
 module UI
   class DatePicker < Base
     include UI::Behaviors::Keydown
+    include UI::Behaviors::Dropdown
+
     attr_reader :value
 
     tag 'ui-date-picker'
@@ -46,6 +48,8 @@ module UI
     keydown :down, :next
     keydown :up,   :prev
 
+    dropdown :input, :dropdown
+
     def next(event)
       if event.shift?
         self.value = @value.next_month
@@ -64,8 +68,6 @@ module UI
 
     def initialize
       super
-      @input.on(:focus) { @dropdown.open }
-      @input.on(:blur)  { @dropdown.close }
       self.value = Date.today
     end
 

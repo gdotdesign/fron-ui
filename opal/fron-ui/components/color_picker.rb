@@ -4,6 +4,8 @@ require 'fron-ui/components/color_panel'
 
 module UI
   class ColorPicker < Base
+    include UI::Behaviors::Dropdown
+
     extend Forwardable
 
     tag 'ui-color-picker'
@@ -38,24 +40,21 @@ module UI
 
     def_delegators :input, :value
 
+    dropdown :input, :dropdown
+
     def initialize
       super
-      @input.on(:blur)  { @dropdown.close }
-      @input.on(:focus) do
-        @dropdown.open
-        update_dropdown
-      end
+      @input.on(:focus) { update_dropdown }
       @input.value = '#FFFFFF'
     end
 
     def value=(value)
       @input.value = value
-      update_dropdown
     end
 
     def update(event)
-      event.stop
       update_dropdown
+      event.stop
     end
 
     def update_dropdown

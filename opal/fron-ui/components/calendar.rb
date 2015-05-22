@@ -6,6 +6,9 @@ module UI
   # * Navigate to next / previous month
   # * Yields all the days (with their cells) for extended useage
   # * Displays the name of the rendered month (and year if it's not the same)
+  #
+  # @author Gusztáv Szikszai
+  # @since  0.1.0
   class Calendar < Base
     include UI::Behaviors::Actions
     extend Forwardable
