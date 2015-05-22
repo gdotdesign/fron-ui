@@ -17,19 +17,24 @@ module UI
           position: :absolute,
           zIndex: 100,
           opacity: 0,
-          left: 0,
           '&.open' => {
             transform: 'translateY(0)',
             pointerEvents: :auto,
             opacity: 1
           },
-          '&[position=top]' => {
+          '&[vertical=top]' => {
             marginBottom: -> { (theme.spacing / 2).em },
             bottom: '100%'
           },
-          '&[position=bottom]' => {
+          '&[vertical=bottom]' => {
             marginTop: -> { (theme.spacing / 2).em },
             top: '100%'
+          },
+          '&[horizontal=left]' => {
+            right: 0
+          },
+          '&[horizontal=right]' => {
+            left: 0
           }
 
     on :mousedown, :stop
@@ -48,7 +53,8 @@ module UI
     #   where is more space in the screen
     def open
       add_class 'open'
-      self[:position] = parent && (parent.top - DOM::Window.scroll_y) > `window.innerHeight / 2` ? :top : :bottom
+      self[:vertical] = parent && (parent.top - DOM::Window.scroll_y) > `window.innerHeight / 2` ? :top : :bottom
+      self[:horizontal] = parent && (parent.left - DOM::Window.scroll_x) > `window.innerWidth / 2` ? :left : :right
     end
 
     # Closes the component
