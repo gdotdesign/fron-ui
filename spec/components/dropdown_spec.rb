@@ -16,10 +16,16 @@ describe UI::Dropdown do
       }.to change { subject.has_class(:open) }.from(false).to(true)
     end
 
-    it 'should set position' do
+    it 'should set vertical attribute' do
       expect {
         subject.open
-      }.to change { subject[:position] }.from(nil).to(:bottom)
+      }.to change { subject[:vertical] }.from(nil).to(:bottom)
+    end
+
+    it 'should set horizontal attribute' do
+      expect {
+        subject.open
+      }.to change { subject[:horizontal] }.from(nil).to(:right)
     end
   end
 

@@ -1,5 +1,12 @@
 module UI
-  # Checkbox Component
+  # Checkbox component.
+  #
+  # Features:
+  # * checked and checked=
+  # * actionable
+  #
+  # @author Gusztáv Szikszai
+  # @since  0.1.0
   class Checkbox < Action
     extend Forwardable
 
@@ -12,9 +19,9 @@ module UI
       component :icon, UI::Icon, glyph: :check
     end
 
-    style display: 'inline-block',
-          height: -> { theme.size.em },
+    style height: -> { theme.size.em },
           width: -> { theme.size.em },
+          display: 'inline-block',
           input: {
             display: :none,
             '&:checked + label' => {
@@ -25,10 +32,10 @@ module UI
             }
           },
           label: {
+            color: -> { readable_color(colors.primary) },
             borderRadius: -> { theme.border_radius.em },
             transition: 'opacity 320ms, transform 320ms',
             background: -> { colors.primary },
-            color: -> { readable_color(colors.primary) },
             justifyContent: :center,
             alignItems: :center,
             cursor: :pointer,
@@ -46,20 +53,19 @@ module UI
             boxShadow: -> { theme.focus_box_shadow }
           }
 
-    keydown [:enter, :space], :toggle
-
+    # Toggles the checkbox
     def action
       self.checked = !checked
       trigger :change
     end
 
     # Initializes the check box
+    # * Sets the tabindex
+    # * Adds unique id for the label to work
     def initialize
       super
-      self[:tabindex] = 0
       id = `Math.uuid(5)`
       @input[:id]   = id
-      @input[:name] = id
       @label[:for]  = id
     end
   end
