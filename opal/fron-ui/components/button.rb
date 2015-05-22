@@ -1,31 +1,39 @@
 require 'fron-ui/components/action'
 
 module UI
-  # Simple Button Component
+  # Button component.
+  #
+  # It has the following types:
+  # * primary
+  # * success
+  # * danger
+  #
+  # @author Gusztáv Szikszai
+  # @since  0.1.0
   class Button < Action
     tag 'ui-button'
 
-    style fontFamily: -> { theme.font_family },
-          display: 'inline-block',
-          padding: -> { "0 #{(theme.spacing * 1.4).em}" },
+    style padding: -> { "0 #{(theme.spacing * 1.4).em}" },
           borderRadius: -> { theme.border_radius.em },
+          fontFamily: -> { theme.font_family },
+          lineHeight: -> { theme.size.em },
+          height: -> { theme.size.em },
+          textOverflow: :ellipsis,
+          display: 'inline-block',
           whiteSpace: :nowrap,
           textAlign: :center,
           userSelect: :none,
-          height: -> { theme.size.em },
-          lineHeight: -> { theme.size.em },
           fontWeight: '600',
           overflow: :hidden,
-          textOverflow: :ellipsis,
           '&[type]:focus' => {
             boxShadow: -> { theme.focus_box_shadow }
           },
           '&[shape=square]' => {
+            minWidth: -> { theme.size.em },
+            height: -> { theme.size.em },
             justifyContent: :center,
             alignItems: :center,
             display: :flex,
-            height: -> { theme.size.em },
-            minWidth: -> { theme.size.em },
             padding: '0'
           },
           '&[disabled]' => {
@@ -40,6 +48,8 @@ module UI
                                    background: -> { colors[type] } }
     end
 
+    # Initializes the button by setting
+    # the type to primary.
     def initialize
       super
       self[:type] ||= :primary

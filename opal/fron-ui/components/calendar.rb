@@ -1,10 +1,9 @@
 module UI
-  # Calendar component
-  # ==================
-  # Renders a month calendar for a given date
-  # with the following features:
+  # A component for rendering a month calendar for a given date.
+  #
+  # It has the following features:
   # * Navigate to next / previous month
-  # * Yields all the days (with their cells) for extended useage
+  # * Yields all the days (with their cells) for extended usage
   # * Displays the name of the rendered month (and year if it's not the same)
   #
   # @author Gusztáv Szikszai
@@ -32,18 +31,18 @@ module UI
     def_delegators :table, :tbody, :thead
     def_delegators :header, :label
 
-    style minWidth: 18.em,
+    style borderRadius: -> { theme.border_radius.em },
           padding: -> { (theme.spacing * 1.25).em },
-          borderRadius: -> { theme.border_radius.em },
           background: -> { colors.input },
+          minWidth: 18.em,
           'ui-label' => { textAlign: :center,
                           fontWeight: 700 },
           'ui-icon' => { width: -> { (theme.spacing * 2).em } },
           'ui-container' => {
-            borderBottomStyle: :solid,
             borderBottomWidth: -> { (theme.border_size / 2).em },
             borderBottomColor: -> { colors.background },
-            paddingBottom: -> { theme.spacing.em }
+            paddingBottom: -> { theme.spacing.em },
+            borderBottomStyle: :solid
           },
           table: { borderSpacing: 0.4.em,
                    'td[date]' => { background: -> { colors.background_lighter },

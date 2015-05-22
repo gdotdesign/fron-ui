@@ -41,7 +41,7 @@ module UI
       event.prevent_default
     end
 
-    # Opens the dropdown:
+    # Opens the component:
     #
     # * adds the *open* class
     # * sets the *position* attribute to either top or bottom depending
@@ -51,7 +51,7 @@ module UI
       self[:position] = parent && (parent.top - DOM::Window.scroll_y) > `window.innerHeight / 2` ? :top : :bottom
     end
 
-    # Closes the
+    # Closes the component
     def close
       remove_class 'open'
     end
