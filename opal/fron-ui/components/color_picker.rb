@@ -50,6 +50,7 @@ module UI
 
     def value=(value)
       @input.value = value
+      update_dropdown
     end
 
     def update(event)

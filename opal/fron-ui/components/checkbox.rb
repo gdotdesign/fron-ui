@@ -6,7 +6,7 @@ module UI
   # * actionable
   #
   # @author Gusztáv Szikszai
-  # @since  0.1.0
+  # @since 0.1.0
   class Checkbox < Action
     extend Forwardable
 
@@ -32,9 +32,9 @@ module UI
             }
           },
           label: {
+            transition: 'opacity 320ms, transform 320ms',
             color: -> { readable_color(colors.primary) },
             borderRadius: -> { theme.border_radius.em },
-            transition: 'opacity 320ms, transform 320ms',
             background: -> { colors.primary },
             justifyContent: :center,
             alignItems: :center,

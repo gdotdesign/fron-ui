@@ -9,7 +9,7 @@ module UI
   # * danger
   #
   # @author Gusztáv Szikszai
-  # @since  0.1.0
+  # @since 0.1.0
   class Button < Action
     tag 'ui-button'
 

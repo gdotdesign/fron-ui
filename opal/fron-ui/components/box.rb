@@ -5,7 +5,7 @@ module UI
   # and border radius
   #
   # @author Gusztáv Szikszai
-  # @since  0.1.0
+  # @since 0.1.0
   class Box < Container
     tag 'ui-box'
 

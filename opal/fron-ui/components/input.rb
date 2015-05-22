@@ -1,15 +1,19 @@
 module UI
-  # Input
+  # Input component, basically the input element wrapped
+  # and styled.
+  #
+  # @author Gusztáv Szikszai
+  # @since  0.1.0
   class Input < Base
     tag 'input[type=text]'
 
-    style padding: -> { "0 #{theme.spacing.em}" },
+    style color: -> { dampen readable_color(colors.input), 0.35 },
           borderRadius: -> { theme.border_radius.em },
+          padding: -> { "0 #{theme.spacing.em}" },
           fontFamily: -> { theme.font_family },
-          color: -> { dampen readable_color(colors.input), 0.35 },
-          height: -> { theme.size.em },
           lineHeight: -> { theme.size.em },
           background: -> { colors.input },
+          height: -> { theme.size.em },
           fontSize: :inherit,
           border: 0,
           '&:focus' => {
@@ -19,10 +23,5 @@ module UI
           '&::placeholder' => {
             fontWeight: 600
           }
-  end
-
-  class Textarea < Input
-    style lineHeight: -> { 1.5.em },
-          padding: -> { (theme.spacing / 2).em }
   end
 end

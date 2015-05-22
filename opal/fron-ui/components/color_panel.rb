@@ -5,29 +5,41 @@ require 'native'
 require 'math'
 
 module UI
+  # Color selector component with a draggable field for
+  # selecting the saturation / value and
+  # a slider for selecting hue.
+  #
+  # @attr_reader [Integer] hue The hue of the represented color
+  # @attr_reader [Integer] value The value of the represented color
+  # @attr_reader [Integer] saturation The saturation of the represented color
+  #
+  # @author Gusztáv Szikszai
+  # @since 0.1.0
   class ColorPanel < UI::Container
     tag 'ui-color-wheel[direction=row]'
 
-    style background: -> { colors.input },
+    style borderRadius: -> { theme.border_radius.em },
           padding: -> { (theme.spacing * 2).em },
-          borderRadius: -> { theme.border_radius.em },
+          background: -> { colors.input },
           '> *' => {
             boxShadow: '0 0 1px 1px rgba(0,0,0,0.2) inset',
             cursor: :pointer
           },
           'ui-drag:first-of-type' => {
-            backgroundImage: 'linear-gradient(0deg, #000 0%, transparent 100%),linear-gradient(90deg, #fff 0%, rgba(255,255,255,0) 100%)',
+            backgroundImage: 'linear-gradient(0deg, #000 0%, transparent 100%),
+                              linear-gradient(90deg, #fff 0%, rgba(255,255,255,0) 100%)',
             width: 14.em,
             height: 14.em
           },
           'ui-drag:last-of-type' => {
-            backgroundImage: 'linear-gradient(to bottom, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)',
+            backgroundImage: 'linear-gradient(to bottom, #ff0000 0%, #ffff00 17%, #00ff00 33%,
+                                              #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)',
             width: 1.2.em,
             'ui-drag-handle' => {
-              right: -0.25.em,
-              left: -0.25.em,
               transform: 'translateY(-50%)',
               borderRadius: 0.5.em,
+              right: -0.25.em,
+              left: -0.25.em,
               height: 0.5.em,
               width: 'auto'
             }
@@ -40,6 +52,8 @@ module UI
 
     attr_reader :hue, :saturation, :value
 
+    # Initializes the component with default
+    # values for hue, value and saturation
     def initialize
       super
 
@@ -50,6 +64,10 @@ module UI
       render
     end
 
+    # Handles changes from the fields, sets the
+    # hue, value and saturation from on the fields.
+    #
+    # @param event [DOM::Event] The event
     def change(event)
       event.stop
       @hue = @hued.value_y * 360
@@ -59,24 +77,38 @@ module UI
       trigger :change
     end
 
+    # Sets the hue to the given value
+    #
+    # @param value [Integer] Integer between 0 and 360
     def hue=(value)
       @hue = value
       @hued.value_y = value / 360
       render
     end
 
+    # Sets the saturation to the given value
+    #
+    # @param value [Integer] Integer between 0 and 100
     def saturation=(value)
       @saturation = value
       @rect.value_x = value / 100
       render
     end
 
+    # Sets the value to the given value
+    #
+    # @param value [Integer] Integer between 0 and 100
     def value=(value)
       @value = value
       @rect.value_y = (100 - value) / 100
       render
     end
 
+    private
+
+    # Returns the color
+    #
+    # @return [Color::RGB] The color
     def color
       s = saturation / 100
       v = value / 100
@@ -103,6 +135,9 @@ module UI
       Color::RGB.from_fraction(r + m, g + m, b + m)
     end
 
+    # Sets the color from a string
+    #
+    # @param color [String] The hex or CSS representation
     def color=(color)
       color = Color::RGB.by_css(color) unless color.is_a? Color
       rgb = color.to_rgb.to_a
@@ -127,6 +162,7 @@ module UI
       self.value = cmax * 100
     end
 
+    # Renders the component
     def render
       @rect.style.backgroundColor = "hsl(#{hue}, 100%, 50%)"
     end
