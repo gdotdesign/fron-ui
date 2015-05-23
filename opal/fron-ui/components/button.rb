@@ -25,23 +25,15 @@ module UI
           userSelect: :none,
           fontWeight: '600',
           overflow: :hidden,
-          '&[type]:focus' => {
-            boxShadow: -> { theme.focus_box_shadow }
-          },
-          '&[shape=square]' => {
-            minWidth: -> { theme.size.em },
-            height: -> { theme.size.em },
-            justifyContent: :center,
-            alignItems: :center,
-            display: :flex,
-            padding: '0'
-          },
-          '&[disabled]' => {
-            opacity: 0.4
-          },
-          '> *' => {
-            pointerEvents: :none
-          }
+          '&[type]:focus' => { boxShadow: -> { theme.focus_box_shadow } },
+          '&[shape=square]' => { minWidth: -> { theme.size.em },
+                                 height: -> { theme.size.em },
+                                 justifyContent: :center,
+                                 alignItems: :center,
+                                 display: :flex,
+                                 padding: '0' },
+          '&[disabled]' => { opacity: 0.4 },
+          '> *' => { pointerEvents: :none }
 
     Fron::Sheet.helper.colors.to_h.keys.each do |type|
       style "&[type=#{type}]" => { color: -> { readable_color(colors[type]) },

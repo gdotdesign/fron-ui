@@ -21,29 +21,21 @@ module UI
     style borderRadius: -> { theme.border_radius.em },
           padding: -> { (theme.spacing * 2).em },
           background: -> { colors.input },
-          '> *' => {
-            boxShadow: '0 0 1px 1px rgba(0,0,0,0.2) inset',
-            cursor: :pointer
-          },
-          'ui-drag:first-of-type' => {
-            backgroundImage: 'linear-gradient(0deg, #000 0%, transparent 100%),
-                              linear-gradient(90deg, #fff 0%, rgba(255,255,255,0) 100%)',
-            width: 14.em,
-            height: 14.em
-          },
-          'ui-drag:last-of-type' => {
-            backgroundImage: 'linear-gradient(to bottom, #ff0000 0%, #ffff00 17%, #00ff00 33%,
-                                              #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)',
-            width: 1.2.em,
-            'ui-drag-handle' => {
-              transform: 'translateY(-50%)',
-              borderRadius: 0.5.em,
-              right: -0.25.em,
-              left: -0.25.em,
-              height: 0.5.em,
-              width: 'auto'
-            }
-          }
+          '> *' => { boxShadow: '0 0 1px 1px rgba(0,0,0,0.2) inset',
+                     cursor: :pointer },
+          'ui-drag:first-of-type' => { backgroundImage: 'linear-gradient(0deg, #000 0%, transparent 100%),
+                                                         linear-gradient(90deg, #fff 0%, rgba(255,255,255,0) 100%)',
+                                       width: 14.em,
+                                       height: 14.em },
+          'ui-drag:last-of-type' => { backgroundImage: 'linear-gradient(to bottom, #ff0000 0%, #ffff00 17%, #00ff00 33%,
+                                                                        #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)',
+                                      width: 1.2.em,
+                                      'ui-drag-handle' => { transform: 'translateY(-50%)',
+                                                            borderRadius: 0.5.em,
+                                                            right: -0.25.em,
+                                                            left: -0.25.em,
+                                                            height: 0.5.em,
+                                                            width: 'auto' } }
 
     component :rect, UI::Drag
     component :hued, UI::Drag, horizontal: false

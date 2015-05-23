@@ -8,7 +8,7 @@ module UI
       # Sets up the behavior:
       #
       # * Includes keydown behavior
-      # * Sets styles for :focus and :hover
+      # * Sets styles for :focus and :hover states
       # * Sets up actions for enter and space
       #
       # @param base [Fron::Component] The includer

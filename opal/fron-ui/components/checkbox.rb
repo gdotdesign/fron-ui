@@ -22,36 +22,24 @@ module UI
     style height: -> { theme.size.em },
           width: -> { theme.size.em },
           display: 'inline-block',
-          input: {
-            display: :none,
-            '&:checked + label' => {
-              'ui-icon' => {
-                transform: 'scale(1)',
-                opacity: 1
-              }
-            }
-          },
-          label: {
-            transition: 'opacity 320ms, transform 320ms',
-            color: -> { readable_color(colors.primary) },
-            borderRadius: -> { theme.border_radius.em },
-            background: -> { colors.primary },
-            justifyContent: :center,
-            alignItems: :center,
-            cursor: :pointer,
-            height: :inherit,
-            display: :flex,
-            width: :inherit,
-            'ui-icon.fa' => {
-              transform: 'scale(0.4) rotate(45deg)',
-              transition: :inherit,
-              fontSize: 1.em,
-              opacity: 0
-            }
-          },
-          '&:focus label' => {
-            boxShadow: -> { theme.focus_box_shadow }
-          }
+          input: { display: :none,
+                   '&:checked + label' => { 'ui-icon' => { transform: 'scale(1)',
+                                                           opacity: 1 } } },
+          label: { transition: 'opacity 320ms, transform 320ms',
+                   color: -> { readable_color(colors.primary) },
+                   borderRadius: -> { theme.border_radius.em },
+                   background: -> { colors.primary },
+                   justifyContent: :center,
+                   alignItems: :center,
+                   cursor: :pointer,
+                   height: :inherit,
+                   display: :flex,
+                   width: :inherit,
+                   'ui-icon.fa' => { transform: 'scale(0.4) rotate(45deg)',
+                                     transition: :inherit,
+                                     fontSize: 1.em,
+                                     opacity: 0 } },
+          '&:focus label' => { boxShadow: -> { theme.focus_box_shadow } }
 
     # Toggles the checkbox
     def action

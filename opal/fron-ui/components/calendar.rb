@@ -38,27 +38,20 @@ module UI
           'ui-label' => { textAlign: :center,
                           fontWeight: 700 },
           'ui-icon' => { width: -> { (theme.spacing * 2).em } },
-          'ui-container' => {
-            borderBottomWidth: -> { (theme.border_size / 2).em },
-            borderBottomColor: -> { colors.background },
-            paddingBottom: -> { theme.spacing.em },
-            borderBottomStyle: :solid
-          },
+          'ui-container' => { borderBottomWidth: -> { (theme.border_size / 2).em },
+                              borderBottomColor: -> { colors.background },
+                              paddingBottom: -> { theme.spacing.em },
+                              borderBottomStyle: :solid },
           table: { borderSpacing: 0.4.em,
                    'td[date]' => { background: -> { colors.background_lighter },
                                    color: -> { colors.font } },
-                   'th' => {
-                     fontSize: 0.8.em,
-                     padding: -> { "#{theme.spacing.em} 0" },
-                     opacity: 0.6
-                   },
-                   'td, th' => {
-                     textAlign: :center,
-                     width: 2.em,
-                     height: 2.em,
-                     borderRadius: -> { theme.border_radius.em }
-                   }
-                 }
+                   'th' => { fontSize: 0.8.em,
+                             padding: -> { "#{theme.spacing.em} 0" },
+                             opacity: 0.6 },
+                   'td, th' => { borderRadius: -> { theme.border_radius.em },
+                                 textAlign: :center,
+                                 height: 2.em,
+                                 width: 2.em } }
 
     # Initializes the calendar with todays date
     def initialize

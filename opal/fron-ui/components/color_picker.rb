@@ -17,23 +17,19 @@ module UI
       component :color, UI::ColorPanel
     end
 
-    style position: :relative,
-          display: 'inline-block',
-          div: {
-            position: :absolute,
-            top: 0.3.em,
-            right: 0.3.em,
-            bottom: 0.3.em,
-            width: 2.em,
-            boxShadow: '0 0 1px 1px rgba(0,0,0,0.2) inset',
-            pointerEvents: :none,
-            borderRadius: -> { theme.border_radius.em }
-          },
-          input: {
-            boxSizing: 'border-box',
-            width: '100%',
-            paddingRight: -> { (theme.size * 1.25).em }
-          }
+    style display: 'inline-block',
+          position: :relative,
+          div: { boxShadow: '0 0 1px 1px rgba(0,0,0,0.2) inset',
+                 borderRadius: -> { theme.border_radius.em },
+                 pointerEvents: :none,
+                 position: :absolute,
+                 bottom: 0.3.em,
+                 right: 0.3.em,
+                 top: 0.3.em,
+                 width: 2.em },
+          input: { paddingRight: -> { (theme.size * 1.25).em },
+                   boxSizing: 'border-box',
+                   width: '100%' }
 
     on :change, :input, :update
     on :change, 'ui-color-wheel', :update_input
