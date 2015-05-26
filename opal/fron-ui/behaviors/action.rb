@@ -1,6 +1,7 @@
 module UI
   module Behaviors
-    # Actions
+    # Behavior for managing components
+    # that can respond to **action** - click / enter / space
     #
     # @author Gusztáv Szikszai
     # @since  0.1.0
