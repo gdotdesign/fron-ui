@@ -3,6 +3,16 @@ require 'fron-ui/components/dropdown'
 require 'fron-ui/components/color_panel'
 
 module UI
+  # Component for selecting colors by a color picker
+  # or just typing.
+  #
+  # Features:
+  # * Typing a CSS color (hex or named) and
+  #   pressing enter will update the color panel.
+  # * Has a rectange for showing the selected color.
+  #
+  # @author Gusztáv Szikszai
+  # @since 0.1.0
   class ColorPicker < Base
     include UI::Behaviors::Dropdown
 
@@ -14,7 +24,7 @@ module UI
     component :div, 'div'
 
     component :dropdown, UI::Dropdown do
-      component :color, UI::ColorPanel
+      component :color_panel, UI::ColorPanel
     end
 
     style display: 'inline-block',
@@ -35,40 +45,62 @@ module UI
     on :change, 'ui-color-wheel', :update_input
 
     def_delegators :input, :value
+    def_delegators :dropdown, :color_panel
 
     dropdown :input, :dropdown
 
+    # Initializes the component:
+    #
+    # * When the input gets the focus
+    #   update the dropdown.
+    # * Set default value to **white**
     def initialize
       super
       @input.on(:focus) { update_dropdown }
       @input.value = '#FFFFFF'
     end
 
+    # Sets the value of the component
+    #
+    # @param value [String] The CSS color (hex or named)
     def value=(value)
       @input.value = value
       update_dropdown
     end
 
+    private
+
+    # Handels the change from the input
+    #
+    # @param event [DOM::Event] The event
     def update(event)
       update_dropdown
       event.stop
     end
 
+    # Updates the dropdown with the
+    # inputs value:
+    #
+    # * If the color is invalid update the input
+    # * Alwas render color of the rectange
     def update_dropdown
-      @dropdown.color.color = @input.value
+      color_panel.color = @input.value
     rescue
       update_input
     ensure
       render
     end
 
+    # Update the value of the input
+    # from the color panel.
     def update_input
-      @input.value = '#' + @dropdown.color.color.hex.upcase
+      @input.value = '#' + color_panel.color.hex.upcase
       render
     end
 
+    # Renders the rectange
     def render
-      @div.style.background = '#' + @dropdown.color.color.hex.upcase
+      @div.style.background = '#' + color_panel.color.hex.upcase
     end
   end
 end
