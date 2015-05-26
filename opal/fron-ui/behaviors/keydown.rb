@@ -1,10 +1,16 @@
 module UI
   module Behaviors
-    # Keydown
+    # Behavior for managing key presses
+    #
+    # @author Gusztáv Szikszai
+    # @since 0.1.0
     module Keydown
       class << self
         TYPES = %w(keyup, keydown)
 
+        # Sets up the behavior:
+        #
+        # @param base [Fron::Component] The includer
         def included(base)
           base.register self, TYPES
         end

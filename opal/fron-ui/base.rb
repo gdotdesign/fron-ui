@@ -24,6 +24,9 @@ module UI
       end
     end
 
+    # Sets the flex value
+    #
+    # @param value [Numeric] The value
     def flex=(value)
       @style.flex = value
     end
