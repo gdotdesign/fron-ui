@@ -1,8 +1,10 @@
 require 'spec_helper'
 
-# Stub timeout so we don't go into recursion
-class UI::Time < Fron::Component
-  def timeout
+module UI
+  # Stub timeout so we don't go into recursion
+  class Time < Fron::Component
+    def timeout
+    end
   end
 end
 

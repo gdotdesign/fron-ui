@@ -7,7 +7,6 @@ module TestClasses
 end
 
 describe TestClasses::Action do
-
   describe '#action' do
     it 'should trigger click' do
       subject.should receive(:trigger).with(:click)

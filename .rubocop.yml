@@ -1,3 +1,6 @@
+ParallelAssignment:
+  Enabled: false
+
 LineLength:
   Enabled: false
 
@@ -19,5 +22,14 @@ AsciiComments:
 Documentation:
   Enabled: false
 
-Style/BlockDelimiters:
+BlockDelimiters:
+  Enabled: false
+
+CyclomaticComplexity:
+  Enabled: false
+
+PerceivedComplexity:
+  Enabled: false
+
+ClassLength:
   Enabled: false

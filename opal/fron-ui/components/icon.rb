@@ -14,7 +14,7 @@ module UI
                       fontWeight: :normal,
                       '&:not([clickable])' => { pointerEvents: :none },
                       '&[clickable]' => { cursor: :pointer,
-                                         '&:hover' => { color: -> { colors.focus } } } }
+                                          '&:hover' => { color: -> { colors.focus } } } }
 
     # Sets the glyph
     #

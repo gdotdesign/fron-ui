@@ -1,3 +1,5 @@
+require 'fron-ui/lib/record'
+
 # Collection component.
 #
 # A collection component reflects the underlying data (Array) with
