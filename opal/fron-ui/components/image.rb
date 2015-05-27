@@ -1,50 +1,65 @@
-# Image
-# TODO: move to components
-class Image < Fron::Component
-  tag 'ui-image'
+module UI
+  # Component for displaying an image, with
+  # a transition after it loads.
+  #
+  # @author Gusztáv Szikszai
+  # @since 0.1.0
+  class Image < Fron::Component
+    tag 'ui-image'
 
-  component :img, :img
+    component :img, :img
 
-  style display: 'inline-block',
-        background: -> { colors.background_lighter },
-        borderRadius: -> { (theme.border_radius * 2).em },
-        img: {
-          borderRadius: :inherit,
-          width: :inherit,
-          height: :inherit,
-          transition: 'opacity 320ms',
-          opacity: 0,
-          '&.loaded' => {
-            opacity: 1
-          }
-        }
+    style borderRadius: -> { (theme.border_radius * 2).em },
+          background: -> { colors.background_lighter },
+          display: 'inline-block',
+          img: { transition: 'opacity 320ms',
+                 borderRadius: :inherit,
+                 height: :inherit,
+                 width: :inherit,
+                 opacity: 0,
+                 '&.loaded' => { opacity: 1 } }
 
-  def initialize
-    super
-    @img.on(:load) { loaded }
-  end
+    # Initializes the component
+    # and listens on the load event
+    # because it doesn't bubble.
+    def initialize
+      super
+      @img.on(:load) { loaded }
+    end
 
-  def loaded
-    @img.add_class :loaded
-  end
+    # Adds the loaded class
+    def loaded
+      @img.add_class :loaded
+    end
 
-  def width=(value)
-    @style.width = value
-  end
+    # Sets the width of the image
+    #
+    # @param value [Numeric] The width
+    def width=(value)
+      @style.width = value
+    end
 
-  def height=(value)
-    @style.height = value
-  end
+    # Sets the height of the image
+    #
+    # @param value [Numeric] The height
+    def height=(value)
+      @style.height = value
+    end
 
-  def src
-    @img[:src]
-  end
+    # Returns the src attribute of the image
+    #
+    # @return [String] The attribute
+    def src
+      @img[:src]
+    end
 
-  def src=(value)
-    return if !value || @img[:src] == value
-    @img.remove_class :loaded
-    timeout 320 do
-      @img[:src] = value
+    # Sets the src of the image
+    #
+    # @param value [String] The URL
+    def src=(value)
+      return if !value || @img[:src] == value
+      @img.remove_class :loaded
+      timeout(320) { @img[:src] = value }
     end
   end
 end
