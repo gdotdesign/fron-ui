@@ -1,20 +1,3 @@
-# Record module
-module Record
-  def self.included(other)
-    other.attr_reader :data
-  end
-
-  def data=(data)
-    @data = data
-    render
-  end
-
-  def render
-    return unless data
-    self.text = data.inspect
-  end
-end
-
 # Collection component.
 #
 # A collection component reflects the underlying data (Array) with
@@ -26,24 +9,34 @@ class Collection < Fron::Component
   end
 
   attr_reader :items
-  attr_writer :base
-  attr_writer :key
+  attr_writer :base, :key
 
   private
 
+  # Initializes the collection
   def initialize
     super
     @items = []
   end
 
+  # Sets items
+  #
+  # @param data [Array<Hash>] The data
   def items=(data)
     diff_items data
   end
 
+  # Returns the key
+  #
+  # @return [String] the key
   def key
     @key || :id
   end
 
+  # Diffs and patches existings items
+  # with the given data.
+  #
+  # @param data [Array<Hash>] The data
   def diff_items(data)
     fail 'Not array given for collection!' unless data.is_a?(Array)
 
@@ -78,6 +71,9 @@ class Collection < Fron::Component
     render_items
   end
 
+  # Renders the items, keeping old items
+  # in the dom while adding new ones and
+  # removeing old ones.
   def render_items
     @items.reverse_each_with_index do |item, index|
       # Skip if item is already in
@@ -96,6 +92,11 @@ class Collection < Fron::Component
     end
   end
 
+  # Creates a new item from the data
+  #
+  # @param data [Hash] The data
+  #
+  # @return [Fron::Component] The item
   def create_item(data)
     fail 'Base class does not include ::Record!' if @base && !@base.include?(::Record)
     item = (@base || Record).new

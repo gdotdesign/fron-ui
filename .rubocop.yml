@@ -16,6 +16,8 @@ AbcSize:
 AsciiComments:
   Enabled: false
 
-BlockDelimiters:
-	Exclude:
-		- '/spec/**/*'
+Documentation:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Enabled: false

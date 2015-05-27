@@ -105,21 +105,19 @@ end
 class Feed < UI::Container
   include UI::Behaviors::Actions
 
-  style '> ui-container' => {
-          borderBottom: -> { "#{(theme.border_size / 1.5).em} dashed #{colors.border}" },
-          paddingBottom: -> { theme.spacing.em },
-          marginBottom: -> { theme.spacing.em },
-          'ui-button' => {
-            maxWidth: 10.em,
-            alignSelf: 'flex-end'
-          },
-          textarea: {
-            border: -> { "#{(theme.border_size / 1.5).em} solid #{colors.border}" },
-            boxSizing: 'border-box',
-            minHeight: 7.em,
-            flex: 1
-          }
-        }
+  style '> ui-container' => { borderBottom: -> { "#{(theme.border_size / 1.5).em} dashed #{colors.border}" },
+                              paddingBottom: -> { theme.spacing.em },
+                              marginBottom: -> { theme.spacing.em },
+                              'ui-button' => {
+                                maxWidth: 10.em,
+                                alignSelf: 'flex-end'
+                              },
+                              textarea: {
+                                border: -> { "#{(theme.border_size / 1.5).em} solid #{colors.border}" },
+                                boxSizing: 'border-box',
+                                minHeight: 7.em,
+                                flex: 1
+                              } }
 
   component :form, UI::Container do
     component :title, UI::Title, text: 'Leave a comment'

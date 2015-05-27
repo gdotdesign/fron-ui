@@ -130,10 +130,8 @@ class Form < UI::Container
     end
   end
 
-  style 'input' => {
-          fontSize: 2.em,
-          borderBottom: -> { "#{theme.border_size.em} solid #{colors.border}" }
-        },
+  style 'input' => { fontSize: 2.em,
+                     borderBottom: -> { "#{theme.border_size.em} solid #{colors.border}" } },
         'ui-container' => {
           position: :relative,
           paddingLeft: '50%'
