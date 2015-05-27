@@ -1,25 +1,31 @@
 module UI
-  # Title
+  # Title component
+  #
+  # Features:
+  # * Align text (left / center / right )
+  # * Bottom border
+  #
+  # @author Gusztáv Szikszai
+  # @since 0.1.0
   class Title < Fron::Component
     extend Forwardable
 
     tag 'ui-title'
 
-    style color: -> { colors.font },
-          fontFamily: -> { theme.font_family },
-          borderBottomStyle: :solid,
-          borderBottomWidth: -> { theme.border_size.em },
-          borderBottomColor: -> { colors.border },
+    style borderBottom: -> { "#{theme.border_size.em} solid #{colors.border}" },
           paddingBottom: -> { theme.spacing.em },
-          '> span' => {
-            fontSize: '1.6em',
-            fontWeight: 600
-          }
+          fontFamily: -> { theme.font_family },
+          color: -> { colors.font },
+          '> span' => { fontSize: '1.6em',
+                        fontWeight: 600 }
 
     component :span, :span
 
     def_delegators :span, :text, :text=
 
+    # Sets the text align of the component
+    #
+    # @param value [Symbol] The alignment
     def align=(value)
       @style.textAlign = value
     end
