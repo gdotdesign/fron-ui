@@ -17,29 +17,19 @@ module UI
           position: :absolute,
           zIndex: 100,
           opacity: 0,
-          '&.open' => {
-            transform: 'translateY(0)',
-            pointerEvents: :auto,
-            opacity: 1
-          },
-          '&[vertical=top]' => {
-            marginBottom: -> { (theme.spacing / 2).em },
-            bottom: '100%'
-          },
-          '&[vertical=bottom]' => {
-            marginTop: -> { (theme.spacing / 2).em },
-            top: '100%'
-          },
-          '&[horizontal=left]' => {
-            right: 0
-          },
-          '&[horizontal=right]' => {
-            left: 0
-          }
+          '&.open' => { transform: 'translateY(0)',
+                        pointerEvents: :auto,
+                        opacity: 1 },
+          '&[vertical=top]' => { marginBottom: -> { (theme.spacing / 2).em },
+                                 bottom: '100%' },
+          '&[vertical=bottom]' => { marginTop: -> { (theme.spacing / 2).em },
+                                    top: '100%' },
+          '&[horizontal=left]' => { right: 0 },
+          '&[horizontal=right]' => { left: 0 }
 
     on :mousedown, :stop
 
-    # Stops the event on mousdown
+    # Stops the event on mousedown
     #
     # @param event [DOM::Event] The event
     def stop(event)
