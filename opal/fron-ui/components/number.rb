@@ -79,7 +79,7 @@ module UI
     # Creates a new instance
     def initialize
       super
-      @input.on :blur do blur end
+      @input.on(:blur) { blur }
       self.value = 0
       setup_drag
     end
@@ -142,7 +142,7 @@ module UI
     #
     # @param event [Event] The event
     def keydown(event)
-      event.prevent_default if event.keyCode == 13
+      event.prevent_default if event.key == :enter
     end
 
     # Runs when the element is blurred. Sets the value form
@@ -159,7 +159,7 @@ module UI
       @style.cursor = in_select_region?(event.page_x) ? '' : 'move'
     end
 
-    # Runs on pointer down. Prevents propagation so dargging
+    # Runs on pointer down. Prevents propagation so dragging
     # cannot start.
     #
     # :reek:FeatureEnvy
