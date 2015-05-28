@@ -21,13 +21,14 @@ module Rest
     end
   end
 
+  # :reek:FeatureEnvy
   def request(method, path, params = {})
     req = Fron::Request.new "#{@rest_options.url}/#{path}", 'Content-Type' => 'application/json'
     req.request method.upcase, params do |response|
       if (200..300).cover?(response.status)
         yield response.json
       else
-        `console.warn(#{response.json['error']})`
+        warn response.json['error']
       end
     end
   end

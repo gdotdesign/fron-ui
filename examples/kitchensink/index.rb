@@ -37,10 +37,10 @@ class Theme < UI::Box
   include UI::Behaviors::Render
 
   component :title, UI::Title, text: 'Theme'
-  component :border, UI::NumberRange, name: :border_radius, step: 0.1, value: 0.15
-  component :border, UI::NumberRange, name: :spacing, step: 0.1, value: 0.75
-  component :border, UI::NumberRange, name: :size, step: 0.1, value: 2.2
-  component :border, UI::NumberRange, name: :font_size, step: 1, value: 16
+  component :border, UI::NumberRange, name: :border_radius, step: 0.1, value: 0.15, affix: :em, label: 'border-radius:'
+  component :border, UI::NumberRange, name: :spacing, step: 0.1, value: 0.75, affix: :em, label: 'spacing:'
+  component :border, UI::NumberRange, name: :size, step: 0.1, value: 2.2, affix: :em, label: 'size:'
+  component :border, UI::NumberRange, name: :font_size, step: 1, value: 16, affix: :em, label: 'font-size:'
 
   component :color, UI::ColorPicker, name: :primary
   component :color, UI::ColorPicker, name: :background
@@ -117,7 +117,7 @@ data = [
   { id: 'UI::Calendar' },
   { id: 'UI::ColorPanel' },
   { id: 'UI::Slider' },
-  { id: 'UI::NumberRange' }
+  { id: 'UI::NumberRange', args: { affix: 'em', label: 'width:', min: 0, max: 10, step: 0.1 } }
 ]
 
 main = Main.new

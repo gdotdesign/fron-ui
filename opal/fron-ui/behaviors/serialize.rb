@@ -19,6 +19,8 @@ module UI
 
       # Gathers the data from elements
       #
+      # :reek:FeatureEnvy
+      #
       # @return [Hash] The data
       def data
         find_all('[name]').each_with_object(@data || {}) do |item, memo|

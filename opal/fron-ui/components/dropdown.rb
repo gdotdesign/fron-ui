@@ -31,6 +31,8 @@ module UI
 
     # Stops the event on mousedown
     #
+    # :reek:FeatureEnvy
+    #
     # @param event [DOM::Event] The event
     def stop(event)
       event.prevent_default
@@ -43,13 +45,27 @@ module UI
     #   where is more space in the screen
     def open
       add_class 'open'
-      self[:vertical] = parent && (parent.top - DOM::Window.scroll_y) > `window.innerHeight / 2` ? :top : :bottom
-      self[:horizontal] = parent && (parent.left - DOM::Window.scroll_x) > `window.innerWidth / 2` ? :left : :right
+      self[:vertical] =  position?(:top, :scroll_y, :innerHeight) ? :top : :bottom
+      self[:horizontal] = position?(:left, :scroll_x, :innerWidth) ? :left : :right
     end
 
     # Closes the component
     def close
       remove_class 'open'
+    end
+
+    private
+
+    # Returns which side to display the dropdown
+    # to based on parameters.
+    #
+    # @param style [Symbol] Which style to use
+    # @param scroll [Symbol] Which scroll position to use
+    # @param size [Symbol] Which window size to use
+    #
+    # @return [Bollean] True or False
+    def position?(style, scroll, size)
+      parent && (parent.send(style) - DOM::Window.send(scroll)) > `window[#{size}] / 2`
     end
   end
 end

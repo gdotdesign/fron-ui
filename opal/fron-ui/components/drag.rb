@@ -25,12 +25,14 @@ module UI
       @horizontal = true
 
       drag = Fron::Drag.new self, 0
-      drag.on :move do |position|
-        point = position - Fron::Point.new(left, top)
-        @handle.style.left = point.x.clamp(0, width).px if @horizontal
-        @handle.style.top = point.y.clamp(0, height).px if @vertical
-        trigger 'change'
-      end
+      drag.on(:move) { |position| on_drag_move position }
+    end
+
+    def on_drag_move(position)
+      point = position - Fron::Point.new(left, top)
+      @handle.style.left = point.x.clamp(0, width).px if @horizontal
+      @handle.style.top = point.y.clamp(0, height).px if @vertical
+      trigger 'change'
     end
 
     {

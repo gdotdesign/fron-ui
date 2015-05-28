@@ -6,101 +6,82 @@ module UI
   # When dragging the value is incremeted or decremented depending on the
   # direction of the drag. The element can be limited to an upper and a lower value.
   #
-  # Options:
+  # Attributes:
   # * label   [String] - The label to be displayed
   # * affix   [String] - The affix (px, %, em, ...)
   # * step    [Float]  - The step modifier to apply to the step, default to 1
-  # * default [Float]  - The default value, defaults to 0
   # * min     [Float]  - The minimal possible value, defaults to -infinity
   # * max     [Float]  - The maximum possible value, defaults to infinity
+  #
+  # @author Gusztáv Szikszai
+  # @since 0.1.0
   class NumberRange < Fron::Component
+    class Input < Fron::Component
+      tag 'ui-number-range-input'
+
+      attribute_accessor :label
+      attribute_accessor :affix
+
+      style borderRadius: -> { theme.border_radius.em },
+            lineHeight: -> { theme.size.em },
+            background: -> { colors.input },
+            height: -> { theme.size.em },
+            color: -> { colors.font },
+            textAlign: :center,
+            display: :block,
+            fontWeight: 600,
+            '&:before' => { content: 'attr(label)',
+                            marginRight: 0.2.em,
+                            fontWeight: :normal },
+            '&:after' => { content: 'attr(affix)' },
+            '&:focus' => { boxShadow: -> { theme.focus_box_shadow },
+                           outline: :none }
+    end
+
+    extend Forwardable
+
     attr_reader :drag
 
     tag 'ui-number-range'
 
+    component :input, Input, contenteditable: true
+
+    def_delegators :@input, :affix=, :affix, :label=, :label
+
     on :keydown,   :keydown
-    on :blur,      :blur
     on :input,     :input
     on :mousemove, :on_mouse_move
     on :mousedown, :on_mouse_down
+    on 'attribute:changed', :reset_value
 
-    style position: :relative,
+    attribute_accessor :step,  default: 1,                coerce: :to_f
+    attribute_accessor :round, default: 1,                coerce: :to_f
+    attribute_accessor :max,   default: Float::INFINITY,  coerce: :to_f
+    attribute_accessor :min,   default: -Float::INFINITY, coerce: :to_f
+
+    style minWidth: -> { (theme.size * 5).em },
           display: 'inline-block',
-          background: -> { colors.input },
-          borderRadius: -> { theme.border_radius.em },
-          textAlign: :center,
-          lineHeight: -> { theme.size.em },
-          color: -> { colors.font },
-          height: -> { theme.size.em },
-          width: -> { (theme.size * 5).em },
-          fontWeight: 600,
-          '&:focus' => {
-            outline: :none,
-            boxShadow: -> { theme.focus_box_shadow }
-          },
-          '&:after, &:before' => {
-            borderStyle: :solid,
-            position: :absolute,
-            marginTop: -0.3.em,
-            content: "''",
-            top: '50%',
-            height: 0,
-            width: 0
-          },
-          '&:after' => {
-            borderColor: 'transparent currentColor transparent transparent',
-            borderWidth: '0.35em 0.4em 0.35em 0',
-            left: 0.75.em
-          },
-          '&:before' => {
-            borderColor: 'transparent transparent transparent currentColor',
-            borderWidth: '0.35em 0 0.35em 0.4em',
-            right: 0.75.em
-          }
+          position: :relative,
+          '&:after, &:before' => { borderStyle: :solid,
+                                   position: :absolute,
+                                   marginTop: -0.3.em,
+                                   content: "''",
+                                   top: '50%',
+                                   height: 0,
+                                   width: 0 },
+          '&:after' => { borderColor: 'transparent currentColor transparent transparent',
+                         borderWidth: '0.35em 0.4em 0.35em 0',
+                         left: 0.75.em },
+          '&:before' => { borderColor: 'transparent transparent transparent currentColor',
+                          borderWidth: '0.35em 0 0.35em 0.4em',
+                          right: 0.75.em }
 
     # Creates a new instance
     def initialize
       super
-
-      self['contenteditable'] = true
-      self.value = options[:default]
-
+      @input.on :blur do blur end
+      self.value = 0
       setup_drag
-    end
-
-    # Changes the affix of the input field
-    #
-    # @param value [String] The new affix
-    def affix=(value)
-      options[:affix] = value
-      self['affix'] = value
-    end
-
-    def label=(value)
-      self['label'] = value
-    end
-
-    def min=(value)
-      @options[:min] = value
-      reset_value
-    end
-
-    def max=(value)
-      @options[:max] = value
-      reset_value
-    end
-
-    def step=(value)
-      @options[:step] = value
-    end
-
-    def options
-      @options ||= { label:   '',
-                     affix:   '',
-                     step:    1,
-                     default: 0,
-                     min:     -Float::INFINITY,
-                     max:      Float::INFINITY }
     end
 
     # Returns the value of the field
@@ -111,50 +92,53 @@ module UI
     end
 
     # Sets the value of the field
-    # @param value [type] [description]
     #
-    # @return [type] [description]
+    # @param value [Float] The value
     def value=(value)
-      self.text = @value = value.to_f.clamp(options[:min], options[:max])
+      @value = value.to_f.clamp(min, max)
+      @input.text = format "%.#{round}f", @value
       trigger 'change'
     end
 
     private
 
+    # Resets the value when attribute changes
     def reset_value
-      puts @value, @min
-      self.value = @value
+      self.value = value
     end
 
     # Sets up dragging.
     def setup_drag
-      @drag = Fron::Drag.new self
+      @drag = Fron::Drag.new self, 0
 
-      @drag.on 'start' do
-        @start_value = @value
-      end
+      @drag.on('start') { @start_value = value }
+      @drag.on('move')  { on_drag_move  }
+      @drag.on('end')   { on_drag_end   }
+    end
 
-      @drag.on 'move' do
-        DOM::Document.body.style.cursor = 'move'
-        value = (@start_value - @drag.diff.x * options[:step]).round(2)
-        self.value = value if @value != value
-      end
+    # Runs when drag end
+    def on_drag_end
+      DOM::Document.body.style.cursor = ''
+      blur
+    end
 
-      @drag.on 'end' do
-        DOM::Document.body.style.cursor = ''
-        blur
-      end
+    # Runs when drag moves
+    def on_drag_move
+      DOM::Document.body.style.cursor = 'move'
+      value = (@start_value - @drag.diff.x * step).round(round)
+      self.value = value if @value != value
     end
 
     # Runs when input changes. It sets the value if the emelement
     # is not empty, otherwise it inserts a non-width space to prevent
     # caret jumping in chrome.
     def input
-      self.html = '&#xfeff;' if text.strip == ''
-      @value = text.strip
+      @input.html = '&#xfeff;' if text.strip == ''
     end
 
     # Runs when key is pressed. Prevents hitting the enter key.
+    #
+    # :reek:FeatureEnvy
     #
     # @param event [Event] The event
     def keydown(event)
@@ -178,9 +162,11 @@ module UI
     # Runs on pointer down. Prevents propagation so dargging
     # cannot start.
     #
+    # :reek:FeatureEnvy
+    #
     # @param event [Event] The event
     def on_mouse_down(event)
-      focus
+      @input.focus
       if in_select_region?(event.page_x)
         event.stop_immediate_propagation
       else

@@ -1,4 +1,5 @@
 Fron::Sheet.helpers do
+  # :reek:FeatureEnvy
   def rgba(color, percent)
     color = Color::RGB.by_css(color)
     "rgba(#{color.red}, #{color.green}, #{color.blue}, #{percent})"
@@ -14,6 +15,7 @@ Fron::Sheet.helpers do
     lightness(color) > 0.5 ? '#000' : '#FFF'
   end
 
+  # :reek:FeatureEnvy
   def lightness(color)
     color.r * 0.299 + color.g * 0.587 + color.b * 0.114
   end

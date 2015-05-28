@@ -100,6 +100,8 @@ module UI
 
     # Returns the color
     #
+    # :reek:UncommunicativeVariableName
+    #
     # @return [Color::RGB] The color
     def color
       s = saturation / 100
@@ -128,6 +130,8 @@ module UI
     end
 
     # Sets the color from a string
+    #
+    # :reek:UncommunicativeVariableName
     #
     # @param color [String] The hex or CSS representation
     def color=(color)
