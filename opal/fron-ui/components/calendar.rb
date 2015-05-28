@@ -15,9 +15,9 @@ module UI
     tag 'ui-calendar'
 
     component :header, UI::Container, direction: :row do
-      component :icon,  UI::Icon,  glyph: 'caret-left',  clickable: true, action: :prev_month
+      component :icon,  UI::Icon,  glyph: 'arrow-left-b',  clickable: true, action: :prev_month
       component :label, UI::Label, flex: 1
-      component :icon,  UI::Icon,  glyph: 'caret-right', clickable: true, action: :next_month
+      component :icon,  UI::Icon,  glyph: 'arrow-right-b', clickable: true, action: :next_month
     end
 
     component :table, :table do

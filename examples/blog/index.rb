@@ -85,7 +85,7 @@ class Posts < UI::Container
   component :preview, UI::Container, flex: 1 do
     component :title, UI::Title do
       component :button, UI::Button, action: :edit do
-        component :icon, UI::Icon, glyph: :pencil
+        component :icon, UI::Icon, glyph: :edit
         component :span, :span, text: 'Edit'
       end
     end

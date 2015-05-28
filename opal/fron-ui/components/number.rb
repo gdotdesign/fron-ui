@@ -26,18 +26,22 @@ module UI
 
     style position: :relative,
           display: 'inline-block',
-          background: -> { colors.primary },
+          background: -> { colors.input },
           borderRadius: -> { theme.border_radius.em },
           textAlign: :center,
           lineHeight: -> { theme.size.em },
-          color: -> { readable_color(colors.primary) },
+          color: -> { colors.font },
           height: -> { theme.size.em },
           width: -> { (theme.size * 5).em },
           fontWeight: 600,
+          '&:focus' => {
+            outline: :none,
+            boxShadow: -> { theme.focus_box_shadow }
+          },
           '&:after, &:before' => {
             borderStyle: :solid,
             position: :absolute,
-            marginTop: -0.25.em,
+            marginTop: -0.3.em,
             content: "''",
             top: '50%',
             height: 0,
@@ -176,6 +180,7 @@ module UI
     #
     # @param event [Event] The event
     def on_mouse_down(event)
+      focus
       if in_select_region?(event.page_x)
         event.stop_immediate_propagation
       else

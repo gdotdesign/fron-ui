@@ -16,7 +16,7 @@ module UI
 
     component :input, :input, tabindex: -1, type: :checkbox
     component :label, :label, tabindex: -1 do
-      component :icon, UI::Icon, glyph: :check
+      component :icon, UI::Icon, glyph: :checkmark
     end
 
     style height: -> { theme.size.em },
@@ -26,19 +26,19 @@ module UI
                    '&:checked + label' => { 'ui-icon' => { transform: 'scale(1)',
                                                            opacity: 1 } } },
           label: { transition: 'opacity 320ms, transform 320ms',
-                   color: -> { readable_color(colors.primary) },
                    borderRadius: -> { theme.border_radius.em },
-                   background: -> { colors.primary },
+                   background: -> { colors.input },
+                   color: -> { colors.font },
                    justifyContent: :center,
                    alignItems: :center,
                    cursor: :pointer,
                    height: :inherit,
                    display: :flex,
                    width: :inherit,
-                   'ui-icon.fa' => { transform: 'scale(0.4) rotate(45deg)',
-                                     transition: :inherit,
-                                     fontSize: 1.em,
-                                     opacity: 0 } },
+                   'ui-icon' => { transform: 'scale(0.4) rotate(45deg)',
+                                  transition: :inherit,
+                                  fontSize: 1.em,
+                                  opacity: 0 } },
           '&:focus label' => { boxShadow: -> { theme.focus_box_shadow } }
 
     # Toggles the checkbox

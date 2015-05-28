@@ -6,21 +6,21 @@ module UI
   class Icon < Fron::Component
     tag 'ui-icon.fa'
 
-    stylesheet '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
+    stylesheet '//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'
 
-    style '&.fa' => { justifyContent: :center,
-                      display: 'inline-flex',
-                      alignItems: :center,
-                      fontWeight: :normal,
-                      '&:not([clickable])' => { pointerEvents: :none },
-                      '&[clickable]' => { cursor: :pointer,
-                                          '&:hover' => { color: -> { colors.focus } } } }
+    style '&[class^=ion]' => { justifyContent: :center,
+                               display: 'inline-flex',
+                               alignItems: :center,
+                               fontWeight: :normal,
+                               '&:not([clickable])' => { pointerEvents: :none },
+                               '&[clickable]' => { cursor: :pointer,
+                                                   '&:hover' => { color: -> { colors.focus } } } }
 
     # Sets the glyph
     #
     # @param value [String] The glyph
     def glyph=(value)
-      self[:class] = "fa fa-#{value}"
+      self[:class] = "ion-#{value}"
     end
   end
 end

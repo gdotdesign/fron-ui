@@ -27,6 +27,7 @@ module UI
           position: :relative,
           '> ui-icon' => { width: -> { theme.size.em },
                            position: :absolute,
+                           fontSize: 1.2.em,
                            bottom: 0,
                            right: 0,
                            top: 0 },

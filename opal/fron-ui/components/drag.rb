@@ -33,20 +33,18 @@ module UI
       end
     end
 
-    def value_y
-      @handle.style.top.to_i / height
-    end
+    {
+      x: [:left, :width],
+      y: [:top, :height]
+    }.each do |name, args|
+      style, side = args
+      define_method "value_#{name}" do
+        @handle.style.send(style).to_i / send(side)
+      end
 
-    def value_y=(position)
-      @handle.style.top = (position.clamp(0, 1) * height).px
-    end
-
-    def value_x
-      @handle.style.left.to_i / width
-    end
-
-    def value_x=(position)
-      @handle.style.left = (position.clamp(0, 1) * width).px
+      define_method "value_#{name}=" do |position|
+        @handle.style[style] = (position.clamp(0, 1) * send(side)).px
+      end
     end
   end
 end

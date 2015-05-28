@@ -20,7 +20,7 @@ class Todos < UI::Box
     component :checkbox, UI::Checkbox
     component :span, UI::Label, flex: 1
     component :action, UI::Action, action: :confirm_destroy! do
-      component :icon, UI::Icon, glyph: :remove
+      component :icon, UI::Icon, glyph: 'android-close'
     end
 
     # Styles
@@ -28,8 +28,8 @@ class Todos < UI::Box
           padding: -> { theme.spacing.em },
           color: -> { colors.font },
           'ui-checkbox' => {
-            height: 1.4.em,
-            width: 1.4.em
+            height: 1.5.em,
+            width: 1.5.em
           },
           '&.done ui-label' => {
             textDecoration: 'line-through'

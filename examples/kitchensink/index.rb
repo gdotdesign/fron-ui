@@ -116,7 +116,8 @@ data = [
   { id: 'UI::Checkbox', args: { checked: true } },
   { id: 'UI::Calendar' },
   { id: 'UI::ColorPanel' },
-  { id: 'UI::Slider' }
+  { id: 'UI::Slider' },
+  { id: 'UI::NumberRange' }
 ]
 
 main = Main.new
