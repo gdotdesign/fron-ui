@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe UI::Image do
   it 'should listen on load' do
-    subject.should receive(:loaded)
-    subject.img.trigger :load
+    expect {
+      subject.img.trigger :load
+    }.to change { subject.img.has_class(:loaded) }.from(false).to(true)
   end
 
   describe '#width=' do
