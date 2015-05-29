@@ -1,6 +1,8 @@
 module UI
   # Horizontal range / slider component
   #
+  # @attr value [Float] The value
+  #
   # @author Gusztáv Szikszai
   # @since 0.1.0
   class Slider < Drag

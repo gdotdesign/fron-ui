@@ -11,9 +11,9 @@ require 'fron_ui'
 Bundler::GemHelper.install_tasks
 
 QualityControl::Rubycritic.directories += %w(opal)
-QualityControl::Yard.threshold = 80
+QualityControl::Yard.threshold = 85
 QualityControl::OpalRspec.files = %r{^opal\/fron-ui\/.*\.rb}
-QualityControl::OpalRspec.threshold = 90
+QualityControl::OpalRspec.threshold = 95
 
 QualityControl.tasks += %w(
   syntax:ruby

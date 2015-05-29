@@ -6,16 +6,17 @@ module UI
   # When dragging the value is incremeted or decremented depending on the
   # direction of the drag. The element can be limited to an upper and a lower value.
   #
-  # Attributes:
-  # * label   [String] - The label to be displayed
-  # * affix   [String] - The affix (px, %, em, ...)
-  # * step    [Float]  - The step modifier to apply to the step, default to 1
-  # * min     [Float]  - The minimal possible value, defaults to -infinity
-  # * max     [Float]  - The maximum possible value, defaults to infinity
+  # @attr_reader drag [Fron::Drag] The drag instance
+  # @attr affix [String] The affix (px, %, em, ...)
+  # @attr label [String] The label to be displayed
+  # @attr step [Float] The step modifier to apply to the step, default to 1
+  # @attr min [Float] The minimal possible value, defaults to -infinity
+  # @attr max [Float] The maximum possible value, defaults to infinity
   #
   # @author Gusztáv Szikszai
   # @since 0.1.0
   class NumberRange < Fron::Component
+    # Input component
     class Input < Fron::Component
       tag 'ui-number-range-input'
 

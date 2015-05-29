@@ -17,7 +17,6 @@
 
 require 'rspec_coverage_helper'
 require 'fron_ui'
-
 require 'fron/event_mock'
 
 module TestHelpers

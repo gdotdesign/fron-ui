@@ -12,9 +12,9 @@ module UI
       # * Sets styles for children to have pointer cursor
       #
       # @param base [Fron::Component] The includer
-      def self.included(other)
-        other.on :click, :on_select
-        other.style '> *' => { cursor: :pointer }
+      def self.included(base)
+        base.on :click, :on_select
+        base.style '> *' => { cursor: :pointer }
       end
 
       # Runs when a child is clicked
