@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/digitalnatives/fron.git
+  revision: ddfea9beba50fd4e2801825c2d8f0b14a1da0444
+  branch: next-version
+  specs:
+    fron (0.2.0rc1)
+      opal (~> 0.7.0)
+
+GIT
   remote: git://github.com/gdotdesign/color.git
   revision: 8f752af6949949e48e2187efc648b8760f8d0f74
   branch: 1.6.1
@@ -23,12 +31,6 @@ PATH
   remote: .
   specs:
     fron-ui (0.1.0)
-
-PATH
-  remote: ../fron
-  specs:
-    fron (0.2.0rc1)
-      opal (~> 0.7.0)
 
 GEM
   remote: https://rubygems.org/
