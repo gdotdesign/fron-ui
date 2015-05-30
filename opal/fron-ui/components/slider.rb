@@ -8,7 +8,7 @@ module UI
   class Slider < Drag
     tag 'ui-slider'
 
-    style width: -> { (theme.size * 6).em },
+    style minWidth: -> { (theme.size * 6).em },
           height: -> { theme.size.em },
           background: :transparent,
           cursor: :pointer,

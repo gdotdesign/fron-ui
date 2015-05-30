@@ -117,6 +117,7 @@ data = [
   { id: 'UI::Calendar' },
   { id: 'UI::ColorPanel' },
   { id: 'UI::Slider' },
+  { id: 'UI::Progress', args: { value: 0.1 } },
   { id: 'UI::NumberRange', args: { affix: 'em', label: 'width:', min: 0, max: 10, step: 0.1 } }
 ]
 
