@@ -7,7 +7,7 @@ module UI
   # @since 0.1.0
   module Behaviors
     module Rest
-      # Sets up the behavior:
+      # Sets up the behavior.
       #
       # @param base [Fron::Component] The includer
       def self.included(base)
