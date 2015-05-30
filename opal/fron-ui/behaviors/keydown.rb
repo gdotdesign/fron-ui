@@ -8,7 +8,7 @@ module UI
       class << self
         TYPES = %w(keyup, keydown)
 
-        # Sets up the behavior:
+        # Sets up the behavior.
         #
         # @param base [Fron::Component] The includer
         def included(base)

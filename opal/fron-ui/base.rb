@@ -1,3 +1,4 @@
+# UI Module
 module UI
   # Base Component
   class Base < Fron::Component
@@ -33,14 +34,19 @@ module UI
   end
 end
 
+# Fron
 module Fron
   # Sheet
   module Sheet
     class << self
+      # Returns the autoprefixer instance
+      #
+      # @return [Native] The instance
       def autoprefixer
         @autoprefixer ||= `autoprefixer()`
       end
 
+      # Renders with autoprefixer
       def render
         text = @rules.map { |tag, data| "#{tag} { #{render_rule(data)} }" }.join("\n")
         style.text = `#{autoprefixer}.process(#{text}).toString()`
