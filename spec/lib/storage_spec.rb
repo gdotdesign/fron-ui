@@ -10,10 +10,30 @@ describe Storage do
     end
   end
 
-  describe '#get' do
-    it 'should get record' do
+  context 'With record' do
+    before do
       subject.storage.set 'test:0', test: 'asd'
-      subject.get('0').should eq test: 'asd'
+    end
+
+    describe '#get' do
+      it 'should get record' do
+        subject.get('0').should eq test: 'asd'
+      end
+    end
+
+    describe '#remove' do
+      it 'should remove record' do
+        expect {
+          subject.remove '0'
+        }.to change { subject.storage.keys.count }.by(-1)
+      end
+    end
+
+    describe '#all' do
+      it 'should return all values' do
+        subject.all.count.should eq 1
+        subject.all[0].should eq(test: 'asd')
+      end
     end
   end
 end
