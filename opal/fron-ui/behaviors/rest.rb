@@ -32,7 +32,7 @@ module UI
 
       # Destroyes the model
       #
-      # @yiled if the action was successfull
+      # @yield if the action was successfull
       def destroy(&block)
         request :delete, @data[:id], &block
       end
