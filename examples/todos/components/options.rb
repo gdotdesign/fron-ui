@@ -12,7 +12,8 @@ class Todos < UI::Box
     component :completed, UI::Action, text: 'Completed', value: :completed
 
     # Styles
-    style '> *:not(.selected)' => { color: -> { dampen colors.font, 0.5 } }
+    style '> *' => { color: -> { dampen colors.font, 0.5 } },
+          '.selected' => { color: -> { colors.font } }
 
     # Select the first by default
     def initialize

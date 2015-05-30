@@ -79,6 +79,7 @@ module UI
       render_body(date) do |*args|
         yield(*args) if block_given?
       end
+      trigger :rendered
     end
 
     private

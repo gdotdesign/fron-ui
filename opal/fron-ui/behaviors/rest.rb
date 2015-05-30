@@ -1,11 +1,11 @@
 module UI
-  # Behavior for giving a component REST methods.
-  #
-  # @see http://en.wikipedia.org/wiki/Representational_state_transfer
-  #
-  # @author Gusztáv Szikszai
-  # @since 0.1.0
   module Behaviors
+    # Behavior for giving a component REST methods.
+    #
+    # @see http://en.wikipedia.org/wiki/Representational_state_transfer
+    #
+    # @author Gusztáv Szikszai
+    # @since 0.1.0
     module Rest
       # Sets up the behavior.
       #
@@ -30,8 +30,9 @@ module UI
         request :put, @data[:id], data, &block
       end
 
-      # Destroyes the model, yields
-      # if was successfull.
+      # Destroyes the model
+      #
+      # @yiled if the action was successfull
       def destroy(&block)
         request :delete, @data[:id], &block
       end

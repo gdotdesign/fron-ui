@@ -18,7 +18,7 @@ describe TestClasses::Serialize do
 
   describe '#data' do
     it 'should return data' do
-      data.should_not have_key(:something)
+      data.should have_key(:something)
       data.should have_key(:other)
       data[:other].should eq 'Test'
     end

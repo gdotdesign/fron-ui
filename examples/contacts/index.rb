@@ -94,7 +94,7 @@ class Details < UI::Box
   component :title, UI::Title, text: 'Contact Details'
 
   component :box, UI::Container, flex: 1, direction: :row do
-    component :image, Image
+    component :image, UI::Image
     component :form, UI::Container, flex: 1 do
       component :label, UI::Label, text: 'Full Name:'
       component :input, UI::Input, placeholder: 'Tony Stark', name: :name

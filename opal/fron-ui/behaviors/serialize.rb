@@ -24,7 +24,6 @@ module UI
       # @return [Hash] The data
       def data
         find_all('[name]').each_with_object(@data || {}) do |item, memo|
-          next unless item.value
           memo[item[:name]] = item.value
         end
       end

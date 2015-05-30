@@ -1,7 +1,7 @@
 require 'fron_ui'
 
 class Item < UI::Container
-  include ::Rest
+  include UI::Behaviors::Rest
   include ::Record
 
   style padding: -> { theme.spacing.em },
@@ -24,7 +24,7 @@ end
 
 class List < UI::List
   include UI::Behaviors::SelectableChildren
-  include ::Rest
+  include UI::Behaviors::Rest
 
   rest url: 'http://localhost:3000/posts'
 
@@ -116,7 +116,7 @@ end
 
 class Form < UI::Container
   include UI::Behaviors::Serialize
-  include ::Rest
+  include UI::Behaviors::Rest
 
   extend Forwardable
 
@@ -131,6 +131,7 @@ class Form < UI::Container
   end
 
   style 'input' => { fontSize: 2.em,
+                     flex: '0 0 auto',
                      borderBottom: -> { "#{theme.border_size.em} solid #{colors.border}" } },
         'ui-container' => {
           position: :relative,
@@ -204,7 +205,7 @@ end
 class Main < UI::Container
   extend Forwardable
   include UI::Behaviors::Actions
-  include ::Rest
+  include UI::Behaviors::Rest
 
   rest url: 'http://localhost:3000/posts'
 

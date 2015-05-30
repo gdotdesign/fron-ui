@@ -13,6 +13,13 @@ describe UI::DatePicker do
     subject.find('.selected')[:date].should eq '2015-01-01'
   end
 
+  context 'Focusing the input' do
+    it 'should render the dropdown' do
+      subject.should receive(:render)
+      subject.input.trigger :focus
+    end
+  end
+
   context 'Changing the input' do
     it 'should set the value' do
       expect {

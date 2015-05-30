@@ -1,9 +1,14 @@
 require 'fron-ui/lib/record'
 
-# Collection component.
-#
 # A collection component reflects the underlying data (Array) with
 # children.
+#
+# @attr_reader items [Array<Fron::Component>] The items of the collection
+# @attr_writer base [Fron::Component] The base component
+# @attr_writer key [String, Symbol] The key for the unique id
+#
+# @author Gusztáv Szikszai
+# @since 0.1.0
 class Collection < Fron::Component
   # Record
   class Record < Fron::Component

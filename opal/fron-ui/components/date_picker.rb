@@ -51,6 +51,7 @@ module UI
 
     on :click,  'td[date]', :select
     on :change, 'input',    :changed
+    on :rendered, :render
 
     keydown :down, :next
     keydown :up,   :prev
@@ -61,6 +62,7 @@ module UI
     # setting the default value for today.
     def initialize
       super
+      @input.on(:focus) { render }
       self.value = Date.today
     end
 
@@ -94,7 +96,8 @@ module UI
     def value=(date)
       changed = @value != date
       @value = date
-      render
+      @input.value = @value.strftime
+      @dropdown.calendar.render @value
       trigger :change if changed
     end
 
@@ -117,10 +120,9 @@ module UI
 
     # Renders the component
     def render
-      @input.value = @value.strftime
-      @dropdown.calendar.render @value do |day, cell|
-        cell.add_class :selected if day == @value
-      end
+      cell = @dropdown.find("td[date='#{value}']")
+      return unless cell
+      cell.add_class :selected
     end
   end
 end
