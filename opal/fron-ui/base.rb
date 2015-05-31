@@ -48,7 +48,10 @@ module Fron
 
       # Renders with autoprefixer
       def render
-        text = @rules.map { |tag, data| "#{tag} { #{render_rule(data)} }" }.join("\n")
+        text = @rules.map { |tag, data|
+          body = tag.start_with?('@') ? render_at_block(data) : render_rule(data)
+          "#{tag} { #{body} }"
+        }.join("\n")
         style.text = `#{autoprefixer}.process(#{text}).toString()`
       end
     end

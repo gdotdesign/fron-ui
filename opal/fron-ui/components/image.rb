@@ -8,10 +8,19 @@ module UI
     tag 'ui-image'
 
     component :img, :img
+    component :loader, UI::Loader
 
     style borderRadius: -> { (theme.border_radius * 2).em },
           background: -> { colors.background_lighter },
           display: 'inline-block',
+          position: :relative,
+          'ui-loader' => {
+            position: :absolute,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            top: 0
+          },
           img: { transition: 'opacity 320ms',
                  borderRadius: :inherit,
                  height: :inherit,
@@ -30,6 +39,7 @@ module UI
     # Adds the loaded class
     def loaded
       @img.add_class :loaded
+      @loader.loading = false
     end
 
     # Sets the width of the image
@@ -59,6 +69,7 @@ module UI
     def src=(value)
       return if !value || @img[:src] == value
       @img.remove_class :loaded
+      @loader.loading = true
       timeout(320) { @img[:src] = value }
     end
   end

@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/digitalnatives/fron.git
-  revision: ddfea9beba50fd4e2801825c2d8f0b14a1da0444
+  revision: 4a1f4ea655c8cd8de82dd17f4e6d343e4651292e
   branch: next-version
   specs:
     fron (0.2.0rc1)

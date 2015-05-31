@@ -117,6 +117,8 @@ data = [
   { id: 'UI::Calendar' },
   { id: 'UI::ColorPanel' },
   { id: 'UI::Slider' },
+  { id: 'UI::Loader', args: { loading: true } },
+  { id: 'UI::Image', args: { src: 'http://m3.i.pbase.com/o6/90/547190/1/116543443.KT2b8KYm.IMG_9562.jpg', width: 800.px, height: 533.px } },
   { id: 'UI::Progress', args: { value: 0.1 } },
   { id: 'UI::NumberRange', args: { affix: 'em', label: 'width:', min: 0, max: 10, step: 0.1 } }
 ]
