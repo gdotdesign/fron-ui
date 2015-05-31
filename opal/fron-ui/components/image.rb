@@ -1,3 +1,5 @@
+require 'fron-ui/components/loader'
+
 module UI
   # Component for displaying an image, with
   # a transition after it loads.
