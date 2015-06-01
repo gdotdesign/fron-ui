@@ -23,6 +23,14 @@ module UI
         remove_attribute :_tabindex
         remove_attribute :disabled
       end
+
+      def readonly=(value)
+        if value
+          remove_attribute :readonly
+        else
+          self[:readonly] = ''
+        end
+      end
     end
 
     # Sets the flex value

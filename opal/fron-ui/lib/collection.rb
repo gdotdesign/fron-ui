@@ -18,8 +18,6 @@ class Collection < Fron::Component
   attr_reader :items
   attr_writer :base, :key
 
-  private
-
   # Initializes the collection
   def initialize
     super

@@ -7,6 +7,8 @@ module UI
   class Input < Base
     tag 'input[type=text]'
 
+    attribute_accessor :placeholder
+
     style color: -> { dampen readable_color(colors.input), 0.35 },
           borderRadius: -> { theme.border_radius.em },
           padding: -> { "0 #{theme.spacing.em}" },

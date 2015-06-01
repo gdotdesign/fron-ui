@@ -72,8 +72,10 @@ class Main < UI::Container
   tag 'main'
 
   style padding: -> { theme.spacing.em },
+        boxSizing: 'border-box',
+        overflow: :hidden,
         margin: '0 auto',
-        height: '96vh'
+        height: '100vh'
 
   component :container, UI::Container, direction: :row, flex: 1 do
     component :sidebar, UI::Box do
@@ -86,7 +88,7 @@ class Main < UI::Container
     component :theme, Theme
   end
 
-  on :selected_change, :populate
+  on :selected_change, 'list', :populate
 
   def populate(event)
     data = event.target.selected.data
@@ -105,6 +107,13 @@ class Main < UI::Container
   end
 end
 
+CHOOSER_ITEMS = [
+  { id: 'en', value: 'English' },
+  { id: 'hu', value: 'Hungarian' },
+  { id: 'fr', value: 'French' },
+  { id: 'gr', value: 'German' }
+]
+
 Fron::Sheet.helper.theme.font_family = 'Open Sans'
 Fron::Sheet.stylesheet '//fonts.googleapis.com/css?family=Open+Sans:400,600,700'
 Fron::Sheet.add_rule 'body', { margin: 0, fontSize: 16.px }, '0'
@@ -117,6 +126,7 @@ data = [
   { id: 'UI::Calendar' },
   { id: 'UI::ColorPanel' },
   { id: 'UI::Slider' },
+  { id: 'UI::Chooser', args: { items: CHOOSER_ITEMS, placeholder: 'Choose language...', multi: true } },
   { id: 'UI::Loader', args: { loading: true } },
   { id: 'UI::Image', args: { src: 'http://m3.i.pbase.com/o6/90/547190/1/116543443.KT2b8KYm.IMG_9562.jpg', width: 800.px, height: 533.px } },
   { id: 'UI::Progress', args: { value: 0.1 } },
