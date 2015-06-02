@@ -43,11 +43,17 @@ module UI
 
     on :change, :input, :update
     on :change, 'ui-color-wheel', :update_input
+    on :change, 'ui-color-wheel, input', :delegate_change
 
     def_delegators :input, :value
     def_delegators :dropdown, :color_panel
 
     dropdown :input, :dropdown
+
+    def delegate_change(event)
+      event.stop
+      trigger :change
+    end
 
     # Initializes the component:
     #

@@ -12,6 +12,7 @@ module UI
   # @attr step [Float] The step modifier to apply to the step, default to 1
   # @attr min [Float] The minimal possible value, defaults to -infinity
   # @attr max [Float] The maximum possible value, defaults to infinity
+  # @attr round [Float] The rounding value, defaults to 2
   #
   # @author Gusztáv Szikszai
   # @since 0.1.0

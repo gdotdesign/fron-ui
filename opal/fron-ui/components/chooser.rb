@@ -85,7 +85,7 @@ module UI
     dropdown :input, :dropdown
 
     def_delegators :input, :placeholder, :placeholder=
-    def_delegators :list, :base, :base=, :key, :key=, :multi, :multi=
+    def_delegators :list, :base, :base=, :key, :key=, :multiple, :multiple=
     def_delegators :dropdown, :list
 
     style position: :relative,
@@ -94,6 +94,15 @@ module UI
 
     on :keydown, :keydown
     on :input,   :filter
+    on :selected_change, :selected_changed
+
+    def searchable=(value)
+      @input.readonly = !value
+    end
+
+    def searchable
+      !@input.readonly
+    end
 
     def initialize
       super
@@ -107,10 +116,17 @@ module UI
     end
 
     def empty_input
+      return if @input.readonly
       @input.value = ''
     end
 
+    def selected_changed
+      return if searchable
+      update_input
+    end
+
     def update_input
+      timeout(320) { show_items }
       @input.value = if list.selected && list.selected.is_a?(Array)
                        list.selected.map(&:value).join(', ')
                      elsif list.selected
@@ -118,6 +134,10 @@ module UI
                      else
                        ''
                      end
+    end
+
+    def show_items
+      list.children.each { |item| item.remove_class :hidden }
     end
 
     def filter

@@ -56,5 +56,8 @@ module UI
       @input[:id]   = id
       @label[:for]  = id
     end
+
+    alias_method :value=, :checked=
+    alias_method :value, :checked
   end
 end

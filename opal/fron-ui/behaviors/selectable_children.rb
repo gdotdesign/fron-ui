@@ -14,7 +14,7 @@ module UI
       # @param base [Fron::Component] The includer
       def self.included(base)
         base.on :click, :on_select
-        base.attr_accessor :multi
+        base.attribute_accessor :multiple, default: false
         base.style '> *' => { cursor: :pointer }
       end
 
@@ -30,8 +30,8 @@ module UI
       # @param child [Fron::Component] The child
       def select(child)
         return unless child
-        selected.remove_class :selected if selected && !multi
-        child.toggle_class :selected, multi ? nil : true
+        Array(selected).each { |item| item.remove_class :selected } if selected && !multiple
+        child.toggle_class :selected, multiple ? nil : true
         trigger :selected_change
       end
 
@@ -45,7 +45,7 @@ module UI
       # @return [Fron::Component] The child
       def selected
         selected = children.find_all { |child| child.has_class :selected }
-        return selected.first unless multi
+        return selected.first if selected.count == 1
         selected
       end
     end

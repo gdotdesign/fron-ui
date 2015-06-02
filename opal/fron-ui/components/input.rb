@@ -8,6 +8,7 @@ module UI
     tag 'input[type=text]'
 
     attribute_accessor :placeholder
+    attribute_accessor :readonly, default: false
 
     style color: -> { dampen readable_color(colors.input), 0.35 },
           borderRadius: -> { theme.border_radius.em },
@@ -21,9 +22,6 @@ module UI
           '&:focus' => {
             boxShadow: -> { theme.focus_box_shadow },
             outline: :none
-          },
-          '&::placeholder' => {
-            fontWeight: 600
           }
   end
 end
