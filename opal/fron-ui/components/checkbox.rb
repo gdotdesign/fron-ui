@@ -5,6 +5,8 @@ module UI
   # * checked and checked=
   # * actionable
   #
+  # @attr value [Boolean] The value
+  #
   # @author Gusztáv Szikszai
   # @since 0.1.0
   class Checkbox < Action

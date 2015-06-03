@@ -12,7 +12,8 @@ Fron::Sheet.helpers do
 
   def readable_color(background)
     color = Color::RGB.by_css(background)
-    lightness(color) > 0.5 ? '#000' : '#FFF'
+    inverze = lightness(color) > 0.5 ? Color::RGB::Black : Color::RGB::White
+    '#' + color.mix_with(inverze, 30).hex
   end
 
   # :reek:FeatureEnvy
@@ -21,7 +22,7 @@ Fron::Sheet.helpers do
   end
 
   def theme
-    @theme ||= OpenStruct.new font_family: 'Open Sans',
+    @theme ||= OpenStruct.new font_family: 'Open Sans, sans-serif',
                               focus_box_shadow: '0 0 0.07em 0.14em #90CAF9',
                               border_radius: 0.15,
                               border_size: 0.2,
@@ -38,9 +39,10 @@ Fron::Sheet.helpers do
                               border: '#e6e6e6',
                               focus: '#2196F3',
                               font: '#555',
-                              input: '#FFF'
+                              input: '#FFF',
+                              body: '#FEFEFE'
   end
 end
 
 Fron::Sheet.stylesheet '//fonts.googleapis.com/css?family=Open+Sans:400,600,700'
-Fron::Sheet.add_rule 'body', { margin: 0 }, '0'
+Fron::Sheet.add_rule 'body', { margin: 0, background: -> { colors.body } }, '0'

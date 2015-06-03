@@ -41,7 +41,7 @@ module UI
                    boxSizing: 'border-box',
                    width: '100%' }
 
-    on :change, :input, :update
+    on :change, :input, :update_dropdown
     on :change, 'ui-color-wheel', :update_input
     on :change, 'ui-color-wheel, input', :delegate_change
 
@@ -50,6 +50,11 @@ module UI
 
     dropdown :input, :dropdown
 
+    # Delegates the change event
+    # so the target would be the picker
+    # not the color panel
+    #
+    # @param event [DOM::Event] The event
     def delegate_change(event)
       event.stop
       trigger :change
@@ -75,14 +80,6 @@ module UI
     end
 
     private
-
-    # Handels the change from the input
-    #
-    # @param event [DOM::Event] The event
-    def update(event)
-      update_dropdown
-      event.stop
-    end
 
     # Updates the dropdown with the
     # inputs value:

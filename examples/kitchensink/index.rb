@@ -47,7 +47,7 @@ class CheckboxField < Field
   component :input, UI::Checkbox
 
   style 'ui-checkbox' => { order: 1,
-                             marginLeft: 0 },
+                           marginLeft: 0 },
         'ui-label' => { order: 2,
                         lineHeight: 2.em,
                         marginLeft: -> { theme.spacing.em } }
@@ -89,16 +89,14 @@ class Theme < UI::Box
   end
 
   def create_input(key, value)
-    if value.class == Numeric
-      input = UI::NumberRange.new
-      input[:name] = key
-      input.step = 0.1
-      input.value = value
-      input.affix = :em
-      input.label = "#{key}:"
-      self << input
-    elsif value.class == String
-    end
+    return unless value.class == Numeric
+    input = UI::NumberRange.new
+    input[:name] = key
+    input.step = 0.1
+    input.value = value
+    input.affix = :em
+    input.label = "#{key}:"
+    self << input
   end
 
   def set(event)
@@ -106,7 +104,7 @@ class Theme < UI::Box
     value = event.target.value
     if key == :font_size
       DOM::Document.body.style.fontSize = value.px
-    elsif value.to_s.start_with?("#")
+    elsif value.to_s.start_with?('#')
       Fron::Sheet.helper.colors[key] = value
       puts Fron::Sheet.helper.colors.to_h
       Fron::Sheet.render
@@ -188,7 +186,6 @@ CHOOSER_ITEMS = [
   { id: 'gr', value: 'German' }
 ]
 
-Fron::Sheet.helper.theme.font_family = 'Open Sans'
 Fron::Sheet.add_rule 'body', { margin: 0, fontSize: 16.px }, '0'
 
 data = [

@@ -12,6 +12,7 @@ module UI
 
     style boxShadow: '0 0.3em 0.625em -0.3em rgba(0,0,0,0.75)',
           transition: 'opacity 320ms, transform 320ms',
+          borderRadius: -> { theme.border_radius.em },
           transform: 'translateY(0.5em)',
           pointerEvents: :none,
           position: :absolute,

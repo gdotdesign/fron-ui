@@ -23,13 +23,16 @@ module UI
         remove_attribute :_tabindex
         remove_attribute :disabled
       end
+    end
 
-      def readonly=(value)
-        if value
-          remove_attribute :readonly
-        else
-          self[:readonly] = ''
-        end
+    # Sets the readonly state
+    #
+    # @param value [Boolean] The value
+    def readonly=(value)
+      if value
+        remove_attribute :readonly
+      else
+        self[:readonly] = ''
       end
     end
 
@@ -55,13 +58,13 @@ module Fron
       end
 
       # Renders with autoprefixer
-      # def render
-      #   text = @rules.map { |tag, data|
-      #     body = tag.start_with?('@') ? render_at_block(data) : render_rule(data)
-      #     "#{tag} { #{body} }"
-      #   }.join("\n")
-      #   style.text = `#{autoprefixer}.process(#{text}).toString()`
-      # end
+      def render
+        text = @rules.map { |tag, data|
+          body = tag.start_with?('@') ? render_at_block(data) : render_rule(data)
+          "#{tag} { #{body} }"
+        }.join("\n")
+        style.text = `#{autoprefixer}.process(#{text}).toString()`
+      end
     end
   end
 end

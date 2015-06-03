@@ -2,6 +2,16 @@ require 'fron-ui/components/dropdown'
 require 'fron-ui/components/input'
 
 module UI
+  # Chooser component
+  #
+  # Features
+  # * Select an item from the dropdown
+  # * Allows multiple selection (multiple attribute)
+  # * Search the items from the input
+  # * Navigate / select with keyboard
+  #
+  # @author Gusztáv Szikszai
+  # @since 0.1.0
   class Chooser < Base
     class Item < Fron::Component
       include ::Record
@@ -26,6 +36,8 @@ module UI
       tag 'ui-chooser-list'
 
       style background: -> { colors.input },
+            borderRadius: -> { theme.border_radius.em },
+            overflow: :auto,
             '> .hidden' => { display: :none },
             '> *:hover' => { background: -> { colors.background_lighter } },
             '> *.intended' => { background: -> { colors.background } },
@@ -33,6 +45,10 @@ module UI
                                 color: -> { readable_color colors.primary } }
       def intend_next
         intend_with :first, :next
+      end
+
+      def select_intended
+        select intended
       end
 
       def intend_previous
@@ -66,11 +82,12 @@ module UI
       end
 
       def intend_children
-        children.select(&:visible?)
+        children.select { |child| !child.has_class :hidden }
       end
     end
 
     include UI::Behaviors::Dropdown
+    include UI::Behaviors::Keydown
     extend Forwardable
 
     attr_reader :items
@@ -84,47 +101,73 @@ module UI
 
     dropdown :input, :dropdown
 
-    def_delegators :input, :placeholder, :placeholder=
-    def_delegators :list, :base, :base=, :key, :key=, :multiple, :multiple=
+    def_delegators :input, :placeholder, :placeholder=, :blur
+    def_delegators :list, :base, :base=, :key, :key=, :multiple, :multiple=,
+                   :intend_next, :intend_previous, :select_intended
     def_delegators :dropdown, :list
 
     style position: :relative,
+          input: { cursor: :pointer,
+                   '&:not(:focus), &[readonly]' => { textOverflow: :ellipsis,
+                                                     userSelect: :none,
+                                                     overflow: :hidden } },
           'ui-dropdown' => { left: 0,
                              right: 0 }
 
-    on :keydown, :keydown
+    keydown :esc,  :blur
+    keydown :up,   :intend_previous
+    keydown :down, :intend_next
+    keydown [:enter, :space], :select_intended
+
     on :input,   :filter
     on :selected_change, :selected_changed
 
-    def searchable=(value)
-      @input.readonly = !value
-    end
-
-    def searchable
-      !@input.readonly
-    end
-
+    # Initilaizes the component, setting
+    # up not bubbling events on the input
     def initialize
       super
       @input.on(:focus) { empty_input }
       @input.on(:blur) { update_input }
     end
 
+    # Sets the searchable value, by setting
+    # the inputs to read only attribute.
+    #
+    # @param value [Boolean] The value
+    def searchable=(value)
+      @input.readonly = !value
+    end
+
+    # Returns if the component is searchable or not
+    #
+    # @return [Boolean] The value
+    def searchable
+      !@input.readonly
+    end
+
+    # Sets the items
+    #
+    # @param items [Array<Hash>] The items
     def items=(items)
       list.items = items
       filter
     end
 
+    # Empties the input
     def empty_input
       return if @input.readonly
       @input.value = ''
     end
 
+    # Updates the input after
+    # an item has been selected
     def selected_changed
       return if searchable
       update_input
     end
 
+    # Updates the input text with
+    # the selected items values
     def update_input
       timeout(320) { show_items }
       @input.value = if list.selected && list.selected.is_a?(Array)
@@ -136,29 +179,15 @@ module UI
                      end
     end
 
+    # Shows the items
     def show_items
       list.children.each { |item| item.remove_class :hidden }
     end
 
+    # Filters the items by the input value
     def filter
       list.children.each do |item|
         item.toggle_class :hidden, !(item.value =~ Regexp.new(@input.value, 'i'))
-      end
-    end
-
-    def keydown(event)
-      return unless [:enter, :esc, :up, :down].include?(event.key)
-      event.prevent_default
-      event.stop_propagation
-      case event.key
-      when :enter
-        list.select list.intended
-      when :esc
-        @input.blur
-      when :up
-        list.intend_previous
-      when :down
-        list.intend_next
       end
     end
   end
