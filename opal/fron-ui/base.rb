@@ -30,9 +30,9 @@ module UI
     # @param value [Boolean] The value
     def readonly=(value)
       if value
-        remove_attribute :readonly
-      else
         self[:readonly] = ''
+      else
+        remove_attribute :readonly
       end
     end
 

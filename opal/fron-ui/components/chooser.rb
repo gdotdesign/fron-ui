@@ -13,6 +13,7 @@ module UI
   # @author Gusztáv Szikszai
   # @since 0.1.0
   class Chooser < Base
+    # Item for the chooser
     class Item < Fron::Component
       include ::Record
 
@@ -21,15 +22,20 @@ module UI
       style display: :block,
             padding: -> { (theme.spacing / 2).em }
 
+      # Renders the item
       def render
         self.text = @data[:value]
       end
 
+      # Retunrs the value
+      #
+      # @return [String] The value
       def value
         text
       end
     end
 
+    # List for the chooser
     class List < Collection
       include UI::Behaviors::SelectableChildren
 
@@ -39,22 +45,32 @@ module UI
             borderRadius: -> { theme.border_radius.em },
             overflow: :auto,
             '> .hidden' => { display: :none },
-            '> *:hover' => { background: -> { colors.background_lighter } },
-            '> *.intended' => { background: -> { colors.background } },
+            '> *:hover' => { background: -> { dampen colors.input, 0.05 } },
+            '> *.intended' => { background: -> { dampen colors.input, 0.1 } },
             '> *.selected' => { background: -> { colors.primary },
                                 color: -> { readable_color colors.primary } }
-      def intend_next
-        intend_with :first, :next
-      end
 
+      # Selects the currently intended item
       def select_intended
         select intended
       end
 
+      # Intends selection for the
+      # next intendable item
+      def intend_next
+        intend_with :first, :next
+      end
+
+      # Intends selection for the
+      # previous intendable item
       def intend_previous
         intend_with :last, :previous
       end
 
+      # Intends an item
+      #
+      # @param tail [Symbol] First or last
+      # @param method [Symbol] Next or previous
       def intend_with(tail, method)
         children = intend_children
         index = children.index(intended)
@@ -71,16 +87,25 @@ module UI
         intend next_indenteded || intend_children.send(tail)
       end
 
+      # Intends the given item
+      #
+      # @param item [Fron::Component] The item
       def intend(item)
         return unless item
         intended.remove_class(:intended) if intended
         item.add_class(:intended)
       end
 
+      # Returns the currently intended item
+      #
+      # @return [Fron::Component] The item
       def intended
         find('.intended')
       end
 
+      # Returns the children that can be intended
+      #
+      # @return [Array<Fron::Component>] The items
       def intend_children
         children.select { |child| !child.has_class :hidden }
       end
@@ -89,8 +114,6 @@ module UI
     include UI::Behaviors::Dropdown
     include UI::Behaviors::Keydown
     extend Forwardable
-
-    attr_reader :items
 
     tag 'ui-chooser'
 
@@ -103,16 +126,21 @@ module UI
 
     def_delegators :input, :placeholder, :placeholder=, :blur
     def_delegators :list, :base, :base=, :key, :key=, :multiple, :multiple=,
-                   :intend_next, :intend_previous, :select_intended
+                   :intend_next, :intend_previous, :select_intended, :items
     def_delegators :dropdown, :list
 
     style position: :relative,
-          input: { cursor: :pointer,
-                   '&:not(:focus), &[readonly]' => { textOverflow: :ellipsis,
-                                                     userSelect: :none,
-                                                     overflow: :hidden } },
+          input: { cursor: :pointer },
           'ui-dropdown' => { left: 0,
-                             right: 0 }
+                             right: 0 },
+          '&:not([focused]):after,
+           &:not([searchable]):after' => { background: -> { "linear-gradient(90deg, transparent, #{colors.input} 70%)" },
+                                           position: :absolute,
+                                           content: '""',
+                                           width: 4.em,
+                                           bottom: 0,
+                                           right: 0,
+                                           top: 0 }
 
     keydown :esc,  :blur
     keydown :up,   :intend_previous
@@ -126,8 +154,15 @@ module UI
     # up not bubbling events on the input
     def initialize
       super
-      @input.on(:focus) { empty_input }
-      @input.on(:blur) { update_input }
+      self.searchable = true
+      @input.on(:focus) do
+        self[:focused] = ''
+        empty_input
+      end
+      @input.on(:blur) do
+        remove_attribute :focused
+        update_input
+      end
     end
 
     # Sets the searchable value, by setting
@@ -136,6 +171,11 @@ module UI
     # @param value [Boolean] The value
     def searchable=(value)
       @input.readonly = !value
+      if @input.readonly
+        remove_attribute :searchable
+      else
+        self[:searchable] = ''
+      end
     end
 
     # Returns if the component is searchable or not

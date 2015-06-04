@@ -23,7 +23,8 @@ module UI
 
     tag 'ui-date-picker'
 
-    style display: 'inline-block',
+    style color: -> { readable_color colors.input },
+          display: 'inline-block',
           position: :relative,
           '> ui-icon' => { width: -> { theme.size.em },
                            position: :absolute,

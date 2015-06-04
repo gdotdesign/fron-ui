@@ -10,6 +10,7 @@ module UI
     tag 'ui-box'
 
     style borderRadius: -> { (theme.border_radius * 2).em },
+          color: -> { readable_color colors.background },
           padding: -> { (theme.spacing * 1.75).em },
           background: -> { colors.background }
   end

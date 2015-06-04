@@ -13,7 +13,7 @@ module UI
 
     style overflow: :auto,
           '> *' => { display: :block,
-                     '&:nth-child(even)' => { background: -> { colors.background_lighter } } },
+                     '&:nth-child(even)' => { background: -> { dampen colors.background, 0.025 } } },
           '&:empty' => { padding: -> { theme.spacing.em },
                          justifyContent: :center,
                          alignItems: :center,

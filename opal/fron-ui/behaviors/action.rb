@@ -1,4 +1,5 @@
 module UI
+  # Behaviors
   module Behaviors
     # Behavior for managing components
     # that can respond to **action** - enter / space

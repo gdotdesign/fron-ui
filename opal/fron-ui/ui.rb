@@ -7,18 +7,13 @@ Fron::Sheet.helpers do
 
   def dampen(color, percent)
     color = Color::RGB.by_css(color)
-    '#' + color.send((lightness(color) > 0.5 ? :darken_by : :lighten_by), (1 - percent) * 100).hex
+    '#' + color.send((color.brightness > 0.5 ? :darken_by : :lighten_by), (1 - percent) * 100).hex
   end
 
   def readable_color(background)
     color = Color::RGB.by_css(background)
-    inverze = lightness(color) > 0.5 ? Color::RGB::Black : Color::RGB::White
-    '#' + color.mix_with(inverze, 30).hex
-  end
-
-  # :reek:FeatureEnvy
-  def lightness(color)
-    color.r * 0.299 + color.g * 0.587 + color.b * 0.114
+    inverze, mix = color.brightness > 0.5 ? [Color::RGB::Black, 40] : [Color::RGB::White, 7]
+    '#' + color.mix_with(inverze, mix).hex
   end
 
   def theme
@@ -35,14 +30,11 @@ Fron::Sheet.helpers do
                               success: '#43A047',
                               danger: '#D32F2F',
                               background: '#f3f3f3',
-                              background_lighter: '#f9f9f9',
-                              border: '#e6e6e6',
                               focus: '#2196F3',
-                              font: '#555',
                               input: '#FFF',
                               body: '#FEFEFE'
   end
 end
 
 Fron::Sheet.stylesheet '//fonts.googleapis.com/css?family=Open+Sans:400,600,700'
-Fron::Sheet.add_rule 'body', { margin: 0, background: -> { colors.body } }, '0'
+Fron::Sheet.add_rule 'body', { margin: 0, background: -> { colors.body }, color: -> { readable_color colors.body } }, '0'

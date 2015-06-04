@@ -12,10 +12,9 @@ module UI
 
     tag 'ui-title'
 
-    style borderBottom: -> { "#{theme.border_size.em} solid #{colors.border}" },
+    style borderBottom: -> { "#{theme.border_size.em} solid #{dampen colors.background, 0.05}" },
           paddingBottom: -> { theme.spacing.em },
           fontFamily: -> { theme.font_family },
-          color: -> { colors.font },
           '> span' => { fontSize: '1.6em',
                         fontWeight: 600 }
 

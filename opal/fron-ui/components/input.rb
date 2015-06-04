@@ -10,8 +10,8 @@ module UI
     attribute_accessor :placeholder
     attribute_accessor :readonly, default: false
 
-    style color: -> { dampen readable_color(colors.input), 0.35 },
-          borderRadius: -> { theme.border_radius.em },
+    style borderRadius: -> { theme.border_radius.em },
+          color: -> { readable_color(colors.input) },
           padding: -> { "0 #{theme.spacing.em}" },
           fontFamily: -> { theme.font_family },
           lineHeight: -> { theme.size.em },

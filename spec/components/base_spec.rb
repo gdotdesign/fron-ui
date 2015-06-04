@@ -8,4 +8,12 @@ describe UI::Base do
       }.to change { subject.attribute?(:disabled) }.from(false).to(true)
     end
   end
+
+  describe '#readonly=' do
+    it 'should set readonly' do
+      expect {
+        subject.readonly = true
+      }.to change { subject.attribute?(:readonly) }.from(false).to(true)
+    end
+  end
 end

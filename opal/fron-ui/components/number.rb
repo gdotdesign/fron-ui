@@ -28,7 +28,6 @@ module UI
             lineHeight: -> { theme.size.em },
             background: -> { colors.input },
             height: -> { theme.size.em },
-            color: -> { colors.font },
             textAlign: :center,
             display: :block,
             fontWeight: 600,
@@ -61,7 +60,8 @@ module UI
     attribute_accessor :max,   default: Float::INFINITY,  coerce: :to_f
     attribute_accessor :min,   default: -Float::INFINITY, coerce: :to_f
 
-    style minWidth: -> { (theme.size * 5).em },
+    style color: -> { readable_color(colors.input) },
+          minWidth: -> { (theme.size * 5).em },
           display: 'inline-block',
           position: :relative,
           '&:after, &:before' => { borderStyle: :solid,

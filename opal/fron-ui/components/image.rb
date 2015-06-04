@@ -13,7 +13,7 @@ module UI
     component :loader, UI::Loader
 
     style borderRadius: -> { (theme.border_radius * 2).em },
-          background: -> { colors.background_lighter },
+          background: -> { dampen colors.background, 0.05 },
           display: 'inline-block',
           position: :relative,
           'ui-loader' => {
