@@ -146,6 +146,7 @@ class Main < UI::Container
   def populate(event)
     data = event.target.selected.data
     el = data[:id].to_class.new
+    data[:proc].call el if data[:proc]
     data[:args].to_h.each do |key, value|
       if el.respond_to?("#{key}=")
         el.send("#{key}=", value)
@@ -187,6 +188,15 @@ CHOOSER_ITEMS = [
 
 Fron::Sheet.add_rule 'body', { margin: 0, fontSize: 16.px }, '0'
 
+create_tabs = lambda do |tabs|
+  (1..3).each do |index|
+    el = UI::Tabs::Tab.new
+    el[:tab] = "Tab #{index}"
+    el.html = Lorem.paragraph
+    tabs << el
+  end
+end
+
 data = [
   { id: 'UI::Button', args: { text: 'Button...' }, options: { text: :input } },
   { id: 'UI::DatePicker' },
@@ -199,6 +209,7 @@ data = [
   { id: 'UI::Loader', args: { loading: true } },
   { id: 'UI::Image', args: { src: 'http://m3.i.pbase.com/o6/90/547190/1/116543443.KT2b8KYm.IMG_9562.jpg', width: 800.px, height: 533.px } },
   { id: 'UI::Progress', args: { value: 0.1 } },
+  { id: 'UI::Tabs', args: {}, proc: create_tabs },
   { id: 'UI::NumberRange', args: { affix: 'em', label: 'width:', min: 0, max: 10, step: 0.1 }, options: { affix: :input, label: :input, min: :range, max: :range, step: :range, round: :range } }
 ]
 
