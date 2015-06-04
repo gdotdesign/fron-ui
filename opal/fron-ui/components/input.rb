@@ -20,7 +20,7 @@ module UI
           fontSize: :inherit,
           border: 0,
           '&:focus' => {
-            boxShadow: -> { theme.focus_box_shadow },
+            boxShadow: -> { theme.focus_box_shadow.call },
             outline: :none
           }
   end

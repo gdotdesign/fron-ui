@@ -35,7 +35,7 @@ module UI
                             marginRight: 0.2.em,
                             fontWeight: :normal },
             '&:after' => { content: 'attr(affix)' },
-            '&:focus' => { boxShadow: -> { theme.focus_box_shadow },
+            '&:focus' => { boxShadow: -> { theme.focus_box_shadow.call },
                            outline: :none }
     end
 

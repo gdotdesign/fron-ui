@@ -41,7 +41,7 @@ module UI
                                   transition: :inherit,
                                   fontSize: 1.em,
                                   opacity: 0 } },
-          '&:focus label' => { boxShadow: -> { theme.focus_box_shadow } }
+          '&:focus label' => { boxShadow: -> { theme.focus_box_shadow.call } }
 
     # Toggles the checkbox
     def action

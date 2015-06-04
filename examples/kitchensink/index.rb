@@ -106,7 +106,6 @@ class Theme < UI::Box
       DOM::Document.body.style.fontSize = value.px
     elsif value.to_s.start_with?('#')
       Fron::Sheet.helper.colors[key] = value
-      puts Fron::Sheet.helper.colors.to_h
       Fron::Sheet.render
     else
       Fron::Sheet.helper.theme[key] = value

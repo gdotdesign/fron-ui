@@ -43,6 +43,7 @@ module UI
 
       style background: -> { colors.input },
             borderRadius: -> { theme.border_radius.em },
+            color: -> { readable_color colors.input },
             overflow: :auto,
             '> .hidden' => { display: :none },
             '> *:hover' => { background: -> { dampen colors.input, 0.05 } },

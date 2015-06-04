@@ -19,7 +19,7 @@ module UI
                                 width: 1.5.em,
                                 top: '50%' },
           '&:focus' => { outline: :none,
-                         '&:before' => { boxShadow: -> { theme.focus_box_shadow } } },
+                         '&:before' => { boxShadow: -> { theme.focus_box_shadow.call } } },
           '&:before' => { borderRadius: -> { theme.border_radius.em },
                           background: -> { colors.input },
                           position: :absolute,

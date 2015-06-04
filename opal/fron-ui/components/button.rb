@@ -25,7 +25,7 @@ module UI
           userSelect: :none,
           fontWeight: '600',
           overflow: :hidden,
-          '&[type]:focus' => { boxShadow: -> { theme.focus_box_shadow } },
+          '&[type]:focus' => { boxShadow: -> { theme.focus_box_shadow.call } },
           '&[shape=square]' => { minWidth: -> { theme.size.em },
                                  height: -> { theme.size.em },
                                  justifyContent: :center,
