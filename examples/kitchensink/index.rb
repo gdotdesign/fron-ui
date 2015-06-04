@@ -27,8 +27,8 @@ class Demo < UI::Box
         justifyContent: :center,
         alignItems: :center,
         '> *' => {
-          maxHeight: '80%',
-          maxWidth: '60%'
+          maxHeight: '85%',
+          maxWidth: '85%'
         }
 end
 

@@ -21,10 +21,20 @@ describe TestClasses::SelectableChildren do
   end
 
   context 'Clicking on a child' do
+    let(:first) { subject.children.first }
+    let(:last) { subject.children.last }
+
     it 'should select child' do
       expect {
-        subject.children.first.trigger :click
-      }.to change { subject.children.first.has_class(:selected) }.from(false).to(true)
+        first.trigger :click
+      }.to change { first.has_class(:selected) }.from(false).to(true)
+    end
+
+    it 'should de select previous selection' do
+      first.trigger :click
+      expect {
+        last.trigger :click
+      }.to change { first.has_class(:selected) }.from(true).to(false)
     end
   end
 end

@@ -40,6 +40,11 @@ module UI
         select children.first
       end
 
+      # Selects the last child
+      def select_last
+        select children.last
+      end
+
       # Returns the selected child
       #
       # @return [Fron::Component] The child
