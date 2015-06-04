@@ -13,8 +13,10 @@ module UI
             position: :relative,
             fontWeight: 600,
             opacity: 0.5,
-            '&.selected' => { borderBottom: -> { "#{theme.border_size.em} solid #{colors.primary}" } },
-            '&:focus' => { borderBottom: -> { "#{theme.border_size.em} solid #{colors.focus}" } },
+            '&.selected' => { borderBottom: -> { "#{theme.border_size.em} solid #{colors.primary}" },
+                              color: -> { colors.primary } },
+            '&:focus' => { borderBottom: -> { "#{theme.border_size.em} solid #{colors.focus}" },
+                           color: -> { colors.focus } },
             '&:hover, &.selected, &:focus' => { opacity: 1 }
 
       def render
@@ -86,10 +88,9 @@ module UI
     def update_tabs
       return unless @handles
       handles.items = tabs.map { |item| { id: item[:tab], name: item[:tab] } }.uniq
-      unless handles.selected
-        handles.select_first
-        select_tab
-      end
+      return if handles.selected
+      handles.select_first
+      select_tab
     end
 
     def tabs
