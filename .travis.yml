@@ -2,3 +2,6 @@ language: ruby
 script: bundle exec rake ci
 rvm:
   - 2.0
+branches:
+  only:
+    - master
