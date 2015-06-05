@@ -17,6 +17,8 @@ module UI
       def self.included(base)
         base.include Behaviors::Keydown
         base.style cursor: :pointer,
+                   userSelect: :none,
+                   '> *' => { pointerEvents: :none },
                    '&:focus, &:hover' => {
                      color: ->  { colors.focus },
                      outline: :none

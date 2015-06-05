@@ -30,6 +30,7 @@ module UI
       # @param child [Fron::Component] The child
       def select(child)
         return unless child
+        return if selected == child
         Array(selected).each { |item| item.remove_class :selected } if selected && !multiple
         child.toggle_class :selected, multiple ? nil : true
         trigger :selected_change

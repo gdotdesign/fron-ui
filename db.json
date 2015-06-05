@@ -1,4 +1,16 @@
 {
+  "files": [
+    {
+      "id": "asd",
+      "filename": "test.csv",
+      "content": "This is a text....asdasdasdasdasd\nasd\nasd\nas\nd"
+    },
+    {
+      "id": "asad",
+      "filename": "test2.csv",
+      "content": null
+    }
+  ],
   "posts": [
     {
       "title": "Some post title....",

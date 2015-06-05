@@ -1,5 +1,5 @@
 module UI
-  class Tabs < Base
+  class Tabs < UI::Container
     class Handle < Action
       include ::Record
 
@@ -31,6 +31,7 @@ module UI
       tag 'ui-tab-handles'
 
       style display: :block,
+            flex: '0 0 auto',
             borderBottom: -> { "#{theme.border_size.em} solid #{dampen colors.background, 0.05}" }
     end
 
@@ -40,9 +41,13 @@ module UI
       style padding: -> { theme.spacing.em }
     end
 
+    extend Forwardable
+
     tag 'ui-tabs'
 
     component :handles, Handles, base: Handle
+
+    def_delegators :handles, :base
 
     style '> *:not(ui-tab-handles):not(.active)' => { visibility: :hidden,
                                                       overflow: :hidden,
@@ -52,7 +57,8 @@ module UI
           '> .active' => { visibility: :visible,
                            overflow: :auto,
                            display: :block,
-                           height: :auto }
+                           height: :auto,
+                           flex: 1 }
 
     on :selected_change, :select_tab
 
@@ -78,6 +84,7 @@ module UI
     def select(tab)
       return unless tab
       active_tab.remove_class(:active) if active_tab
+      handles.select handles.find("[tab_id='#{tab[:tab]}']")
       tab.add_class(:active)
     end
 
