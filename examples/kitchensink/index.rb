@@ -1,4 +1,5 @@
 require 'fron_ui'
+require 'fron-ui/utils/theme_roller'
 
 class String
   def to_class
@@ -67,53 +68,6 @@ class RangeField < Field
   component :input, UI::NumberRange
 end
 
-class Theme < UI::Box
-  include UI::Behaviors::Serialize
-  include UI::Behaviors::Render
-
-  component :title, UI::Title, text: 'Theme'
-
-  on :change, :set
-
-  def initialize
-    super
-    Fron::Sheet.helper.theme.to_h.each do |key, value|
-      create_input key, value
-    end
-    Fron::Sheet.helper.colors.to_h.each do |key, value|
-      input = UI::ColorPicker.new
-      input[:name] = key
-      input.value = value
-      self << input
-    end
-  end
-
-  def create_input(key, value)
-    return unless value.class == Numeric
-    input = UI::NumberRange.new
-    input[:name] = key
-    input.step = 0.1
-    input.value = value
-    input.affix = :em
-    input.label = "#{key}:"
-    self << input
-  end
-
-  def set(event)
-    key = event.target[:name]
-    value = event.target.value
-    if key == :font_size
-      DOM::Document.body.style.fontSize = value.px
-    elsif value.to_s.start_with?('#')
-      Fron::Sheet.helper.colors[key] = value
-      Fron::Sheet.render
-    else
-      Fron::Sheet.helper.theme[key] = value
-      Fron::Sheet.render
-    end
-  end
-end
-
 class Main < UI::Container
   tag 'main'
 
@@ -138,7 +92,7 @@ class Main < UI::Container
       component :options, UI::Box
     end
 
-    component :theme, Theme
+    component :theme, ThemeRoller
   end
 
   on :selected_change, 'list', :populate

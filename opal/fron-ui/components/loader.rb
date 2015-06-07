@@ -10,9 +10,9 @@ module UI
 
     component :div, 'ui-loader-div'
 
-    keyframes 'ui-loader', '0%' =>   { transform: 'perspective(120px) rotateX(0deg) rotateY(0deg)' },
-                           '50%' =>  { transform: 'perspective(120px) rotateX(-180.1deg) rotateY(0deg)' },
-                           '100%' => { transform: 'perspective(120px) rotateX(-180deg) rotateY(-179.9deg)' }
+    keyframes 'ui-loader', '0%' =>   { transform: 'rotate(0deg)' },
+                           '50%' =>  { transform: 'rotate(179.9deg)' },
+                           '100%' => { transform: 'rotate(359.9deg)' }
 
     style transition: 'opacity 320ms',
           justifyContent: :center,
@@ -20,15 +20,29 @@ module UI
           minHeight: 2.em,
           minWidth: 2.em,
           display: :flex,
+          color: -> { colors.primary },
           opacity: 0,
           '&.loading' => {
             opacity: 1
           },
           'ui-loader-div' => {
-            animation: 'ui-loader 1.2s infinite ease-in-out',
-            background: -> { colors.primary },
+            animation: 'ui-loader 1.2s infinite linear',
+            border: '0.15em solid currentColor',
+            borderTop: '0.15em solid transparent',
+            borderBottom: '0.15em solid transparent',
+            display: :flex,
+            justifyContent: :center,
+            alignItems: :center,
+            borderRadius: '50%',
             height: 2.em,
-            width: 2.em
+            width: 2.em,
+            '&:before' => {
+              content: '""',
+              border: '0.15em solid currentColor',
+              borderRadius: '50%',
+              height: 1.em,
+              width: 1.em
+            }
           }
 
     # Sets the loading flag

@@ -1,3 +1,5 @@
+require 'fron-ui/utils/theme_roller'
+
 # Main Component
 class Main < Fron::Component
   # Styles
@@ -10,4 +12,5 @@ class Main < Fron::Component
 
   # Components
   component :todos, Todos
+  component :theme, ThemeRoller
 end

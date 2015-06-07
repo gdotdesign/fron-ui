@@ -4,7 +4,10 @@ class Todos < UI::Box
     # Includes
     include UI::Behaviors::Confirmation
     include UI::Behaviors::Actions
-    include Record
+    include UI::Behaviors::Rest
+    include ::Record
+
+    rest url: 'http://localhost:3000/todos'
 
     # Extends
     extend Forwardable
@@ -35,7 +38,7 @@ class Todos < UI::Box
             textDecoration: 'line-through'
           }
 
-    on :change, :update
+    on :change, :update!
 
     confirmation :destroy!, 'Are you sure?'
 
@@ -47,15 +50,17 @@ class Todos < UI::Box
     # Destroys the element in the storage
     # and trigger refresh.
     def destroy!
-      Todos.storage.remove data[:id]
-      trigger :refresh
+      destroy do
+        trigger :refresh
+      end
     end
 
     # Updates the elemen tin the storage
     # and triggers refresh.
-    def update
-      Todos.storage.set data[:id], data.merge(done: done?)
-      trigger :refresh
+    def update!
+      update data.merge(done: done?) do
+        trigger :refresh
+      end
     end
 
     # Renders the element

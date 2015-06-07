@@ -78,7 +78,7 @@ module UI
     end
 
     def select_tab
-      select find("[tab='#{handles.selected.tab_id}']")
+      select find_by_id(handles.selected.tab_id)
     end
 
     def select(tab)
@@ -90,6 +90,10 @@ module UI
 
     def active_tab
       find('[tab].active')
+    end
+
+    def find_by_id(id)
+      find("[tab='#{id}']")
     end
 
     def update_tabs

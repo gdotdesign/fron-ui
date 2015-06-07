@@ -4,9 +4,12 @@ class Todos < UI::Box
   include UI::Behaviors::Keydown
   include UI::Behaviors::Actions
   include UI::Behaviors::Render
+  include UI::Behaviors::Rest
 
   # Extends
   extend Forwardable
+
+  rest url: 'http://localhost:3000/todos'
 
   # Tag definition
   tag 'ui-todos'
@@ -17,7 +20,7 @@ class Todos < UI::Box
   # Styles
   style minHeight: 35.em,
         'ui-container:last-of-type' => {
-          borderTop: -> { "#{theme.border_size.em} solid #{colors.border}" },
+          borderTop: -> { "#{theme.border_size.em} solid #{dampen colors.background, 0.05}" },
           paddingTop: -> { theme.spacing.em },
           fontWeight: '600'
         }
@@ -39,11 +42,8 @@ class Todos < UI::Box
     component :filters, Filters, direction: :row
   end
 
-  # Delegate storage to class
-  def_delegators :class, :storage
-
   # Render on checkbox change
-  on :refresh, :render
+  on :refresh, :refresh
   # Render when filters change
   on :selected_change, :render
 
@@ -53,36 +53,48 @@ class Todos < UI::Box
   # Initializes the list
   def initialize
     super
-    render
+    refresh
+  end
+
+  # Loads the items from the server
+  def refresh
+    all do |items|
+      @items = items
+      render
+    end
   end
 
   # Renders the component
   def render!
-    items = storage.all.to_a
-    render_items items
-    done_count = items.count { |item| item[:done] }
-    @footer.count.text = "#{items.count - done_count} items left"
+    render_items
+    done_count = @items.count { |item| item[:done] }
+    @footer.count.text = "#{@items.count - done_count} items left"
   end
 
   # Render items based on the selected filter
-  def render_items(items)
+  def render_items
     @list.items = case @footer.filters.selected.value
                   when :active
-                    items.reject { |item| item[:done] }
+                    @items.reject { |item| item[:done] }
                   when :completed
-                    items.select { |item| item[:done] }
+                    @items.select { |item| item[:done] }
                   else
-                    items
+                    @items
                   end.sort_by { |item| item[:text] }
   end
 
   # Adds a new item
   def add
     return if value.empty?
-    id = SecureRandom.uuid
-    storage.set id, text: value, done: false, id: id
-    @header.input.value = ''
-    render
+    data = {
+      id: SecureRandom.uuid,
+      text: value,
+      done: false
+    }
+    create data do
+      @header.input.value = ''
+      refresh
+    end
   end
 
   private
@@ -92,12 +104,5 @@ class Todos < UI::Box
   # @return [String] The value
   def value
     @header.input.value.to_s.strip
-  end
-
-  # Returns the prefixed storage
-  #
-  # @return [Storage] The storage
-  def self.storage
-    @storage ||= Storage.new :todos
   end
 end

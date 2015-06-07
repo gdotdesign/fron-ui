@@ -46,6 +46,10 @@ module UI
         request :post, '', data, &block
       end
 
+      def all(&block)
+        request :get, '', &block
+      end
+
       # Makes a requests to server
       #
       # :reek:FeatureEnvy

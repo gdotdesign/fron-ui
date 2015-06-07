@@ -65,11 +65,18 @@ end
 class Main < UI::Container
   style padding: -> { theme.spacing.em },
         boxSizing: 'border-box',
-        height: '100vh'
+        height: '100vh',
+        'ui-box:first-child' => {
+          flex: '0 0 10em'
+        }
 
   component :container, UI::Container, direction: :row, flex: 1 do
     component :sidebar, UI::Box do
-      component :title, UI::Title, text: 'Files'
+      component :title, UI::Title, text: 'Files', direction: :row do
+        component :button, UI::Button, type: :success, shape: :square do
+          component :icon, UI::Icon, glyph: :plus
+        end
+      end
       component :list, List, base: Item
     end
     component :content, UI::Box, flex: 1 do
@@ -90,6 +97,8 @@ class Main < UI::Container
 
   def open(event)
     request :get, event.target.data[:id] do |data|
+      current = @container.content.tabs.find_by_id(data[:filename])
+      break @container.content.tabs.select current if current
       tab = FileTab.new
       tab.data = data
       @container.content.tabs << tab

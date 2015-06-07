@@ -29,8 +29,8 @@ module UI
           '&[shape=square]' => { minWidth: -> { theme.size.em },
                                  height: -> { theme.size.em },
                                  justifyContent: :center,
+                                 display: 'inline-flex',
                                  alignItems: :center,
-                                 display: :flex,
                                  padding: '0' },
           '&[disabled]' => { opacity: 0.4 },
           '> *' => { pointerEvents: :none }

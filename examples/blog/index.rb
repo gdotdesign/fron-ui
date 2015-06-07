@@ -63,18 +63,16 @@ class Posts < UI::Container
           marginLeft: -> { (theme.spacing * 2).em }
         },
         'ui-title' => {
-          display: :flex,
           flex: '0 0 2em',
           '> span' => {
             overflow: :hidden,
             textOverflow: :ellipsis,
-            whiteSpace: :nowrap,
-            flex: 1
+            whiteSpace: :nowrap
           }
         }
 
   component :box, UI::Container, flex: '0 0 15em' do
-    component :title, UI::Title, text: 'Posts' do
+    component :title, UI::Title, text: 'Posts', direction: :row do
       component :button, UI::Button, type: :success, shape: :square do
         component :icon, UI::Icon, glyph: :plus
       end
@@ -83,7 +81,7 @@ class Posts < UI::Container
   end
 
   component :preview, UI::Container, flex: 1 do
-    component :title, UI::Title do
+    component :title, UI::Title, direction: :row  do
       component :button, UI::Button, action: :edit do
         component :icon, UI::Icon, glyph: :edit
         component :span, :span, text: 'Edit'
@@ -132,7 +130,7 @@ class Form < UI::Container
 
   style 'input' => { fontSize: 2.em,
                      flex: '0 0 auto',
-                     borderBottom: -> { "#{theme.border_size.em} solid #{colors.border}" } },
+                     borderBottom: -> { "#{theme.border_size.em} solid #{dampen colors.background, 0.05}" } },
         'ui-container' => {
           position: :relative,
           paddingLeft: '50%'
@@ -143,7 +141,7 @@ class Form < UI::Container
           padding: 20.px
         },
         'base' => {
-          borderLeft: -> { "#{theme.border_size.em} solid #{colors.border}" },
+          borderLeft: -> { "#{theme.border_size.em} solid #{dampen colors.background, 0.05}" },
           overflow: :auto,
           div: {
             maxWidth: 800.px,

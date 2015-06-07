@@ -7,7 +7,7 @@ module UI
   #
   # @author Gusztáv Szikszai
   # @since 0.1.0
-  class Title < Fron::Component
+  class Title < UI::Container
     extend Forwardable
 
     tag 'ui-title'
@@ -16,7 +16,8 @@ module UI
           paddingBottom: -> { theme.spacing.em },
           fontFamily: -> { theme.font_family },
           '> span' => { fontSize: '1.6em',
-                        fontWeight: 600 }
+                        fontWeight: 600,
+                        flex: 1 }
 
     component :span, :span
 

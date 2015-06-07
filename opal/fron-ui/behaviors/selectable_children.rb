@@ -50,7 +50,7 @@ module UI
       #
       # @return [Fron::Component] The child
       def selected
-        selected = children.find_all { |child| child.has_class :selected }
+        selected = children.select { |child| child.has_class :selected }
         return nil if selected.empty?
         return selected.first if selected.count == 1
         selected
