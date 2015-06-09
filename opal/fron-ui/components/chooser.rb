@@ -175,6 +175,7 @@ module UI
     # @return The value
     def value
       selected = list.selected
+      return nil unless selected
       if selected.is_a?(Array)
         return nil if selected.empty?
         selected.map(&:value)

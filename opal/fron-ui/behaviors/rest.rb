@@ -7,6 +7,8 @@ module UI
     # @author Gusztáv Szikszai
     # @since 0.1.0
     module Rest
+      extend Fron::Eventable
+
       # Sets up the behavior.
       #
       # @param base [Fron::Component] The includer
@@ -62,15 +64,29 @@ module UI
       def request(method, path, params = {})
         req = create_request path
         req.request method.upcase, params do |response|
-          if (200..300).cover?(response.status)
-            yield response.json if block_given?
+          if response.status == 0
+            raise_error :no_connection, "Could not connect to: #{req.url}"
+          elsif (200..300).cover?(response.status)
+            yield response_json(response) if block_given?
           else
-            warn response.json['error']
+            raise_error :wrong_status, response_json(response)['error']
           end
         end
       end
 
       private
+
+      def raise_error(type, message)
+        UI::Behaviors::Rest.trigger type, message
+        UI::Behaviors::Rest.trigger :error, [type, message]
+        warn message
+      end
+
+      def response_json(response)
+        response.json
+      rescue StandardError
+        raise_error :invalid_json, 'Invalid JSON data!'
+      end
 
       # Creates a request object
       #

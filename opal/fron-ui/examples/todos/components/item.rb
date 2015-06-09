@@ -58,7 +58,7 @@ class Todos < UI::Box
     # Updates the elemen tin the storage
     # and triggers refresh.
     def update!
-      update data.merge(done: done?) do
+      update done: done? do
         trigger :refresh
       end
     end

@@ -17,12 +17,6 @@ describe TestClasses::Rest do
     subject.data = { id: 0 }
   end
 
-  describe '#create_request' do
-    it 'should create request' do
-      subject.create_request('/').should be_a Fron::Request
-    end
-  end
-
   context 'Requests' do
     before do
       subject.should receive(:create_request).and_return request

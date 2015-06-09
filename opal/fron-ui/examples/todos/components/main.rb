@@ -1,4 +1,4 @@
-require 'fron-ui/utils/theme_roller'
+require_relative 'todos'
 
 # Main Component
 class Main < Fron::Component
@@ -12,5 +12,19 @@ class Main < Fron::Component
 
   # Components
   component :todos, Todos
-  component :theme, ThemeRoller
+  component :notifications, UI::Notifications
+
+  on :notification, :test
+
+  def test(event)
+    @notifications.push event.message
+  end
+
+  def initialize
+    super
+    UI::Behaviors::Rest.on :error do |args|
+      @notifications.push args[1]
+    end
+    @todos.refresh
+  end
 end

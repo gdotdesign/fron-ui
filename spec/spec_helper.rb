@@ -19,6 +19,28 @@ require 'rspec_coverage_helper'
 require 'fron_ui'
 require 'fron/event_mock'
 
+class FakeRequest
+  def initialize(url)
+    @url = url
+  end
+
+  def request(method, params = {})
+    fail ['Tried to make a request in test environment!',
+          "To: #{method.upcase} - #{@url}",
+          "With: #{params}"].join("\n")
+  end
+end
+
+module UI
+  module Behaviors
+    module Rest
+      def create_request(path)
+        FakeRequest.new "#{@rest_options.url}/#{path}"
+      end
+    end
+  end
+end
+
 module TestHelpers
   def mock_drag(drag, left = 0, top = 0)
     target = drag.base

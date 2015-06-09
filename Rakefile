@@ -25,9 +25,7 @@ QualityControl.tasks += %w(
 task :example do
   example = (ARGV[1] || 'todo')
   server = Opal::Server.new do |s|
-    s.append_path 'examples'
-    s.append_path "examples/#{example}"
-    s.main = example
+    s.main = "fron-ui/examples/#{example}/index"
     s.debug = false
   end
   Rack::Handler::WEBrick.run server, Port: 9292

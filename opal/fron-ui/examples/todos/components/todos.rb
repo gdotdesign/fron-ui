@@ -1,3 +1,6 @@
+require_relative 'item'
+require_relative 'options'
+
 # Todo List
 class Todos < UI::Box
   # Includes
@@ -50,12 +53,6 @@ class Todos < UI::Box
   # Set render method
   render :render!
 
-  # Initializes the list
-  def initialize
-    super
-    refresh
-  end
-
   # Loads the items from the server
   def refresh
     all do |items|
@@ -80,7 +77,7 @@ class Todos < UI::Box
                     @items.select { |item| item[:done] }
                   else
                     @items
-                  end.sort_by { |item| item[:text] }
+                  end.sort_by { |item| item[:text].to_s }
   end
 
   # Adds a new item
@@ -95,6 +92,7 @@ class Todos < UI::Box
       @header.input.value = ''
       refresh
     end
+    trigger :notification, message: 'Item added!'
   end
 
   private
