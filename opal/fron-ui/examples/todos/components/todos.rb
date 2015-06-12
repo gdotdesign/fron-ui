@@ -56,8 +56,7 @@ class Todos < UI::Box
   def initialize
     super
     DOM::Window.on('popstate') do
-      filter = State.decode(`location.search`[1..-1])[:filter]
-      @footer.filters.select @footer.filters.children.find { |item| item.value == filter }
+      @footer.filters.select @footer.filters.children.find { |item| item.value == get_state[:filter] }
     end
   end
 
@@ -74,6 +73,15 @@ class Todos < UI::Box
     render_items
     done_count = @items.count { |item| item[:done] }
     @footer.count.text = "#{@items.count - done_count} items left"
+    save_state
+  end
+
+  def get_state
+    State.decode(`location.search`[1..-1])
+  end
+
+  def save_state
+    return if get_state == state
     DOM::Window.state = '?' + State.encode(state)
   end
 

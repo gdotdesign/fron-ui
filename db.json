@@ -13,17 +13,17 @@
     {
       "id": "37c130ed-d54d-49be-83ed-6e43d794fb17",
       "text": "sad",
-      "done": false
+      "done": true
     },
     {
       "id": "ed14c174-64f0-4ca8-acf3-abb70a94c9c7",
       "text": "asd",
-      "done": false
+      "done": true
     },
     {
       "id": "8b5a6928-f1d7-49be-b13d-092581f40c3e",
       "text": "asd",
-      "done": false
+      "done": true
     }
   ],
   "comments": [
