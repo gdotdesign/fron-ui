@@ -53,6 +53,14 @@ class Todos < UI::Box
   # Set render method
   render :render!
 
+  def initialize
+    super
+    DOM::Window.on('popstate') do
+      filter = State.decode(`location.search`[1..-1])[:filter]
+      @footer.filters.select @footer.filters.children.find { |item| item.value == filter }
+    end
+  end
+
   # Loads the items from the server
   def refresh
     all do |items|
@@ -66,6 +74,11 @@ class Todos < UI::Box
     render_items
     done_count = @items.count { |item| item[:done] }
     @footer.count.text = "#{@items.count - done_count} items left"
+    DOM::Window.state = '?' + State.encode(state)
+  end
+
+  def state
+    { filter: @footer.filters.selected.value }
   end
 
   # Render items based on the selected filter

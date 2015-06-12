@@ -1,11 +1,6 @@
 {
   "todos": [
     {
-      "id": "1119553d-b95c-4843-a679-ec9631ef852f",
-      "text": "sad12",
-      "done": true
-    },
-    {
       "id": "53bb21b6-3a07-4243-b8a7-2b4cdebeaa8a",
       "text": "asd",
       "done": true
@@ -21,7 +16,12 @@
       "done": false
     },
     {
-      "id": "2396abe7-fbdd-4c52-bf63-32035f8ff54b",
+      "id": "ed14c174-64f0-4ca8-acf3-abb70a94c9c7",
+      "text": "asd",
+      "done": false
+    },
+    {
+      "id": "8b5a6928-f1d7-49be-b13d-092581f40c3e",
       "text": "asd",
       "done": false
     }
