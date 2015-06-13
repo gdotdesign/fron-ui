@@ -7,6 +7,7 @@ class Todos < UI::Box
   include UI::Behaviors::Keydown
   include UI::Behaviors::Actions
   include UI::Behaviors::Render
+  include UI::Behaviors::State
   include UI::Behaviors::Rest
 
   # Extends
@@ -50,14 +51,18 @@ class Todos < UI::Box
   # Render when filters change
   on :selected_change, :render
 
+  state_changed :state_changed
+
   # Set render method
   render :render!
 
   def initialize
     super
-    DOM::Window.on('popstate') do
-      @footer.filters.select @footer.filters.children.find { |item| item.value == get_state[:filter] }
-    end
+    @items = []
+  end
+
+  def state_changed
+    @footer.filters.select @footer.filters.children.find { |item| item.value == state }
   end
 
   # Loads the items from the server
@@ -73,20 +78,7 @@ class Todos < UI::Box
     render_items
     done_count = @items.count { |item| item[:done] }
     @footer.count.text = "#{@items.count - done_count} items left"
-    save_state
-  end
-
-  def get_state
-    State.decode(`location.search`[1..-1])
-  end
-
-  def save_state
-    return if get_state == state
-    DOM::Window.state = '?' + State.encode(state)
-  end
-
-  def state
-    { filter: @footer.filters.selected.value }
+    self.state = @footer.filters.selected.value
   end
 
   # Render items based on the selected filter

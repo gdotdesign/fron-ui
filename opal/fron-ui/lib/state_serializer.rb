@@ -1,15 +1,17 @@
-# Class for managing states in the application
-# mainly in the form of a string, for exmaple:
-# (hash:value,hash:[value,value2,(hash3:value2)])
+# Class for encoding data into a string for use in URLS
 #
 # Features
 # * Encodes string values to be used in url
 # * Handles recursives structures such as hashes and arrays
 # * Can be extended with additional classes easily
 #
+# @example Recursive Structures
+#   { key1: 'value', key2: { key3: 'test' } }
+#   #=> (key1:value,key2:(key3:test))
+#
 # @author Gusztáv Szikszai
 # @since 0.1
-class State
+class StateSerializer
   # MAP of encoding / decodings for classes
   MAP = {
     String => { encode: -> (item) { `escape(#{item})` } },

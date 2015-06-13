@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe State do
+describe StateSerializer do
   subject { described_class.decode(described_class.encode(data)).should eq data }
 
   context 'Recursive structures' do

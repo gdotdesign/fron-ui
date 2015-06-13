@@ -36,5 +36,6 @@ Fron::Sheet.helpers do
   end
 end
 
+DOM::Document.body.style.display = :none
 Fron::Sheet.stylesheet '//fonts.googleapis.com/css?family=Open+Sans:400,600,700'
-Fron::Sheet.add_rule 'body', { margin: 0, background: -> { colors.body }, color: -> { readable_color colors.body } }, '0'
+Fron::Sheet.add_rule 'body', { margin: 0, display: 'block !important', background: -> { colors.body }, color: -> { readable_color colors.body } }, '0'
