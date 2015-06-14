@@ -10,16 +10,38 @@ module TestClasses
 end
 
 describe TestClasses::Rest do
-  let(:request) { double :request }
+  let(:request) { double :request, url: 'test' }
   let(:resp) { double :response, status: 200, json: {} }
+  let(:error_resp) { double :response, status: 0, json: {} }
 
   before do
     subject.data = { id: 0 }
   end
 
+  context 'Real request' do
+    it 'should return request' do
+      subject.create_request('/').should be_a(FakeRequest)
+    end
+  end
+
   context 'Requests' do
     before do
       subject.should receive(:create_request).and_return request
+    end
+
+    context 'Wrong request' do
+      it 'should raise error' do
+        subject.should receive(:warn)
+        request.should receive(:request).and_yield error_resp
+        subject.request :get, '', {}
+      end
+    end
+
+    describe '#all' do
+      it 'should return all records' do
+        request.should receive(:request).with(:GET, {}).and_yield resp
+        subject.all
+      end
     end
 
     describe '#update' do

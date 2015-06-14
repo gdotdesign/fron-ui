@@ -66,6 +66,7 @@ module UI
       noti = Notification.new
       noti.span.text = message
       noti >> self
+      noti
     end
   end
 end

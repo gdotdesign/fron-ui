@@ -25,6 +25,7 @@ describe TestClasses::Dropdown do
       subject.dropdown.open
       expect {
         subject.input.trigger :blur
+        subject.dropdown.trigger :animationend, animationName: 'ui-dropdown-hide'
       }.to change { subject.dropdown.has_class(:open) }.from(true).to(false)
     end
   end

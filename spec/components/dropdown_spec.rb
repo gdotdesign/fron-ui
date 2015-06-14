@@ -34,6 +34,7 @@ describe UI::Dropdown do
       subject.add_class :open
       expect {
         subject.close
+        subject.trigger :animationend, animationName: 'ui-dropdown-hide'
       }.to change { subject.has_class(:open) }.from(true).to(false)
     end
   end
