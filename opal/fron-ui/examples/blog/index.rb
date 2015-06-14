@@ -204,6 +204,7 @@ class Main < UI::Container
   extend Forwardable
   include UI::Behaviors::Actions
   include UI::Behaviors::Rest
+  include UI::Behaviors::State
 
   rest url: 'http://localhost:3000/posts'
 
@@ -219,20 +220,25 @@ class Main < UI::Container
     component :form, Form, flex: 1, compact: true
   end
 
-  def initialize
-    super
-    @content.children.each(&:hide)
-    content
+  state_changed :state_changed
+
+  def state_changed
+    id = state.to_h[:id]
+    if id && id != ''
+      load(id)
+    else
+      @content.posts.refresh
+      @content.posts.show
+      @content.form.hide
+    end
   end
 
   def content
-    @content.posts.refresh
-    @content.posts.show
-    @content.form.hide
+    self.state = state.to_h.merge!(id: '')
   end
 
   def edit
-    load @content.posts.selected.data[:id]
+    self.state = state.to_h.merge!(id: @content.posts.selected.data[:id])
   end
 
   def load(id)

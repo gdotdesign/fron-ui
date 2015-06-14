@@ -1,10 +1,10 @@
 require 'fron_ui'
 
-require 'components/header'
-require 'components/footer'
-require 'components/comment'
-require 'components/list'
-require 'components/feed'
-require 'components/main'
+require_relative 'components/header'
+require_relative 'components/footer'
+require_relative 'components/comment'
+require_relative 'components/list'
+require_relative 'components/feed'
+require_relative 'components/main'
 
 DOM::Document.body << Main.new

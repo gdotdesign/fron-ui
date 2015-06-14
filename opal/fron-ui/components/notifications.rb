@@ -1,5 +1,13 @@
 module UI
+  # Component for displaying notifications.
+  #
+  # @author Gusztáv Szikszai
+  # @since 0.1.0
   class Notifications < Base
+    # Notification component-
+    #
+    # @author Gusztáv Szikszai
+    # @since 0.1.0
     class Notification < Base
       include UI::Behaviors::Transition
 
@@ -30,11 +38,14 @@ module UI
                                   '100%' => { opacity: 0 } },
                         callback: :remove!
 
+      # Initializes the component, starting
+      # the show transition.
       def initialize
         super
         transition! :show
       end
 
+      # Hides the component with the hide transition.
       def hide
         transition! :hide
       end
@@ -47,9 +58,13 @@ module UI
           left: 1.5.em,
           '> * + *' => { marginTop: -> { (theme.spacing / 1.5).em } }
 
-    def push(notification)
+    # Pushes a new notification with the given
+    # message into the queue.
+    #
+    # @param message [String] The message
+    def push(message)
       noti = Notification.new
-      noti.span.text = notification
+      noti.span.text = message
       noti >> self
     end
   end

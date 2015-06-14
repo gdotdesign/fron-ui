@@ -45,6 +45,7 @@ class StateSerializer
     #
     # @return The decoded value
     def decode(string)
+      return nil if string.empty?
       with_rec_map do
         # Replace recursive types with placeholders
         string = replace_recursives string
@@ -62,7 +63,7 @@ class StateSerializer
         # If we couldn't decode the value
         # it's a string or unkown type
         # that we treat as string
-        decoded || `unescape(#{string})`
+        decoded ||= `unescape(#{string})`
       end
     end
 
