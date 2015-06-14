@@ -48,6 +48,9 @@ module UI
         request :post, '', data, &block
       end
 
+      # Returns all recrods
+      #
+      # @yieldreturn [Array<Hash>] The recrods
       def all(&block)
         request :get, '', &block
       end
@@ -76,12 +79,22 @@ module UI
 
       private
 
+      # Raises an error on the parent class.
+      #
+      # @param type [Symbol] The type
+      # @param message [String] The message
       def raise_error(type, message)
         UI::Behaviors::Rest.trigger type, message
         UI::Behaviors::Rest.trigger :error, [type, message]
         warn message
       end
 
+      # Tries to parse the json response,
+      # raises error if it's invalid.
+      #
+      # @param response [Fron::Response] The response
+      #
+      # @return [Hash] The parsed data
       def response_json(response)
         response.json
       rescue StandardError

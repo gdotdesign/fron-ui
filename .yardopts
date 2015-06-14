@@ -1,4 +1,5 @@
 --private
 --protected
 --title Fron
+--exclude opal/fron-ui/examples
 opal/**/*.rb
