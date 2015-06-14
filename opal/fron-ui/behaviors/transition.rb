@@ -25,6 +25,7 @@ module UI
       def on_transition_end(event)
         options = @transitions[event.animationName]
         send options[:callback] if options[:callback] && respond_to?(options[:callback])
+        send @transition_callback if @transition_callback
       end
 
       # Adds the transitions animations to
@@ -42,10 +43,11 @@ module UI
       # Starts the transition with the given name.
       #
       # @param name [String] The name of the transition
-      def transition!(name)
+      def transition!(name, &block)
         name = "#{tag}-#{name}"
         options = @transitions[name]
         @style.animation = [name, options[:duration], options[:delay], 'both'].join(' ')
+        @transition_callback = block
       end
     end
   end

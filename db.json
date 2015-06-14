@@ -8,7 +8,7 @@
     {
       "id": "8e36d78b-c588-4a6d-a50b-8a60313b1c53",
       "text": "aS",
-      "done": true
+      "done": false
     },
     {
       "id": "37c130ed-d54d-49be-83ed-6e43d794fb17",
@@ -28,12 +28,12 @@
     {
       "id": "62baf3b1-79c2-4145-ae52-a63b32db3c35",
       "text": "asd",
-      "done": false
+      "done": true
     },
     {
       "id": "1a234966-609f-4cd0-b8f5-357d0c2cfa32",
       "text": "asd",
-      "done": false
+      "done": true
     },
     {
       "id": "93ba39fa-f937-41f4-8bde-82d88a3fcb3d",
@@ -43,6 +43,11 @@
     {
       "id": "48d4e022-2574-4bc3-9350-aca0562a83d4",
       "text": "sad",
+      "done": false
+    },
+    {
+      "id": "cb91666c-96cf-4a87-ac24-2ad7e85dbae0",
+      "text": "asd",
       "done": false
     }
   ],
