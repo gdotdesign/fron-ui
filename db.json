@@ -8,7 +8,7 @@
     {
       "id": "8e36d78b-c588-4a6d-a50b-8a60313b1c53",
       "text": "aS",
-      "done": false
+      "done": true
     },
     {
       "id": "37c130ed-d54d-49be-83ed-6e43d794fb17",
@@ -23,7 +23,7 @@
     {
       "id": "8b5a6928-f1d7-49be-b13d-092581f40c3e",
       "text": "asd",
-      "done": true
+      "done": false
     },
     {
       "id": "62baf3b1-79c2-4145-ae52-a63b32db3c35",
@@ -33,7 +33,7 @@
     {
       "id": "1a234966-609f-4cd0-b8f5-357d0c2cfa32",
       "text": "asd",
-      "done": true
+      "done": false
     },
     {
       "id": "93ba39fa-f937-41f4-8bde-82d88a3fcb3d",
@@ -43,7 +43,7 @@
     {
       "id": "48d4e022-2574-4bc3-9350-aca0562a83d4",
       "text": "sad",
-      "done": false
+      "done": true
     },
     {
       "id": "cb91666c-96cf-4a87-ac24-2ad7e85dbae0",
@@ -135,10 +135,20 @@
     {
       "id": "0c172826-0a50-4343-a759-1b4ee600b68a",
       "date": "2015-06-13T17:08:17+0200",
-      "votes": 0,
+      "votes": 2,
       "user": {
         "name": "Javonte Kerluke",
         "image": "https://randomuser.me/api/portraits/men/39.jpg"
+      },
+      "body": "<p>asd</p>"
+    },
+    {
+      "id": "3be9c97e-66bd-430b-aab7-f55d4bb7d421",
+      "date": "2015-06-15T07:38:35+0200",
+      "votes": 0,
+      "user": {
+        "name": "Lizeth Hintz",
+        "image": "https://randomuser.me/api/portraits/men/32.jpg"
       },
       "body": "<p>asd</p>"
     }
@@ -235,6 +245,11 @@
       "title": "",
       "body": "",
       "id": 16
+    },
+    {
+      "title": "",
+      "body": "",
+      "id": 17
     }
   ]
 }

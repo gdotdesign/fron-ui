@@ -22,11 +22,26 @@ QualityControl.tasks += %w(
   rubycritic:coverage
 )
 
-task :example do
-  example = (ARGV[1] || 'todo')
-  server = Opal::Server.new do |s|
-    s.main = "fron-ui/examples/#{example}/index"
+html = -> (file) {
+  """
+  <body>
+    <script src='/assets/#{file}.js'></script>
+  </body>
+  """
+}
+
+task :examples do
+  opal = Opal::Server.new do |s|
+    s.main = nil
     s.debug = false
   end
+
+  app = Proc.new do |env|
+    next [404, {}, []] if env['PATH_INFO'] =~ /^\/assets/
+    example = env['PATH_INFO'][1..-1]
+    ['200', {'Content-Type' => 'text/html'}, [html.call("fron-ui/examples/#{example}/index")]]
+  end
+
+  server = Rack::Cascade.new([app, opal])
   Rack::Handler::WEBrick.run server, Port: 9292
 end
