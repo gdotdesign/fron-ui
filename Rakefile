@@ -22,13 +22,7 @@ QualityControl.tasks += %w(
   rubycritic:coverage
 )
 
-html = -> (file) {
-  """
-  <body>
-    <script src='/assets/#{file}.js'></script>
-  </body>
-  """
-}
+html = -> (file) { "<body><script src='/assets/#{file}.js'></script></body>" }
 
 task :examples do
   opal = Opal::Server.new do |s|
@@ -36,10 +30,10 @@ task :examples do
     s.debug = false
   end
 
-  app = Proc.new do |env|
-    next [404, {}, []] if env['PATH_INFO'] =~ /^\/assets/
+  app = proc do |env|
+    next [404, {}, []] if env['PATH_INFO'] =~ %r{^/assets}
     example = env['PATH_INFO'][1..-1]
-    ['200', {'Content-Type' => 'text/html'}, [html.call("fron-ui/examples/#{example}/index")]]
+    ['200', { 'Content-Type' => 'text/html' }, [html.call("fron-ui/examples/#{example}/index")]]
   end
 
   server = Rack::Cascade.new([app, opal])

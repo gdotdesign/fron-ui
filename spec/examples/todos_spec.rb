@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'fron-ui/examples/todos/components/todos'
 
-describe Todos do
+describe Examples::Todos do
   let(:items) { [{ done: false, id: 1, test: 'Todo Item #1' }] }
   let(:item) { subject.find('ui-todo-item') }
 

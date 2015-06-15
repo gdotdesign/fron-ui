@@ -71,7 +71,6 @@ module Examples
       UI::Behaviors::Rest.on :error do |args|
         @notifications.push args[1]
       end
-      refresh
     end
 
     def test(event)
