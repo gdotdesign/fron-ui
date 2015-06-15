@@ -46,6 +46,7 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    code_metrics (0.1.3)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     colorize (0.7.7)
@@ -133,6 +134,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  code_metrics
   color!
   execjs (~> 2.4.0)
   fron!

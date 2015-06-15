@@ -39,3 +39,10 @@ task :examples do
   server = Rack::Cascade.new([app, opal])
   Rack::Handler::WEBrick.run server, Port: 9292
 end
+
+task :metrics do
+  require 'code_metrics'
+  require 'code_metrics/line_statistics'
+  files = FileList["opal/fron-ui/examples/**/*.rb"]
+  CodeMetrics::LineStatistics.new(files).print_loc
+end
