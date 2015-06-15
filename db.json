@@ -1,52 +1,47 @@
 {
   "todos": [
     {
-      "id": "53bb21b6-3a07-4243-b8a7-2b4cdebeaa8a",
-      "text": "asd",
-      "done": true
-    },
-    {
-      "id": "8e36d78b-c588-4a6d-a50b-8a60313b1c53",
-      "text": "aS",
-      "done": true
-    },
-    {
-      "id": "37c130ed-d54d-49be-83ed-6e43d794fb17",
+      "id": "7d8851f4-bf11-4ddc-9363-8f31ec39682f",
       "text": "sad",
-      "done": true
+      "done": false
     },
     {
-      "id": "ed14c174-64f0-4ca8-acf3-abb70a94c9c7",
-      "text": "asd",
-      "done": true
-    },
-    {
-      "id": "8b5a6928-f1d7-49be-b13d-092581f40c3e",
+      "id": "e6016bc2-a35d-4f9e-a332-765f7090efb9",
       "text": "asd",
       "done": false
     },
     {
-      "id": "62baf3b1-79c2-4145-ae52-a63b32db3c35",
+      "id": "22f06b9a-79c8-4c5d-a4e3-ad1263c920a9",
       "text": "asd",
       "done": true
     },
     {
-      "id": "1a234966-609f-4cd0-b8f5-357d0c2cfa32",
+      "id": "cf3cbf62-bcd6-48ad-8db7-bb1caa5e8029",
       "text": "asd",
-      "done": false
-    },
-    {
-      "id": "93ba39fa-f937-41f4-8bde-82d88a3fcb3d",
-      "text": "asd",
-      "done": false
-    },
-    {
-      "id": "48d4e022-2574-4bc3-9350-aca0562a83d4",
-      "text": "sad",
       "done": true
     },
     {
-      "id": "cb91666c-96cf-4a87-ac24-2ad7e85dbae0",
+      "id": "86b74f49-316b-4394-8f31-a00ad4b4fa2d",
+      "text": "asd",
+      "done": false
+    },
+    {
+      "id": "23386ac4-fd72-4d7b-97f3-538519b56237",
+      "text": "sd",
+      "done": false
+    },
+    {
+      "id": "73acd3ad-2f46-4a5a-849e-651512358ae9",
+      "text": "asd",
+      "done": true
+    },
+    {
+      "id": "1fab55da-b5e2-491b-9a69-8518f837a990",
+      "text": "asd",
+      "done": true
+    },
+    {
+      "id": "00613730-0617-4bc6-b2d1-096fbe922e85",
       "text": "asd",
       "done": false
     }
@@ -135,50 +130,10 @@
     {
       "id": "0c172826-0a50-4343-a759-1b4ee600b68a",
       "date": "2015-06-13T17:08:17+0200",
-      "votes": 2,
+      "votes": 0,
       "user": {
         "name": "Javonte Kerluke",
         "image": "https://randomuser.me/api/portraits/men/39.jpg"
-      },
-      "body": "<p>asd</p>"
-    },
-    {
-      "id": "3be9c97e-66bd-430b-aab7-f55d4bb7d421",
-      "date": "2015-06-15T07:38:35+0200",
-      "votes": 0,
-      "user": {
-        "name": "Lizeth Hintz",
-        "image": "https://randomuser.me/api/portraits/men/32.jpg"
-      },
-      "body": "<p>asd</p>"
-    },
-    {
-      "id": "8cf9d105-e808-4ca6-8216-b2be412446af",
-      "date": "2015-06-15T08:12:51+0200",
-      "votes": 0,
-      "user": {
-        "name": "Lizeth Hintz",
-        "image": "https://randomuser.me/api/portraits/men/32.jpg"
-      },
-      "body": "<p>asd</p>"
-    },
-    {
-      "id": "70ca1b3e-1294-46a9-bca1-83be74062b6f",
-      "date": "2015-06-15T08:13:43+0200",
-      "votes": 0,
-      "user": {
-        "name": "Wade Haley",
-        "image": "https://randomuser.me/api/portraits/women/48.jpg"
-      },
-      "body": "<p>asdasd</p>"
-    },
-    {
-      "id": "85670543-0d13-4f4b-a046-c4ac51bb6400",
-      "date": "2015-06-15T08:19:38+0200",
-      "votes": 0,
-      "user": {
-        "name": "Madaline Turcotte",
-        "image": "https://randomuser.me/api/portraits/women/15.jpg"
       },
       "body": "<p>asd</p>"
     }
@@ -275,11 +230,6 @@
       "title": "",
       "body": "",
       "id": 16
-    },
-    {
-      "title": "",
-      "body": "",
-      "id": 17
     }
   ]
 }

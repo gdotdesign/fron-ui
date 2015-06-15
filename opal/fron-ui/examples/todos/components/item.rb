@@ -30,10 +30,14 @@ module Examples
       # Styles
       style fontFamily: -> { theme.font_family },
             padding: -> { theme.spacing.em },
-            color: -> { colors.font },
-            'ui-checkbox' => {
+            'ui-checkbox, ui-action' => {
               height: 1.5.em,
               width: 1.5.em
+            },
+            'ui-action' => {
+              justifyContent: :center,
+              alignItems: :center,
+              display: :flex
             },
             '&.done ui-label' => {
               textDecoration: 'line-through'

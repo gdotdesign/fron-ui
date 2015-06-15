@@ -25,9 +25,9 @@ module Examples
     # Styles
     style fontFamily: -> { theme.font_family },
           padding: -> { theme.spacing.em },
-          marginTop: 1.5.em,
           minHeight: 35.em,
           margin: '0 auto',
+          marginTop: 1.5.em,
           width: 42.em,
           'ui-container:last-of-type' => {
             borderTop: -> { "#{theme.border_size.em} solid #{dampen colors.background, 0.05}" },
