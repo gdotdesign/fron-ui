@@ -43,7 +43,7 @@
     {
       "id": "00613730-0617-4bc6-b2d1-096fbe922e85",
       "text": "asd",
-      "done": false
+      "done": true
     }
   ],
   "comments": [
@@ -136,18 +136,38 @@
         "image": "https://randomuser.me/api/portraits/men/39.jpg"
       },
       "body": "<p>asd</p>"
+    },
+    {
+      "id": "da99982e-3358-4592-8488-ea7b58bfc7c1",
+      "date": "2015-06-16T07:53:11+0200",
+      "votes": 0,
+      "user": {
+        "name": "Furman Dickens",
+        "image": "https://randomuser.me/api/portraits/women/74.jpg"
+      },
+      "body": "<p>asd</p>"
+    },
+    {
+      "id": "0a7254b9-ccf4-4801-9e23-120a1635e80c",
+      "date": "2015-06-16T07:54:11+0200",
+      "votes": 0,
+      "user": {
+        "name": "Furman Dickens",
+        "image": "https://randomuser.me/api/portraits/women/74.jpg"
+      },
+      "body": "<p>asd</p>"
     }
   ],
   "files": [
     {
       "id": "asd",
       "filename": "test.csv",
-      "content": "This is a text....asdasdasdasdasd\nasd\nasd\nas\nd"
+      "content": "This is a textarea here where you can edit things...."
     },
     {
       "id": "asad",
       "filename": "test2.csv",
-      "content": "asdasd"
+      "content": "This is some text heree...."
     }
   ],
   "posts": [

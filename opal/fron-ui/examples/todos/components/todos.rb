@@ -54,7 +54,7 @@ module Examples
 
     component :notifications, UI::Notifications
 
-    on :notification, :test
+    on :notification, :notify
     # Render on checkbox change
     on :refresh, :refresh
     # Render when filters change
@@ -73,7 +73,7 @@ module Examples
       end
     end
 
-    def test(event)
+    def notify(event)
       @notifications.push event.message
     end
 

@@ -45,6 +45,7 @@ module UI
 
       style display: :block,
             flex: '0 0 auto',
+            minHeight: 3.em,
             borderBottom: -> { "#{theme.border_size.em} solid #{dampen colors.background, 0.05}" }
     end
 
@@ -64,7 +65,7 @@ module UI
 
     component :handles, Handles, base: Handle
 
-    def_delegators :handles, :base
+    def_delegators :handles, :base, :base=
 
     style '> *:not(ui-tab-handles):not(.active)' => { visibility: :hidden,
                                                       overflow: :hidden,
