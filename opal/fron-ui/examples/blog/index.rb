@@ -55,13 +55,14 @@ end
 class Posts < UI::Container
   extend Forwardable
 
-  tag 'posts[direction=row]'
+  tag 'ui-posts'
 
   style padding: -> { (theme.spacing * 2).em },
         'ui-container:last-of-type ui-icon' => { marginRight: -> { theme.spacing.em } },
         'ui-container:last-of-type' => {
           marginLeft: -> { (theme.spacing * 2).em }
         },
+        'ui-body' => { overflow: :auto },
         'ui-title' => {
           flex: '0 0 2em',
           '> span' => {
@@ -86,6 +87,10 @@ class Posts < UI::Container
         component :icon, UI::Icon, glyph: :edit
         component :span, :span, text: 'Edit'
       end
+      component :button, UI::Button, action: :edit do
+        component :icon, UI::Icon, glyph: 'trash-b'
+        component :span, :span, text: 'Delete'
+      end
     end
     component :body, 'ui-body'
   end
@@ -108,7 +113,7 @@ class Posts < UI::Container
 
   def selected=(data)
     @preview.title.text = data[:title]
-    @preview.body.html = `marked(#{data[:body]})`
+    @preview.body.html = `marked(#{data[:body]}, { gfm: true, breaks: true })`
   end
 end
 
@@ -117,6 +122,8 @@ class Form < UI::Container
   include UI::Behaviors::Rest
 
   extend Forwardable
+
+  tag 'ui-form'
 
   rest url: 'http://localhost:3000/posts'
 
@@ -135,12 +142,12 @@ class Form < UI::Container
           position: :relative,
           paddingLeft: '50%'
         },
-        'base, textarea' => {
+        'ui-base, textarea' => {
           boxSizing: 'border-box',
           fontSize: 16.px,
           padding: 20.px
         },
-        'base' => {
+        'ui-base' => {
           borderLeft: -> { "#{theme.border_size.em} solid #{dampen colors.background, 0.05}" },
           overflow: :auto,
           div: {
@@ -196,7 +203,7 @@ class Form < UI::Container
   end
 
   def render
-    preview.div.html = `marked(#{data[:body].to_s})`
+    preview.div.html = `marked(#{data[:body].to_s}, { gfm: true, breaks: true })`
   end
 end
 
@@ -216,7 +223,7 @@ class Main < UI::Container
 
   component :header, Header
   component :content, UI::Container, direction: :row, flex: 1, compact: true do
-    component :posts, Posts, flex: 1
+    component :posts, Posts, flex: 1, compact: true, direction: :row
     component :form, Form, flex: 1, compact: true
   end
 
