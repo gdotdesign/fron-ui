@@ -22,6 +22,7 @@ module UI
           display: :flex,
           color: -> { colors.primary },
           opacity: 0,
+          pointerEvents: :none,
           '&.loading' => {
             opacity: 1
           },

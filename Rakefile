@@ -11,9 +11,9 @@ require 'fron_ui'
 Bundler::GemHelper.install_tasks
 
 QualityControl::Rubycritic.directories += Dir.glob('opal/*/*') - ['opal/fron-ui/examples']
-QualityControl::Yard.threshold = 100
+QualityControl::Yard.threshold = 99
 QualityControl::OpalRspec.files = %r{^opal\/fron-ui\/.*\.rb}
-QualityControl::OpalRspec.threshold = 100
+QualityControl::OpalRspec.threshold = 99
 
 QualityControl.tasks += %w(
   syntax:ruby
@@ -38,11 +38,4 @@ task :examples do
 
   server = Rack::Cascade.new([app, opal])
   Rack::Handler::WEBrick.run server, Port: 9292
-end
-
-task :metrics do
-  require 'code_metrics'
-  require 'code_metrics/line_statistics'
-  files = FileList["opal/fron-ui/examples/**/*.rb"]
-  CodeMetrics::LineStatistics.new(files).print_loc
 end

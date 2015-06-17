@@ -8,4 +8,3 @@ gem 'execjs', '~> 2.4.0'
 # Gemspec deps
 gem 'fron', github: 'digitalnatives/fron', branch: 'next-version'
 gem 'color', github: 'gdotdesign/color', branch: '1.6.1'
-gem 'code_metrics'

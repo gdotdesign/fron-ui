@@ -1,5 +1,9 @@
 --private
 --protected
 --title Fron
---exclude opal/fron-ui/examples
+--exclude opal/fron-ui/examples/blog
+--exclude opal/fron-ui/examples/contacts
+--exclude opal/fron-ui/examples/editor
+--exclude opal/fron-ui/examples/kitchensink
+--exclude opal/fron-ui/examples/webshop
 opal/**/*.rb

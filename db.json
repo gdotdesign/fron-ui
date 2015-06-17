@@ -78,78 +78,8 @@
       "body": "<p>asdasd</p><p>asdasd</p>"
     },
     {
-      "id": "976553a4-3788-4b5b-a9f4-aabfc8d5b019",
-      "date": "2015-06-07T06:14:59+0200",
-      "votes": 0,
-      "user": {
-        "name": "Evie Wolff",
-        "image": "https://randomuser.me/api/portraits/women/72.jpg"
-      },
-      "body": "<p>asdasd</p>"
-    },
-    {
-      "id": "21ad214a-62c3-4d5f-a5d5-7642ef3027c9",
-      "date": "2015-06-13T17:06:37+0200",
-      "votes": 3,
-      "user": {
-        "name": "Keyshawn Heidenreich",
-        "image": "https://randomuser.me/api/portraits/women/25.jpg"
-      },
-      "body": "<p>asd</p>"
-    },
-    {
-      "id": "3b5f844d-8295-43f2-9392-0bb8abcd7eb7",
-      "date": "2015-06-13T17:06:51+0200",
-      "votes": 0,
-      "user": {
-        "name": "Vanessa Nikolaus",
-        "image": "https://randomuser.me/api/portraits/women/14.jpg"
-      },
-      "body": "<p>asd</p>"
-    },
-    {
-      "id": "1feebb6b-d254-4b97-a619-4c930ff0d371",
-      "date": "2015-06-13T17:07:21+0200",
-      "votes": 0,
-      "user": {
-        "name": "Vanessa Nikolaus",
-        "image": "https://randomuser.me/api/portraits/women/14.jpg"
-      },
-      "body": "<p>asd</p>"
-    },
-    {
-      "id": "74c0274d-d78f-4f79-9a86-fc190e9799f2",
-      "date": "2015-06-13T17:08:15+0200",
-      "votes": 0,
-      "user": {
-        "name": "Javonte Kerluke",
-        "image": "https://randomuser.me/api/portraits/men/39.jpg"
-      },
-      "body": "<p>sad</p>"
-    },
-    {
-      "id": "0c172826-0a50-4343-a759-1b4ee600b68a",
-      "date": "2015-06-13T17:08:17+0200",
-      "votes": 0,
-      "user": {
-        "name": "Javonte Kerluke",
-        "image": "https://randomuser.me/api/portraits/men/39.jpg"
-      },
-      "body": "<p>asd</p>"
-    },
-    {
       "id": "da99982e-3358-4592-8488-ea7b58bfc7c1",
       "date": "2015-06-16T07:53:11+0200",
-      "votes": 0,
-      "user": {
-        "name": "Furman Dickens",
-        "image": "https://randomuser.me/api/portraits/women/74.jpg"
-      },
-      "body": "<p>asd</p>"
-    },
-    {
-      "id": "0a7254b9-ccf4-4801-9e23-120a1635e80c",
-      "date": "2015-06-16T07:54:11+0200",
       "votes": 0,
       "user": {
         "name": "Furman Dickens",

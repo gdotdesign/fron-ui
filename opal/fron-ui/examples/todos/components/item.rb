@@ -47,6 +47,7 @@ module Examples
 
       confirmation :destroy!, 'Are you sure?'
 
+      # Initializes the component
       def initialize
         super
         self[:direction] = :row
@@ -75,6 +76,8 @@ module Examples
         toggle_class :done, done?
       end
 
+      # @!method done?
+      #   Returns true if the item is in done state false if not
       alias_method :done?, :checked
     end
   end

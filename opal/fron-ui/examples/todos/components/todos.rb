@@ -1,6 +1,7 @@
 require_relative 'item'
 require_relative 'options'
 
+# Examples module
 module Examples
   # Todo List
   class Todos < UI::Box
@@ -54,6 +55,7 @@ module Examples
 
     component :notifications, UI::Notifications
 
+    # Show notifications
     on :notification, :notify
     # Render on checkbox change
     on :refresh, :refresh
@@ -65,6 +67,9 @@ module Examples
     # Set render method
     render :render!
 
+    # Initializes the component
+    #
+    # * Listens on error for rest actions and shows notifiactions
     def initialize
       super
       @items = []
@@ -73,10 +78,14 @@ module Examples
       end
     end
 
+    # Shows notification for an event
+    #
+    # @param event [DOM::Event] The event
     def notify(event)
       @notifications.push event.message
     end
 
+    # Handle state change
     def state_changed
       @footer.filters.select @footer.filters.children.find { |item| item.value == state }
     end
