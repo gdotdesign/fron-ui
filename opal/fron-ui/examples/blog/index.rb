@@ -87,7 +87,7 @@ class Posts < UI::Container
         component :icon, UI::Icon, glyph: :edit
         component :span, :span, text: 'Edit'
       end
-      component :button, UI::Button, action: :edit do
+      component :button, UI::Button, action: :destroy do
         component :icon, UI::Icon, glyph: 'trash-b'
         component :span, :span, text: 'Delete'
       end
@@ -242,6 +242,12 @@ class Main < UI::Container
 
   def content
     self.state = state.to_h.merge!(id: '')
+  end
+
+  def destroy
+    request :delete, @content.posts.selected.data[:id] do
+      @content.posts.refresh
+    end
   end
 
   def edit
