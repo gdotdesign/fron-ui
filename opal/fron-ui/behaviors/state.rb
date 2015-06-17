@@ -20,7 +20,9 @@ module UI
       def self.state_changed(item)
         method = item[:args][0]
         DOM::Window.on('popstate') { send method }
-        send method
+        timeout do
+          send method
+        end
       end
 
       # Returns the decoded state.

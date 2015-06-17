@@ -2,29 +2,34 @@
   "contacts": [
     {
       "id": "eb31ef2c-191b-4b1d-abd8-f2af6cfb8701",
-      "name": "sadasdasd",
-      "email": "asd123asb",
-      "address": "asda",
-      "phone": "sad"
-    },
-    {
-      "id": "9cde4739-a564-4f1b-8ed9-59974d7ab442"
-    },
-    {
-      "id": "54cb60ee-9361-4510-91a5-e020f5996010"
-    },
-    {
-      "id": "95e2079a-24fb-4be9-a817-52aa5835bd99"
-    },
-    {
-      "id": "3e1fcf8f-577f-4244-9469-bbc7ef689728"
-    },
-    {
-      "id": "e6e50e24-daaa-404e-b763-982d0f1aa339",
-      "name": "asdasd",
+      "name": "Gusztáv Szikszai",
       "email": "cyber.gusztav@gmail.com",
+      "address": "Asd",
+      "phone": "Asd"
+    },
+    {
+      "id": "fb0a3a88-8132-4e0c-bd9d-7a2e7160e762",
+      "name": "a",
+      "email": 26710,
       "address": null,
       "phone": null
+    },
+    {
+      "id": "095a3e79-6930-4d3e-937f-a97146aad8df",
+      "name": "asd",
+      "email": "asd12123asd",
+      "address": "sdasd",
+      "phone": "asd"
+    },
+    {
+      "id": "28e5a800-0006-413e-8aac-0a0dcf0f427d",
+      "name": "Tony Stark",
+      "email": "tony@star",
+      "address": "asd",
+      "phone": "a012340"
+    },
+    {
+      "id": "614d3c1d-b386-4d1a-9438-786f253b6f5c"
     }
   ],
   "todos": [

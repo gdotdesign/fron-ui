@@ -34,6 +34,10 @@ class Item < UI::Container
     self[:direction] = :row
   end
 
+  def id
+    @data[:id]
+  end
+
   def render
     @image.src = 'http://www.gravatar.com/avatar/' + `md5(#{data[:email] || ''})` + '?s=100&d=identicon'
     @name.text = data[:name] || ' '
@@ -70,7 +74,6 @@ class Details < UI::Box
   rest url: 'http://localhost:3000/contacts'
 
   style 'ui-image' => { margin: -> { theme.spacing.em },
-                        borderRadius: 0.5.em,
                         height: 15.em,
                         width: 15.em },
         'ui-container' => { padding: -> { theme.spacing.em } },
@@ -135,7 +138,6 @@ class Details < UI::Box
   end
 
   def render
-    toggle_class :empty, data[:id].nil?
     @box.image.src = 'http://www.gravatar.com/avatar/' + `md5(#{data[:email] || ''})` + '?s=200&d=identicon'
   end
 end
@@ -145,6 +147,7 @@ class Main < UI::Container
   include UI::Behaviors::Actions
   include UI::Behaviors::Render
   include UI::Behaviors::Rest
+  include UI::Behaviors::State
 
   extend Forwardable
 
@@ -168,11 +171,18 @@ class Main < UI::Container
   on :input, 'ui-sidebar input', :render
   on :refresh, :refresh
 
+  state_changed :state_changed
+
   def initialize
+    @items = []
     super
     self[:direction] = :row
-    @items = []
     refresh
+  end
+
+  def state_changed
+    load state
+    render!
   end
 
   def add
@@ -181,21 +191,23 @@ class Main < UI::Container
     }
 
     create data do |item|
-      puts item
       refresh do
-        load item[:id]
+        @sidebar.input.value = ''
+        render!
+        self.state = item[:id]
       end
     end
   end
 
   def select
-    load @sidebar.selected.data[:id]
+    self.state = @sidebar.selected.data[:id]
   end
 
   def load(id)
+    return if id.empty?
     @details.load id
-    # @selected = @sidebar.selected.data[:id]
-    # @details.render
+    @sidebar.select id
+    render!
   end
 
   def refresh
@@ -207,8 +219,6 @@ class Main < UI::Container
 
   def render!
     @sidebar.items = @items.select { |item| item[:name].to_s.match Regexp.new(@sidebar.input.value || '.*', 'i') }
-    # @sidebar.select @selected
-    # @details.render
   end
 end
 
