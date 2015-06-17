@@ -1,4 +1,32 @@
 {
+  "contacts": [
+    {
+      "id": "eb31ef2c-191b-4b1d-abd8-f2af6cfb8701",
+      "name": "sadasdasd",
+      "email": "asd123asb",
+      "address": "asda",
+      "phone": "sad"
+    },
+    {
+      "id": "9cde4739-a564-4f1b-8ed9-59974d7ab442"
+    },
+    {
+      "id": "54cb60ee-9361-4510-91a5-e020f5996010"
+    },
+    {
+      "id": "95e2079a-24fb-4be9-a817-52aa5835bd99"
+    },
+    {
+      "id": "3e1fcf8f-577f-4244-9469-bbc7ef689728"
+    },
+    {
+      "id": "e6e50e24-daaa-404e-b763-982d0f1aa339",
+      "name": "asdasd",
+      "email": "cyber.gusztav@gmail.com",
+      "address": null,
+      "phone": null
+    }
+  ],
   "todos": [
     {
       "id": "7d8851f4-bf11-4ddc-9363-8f31ec39682f",
@@ -76,16 +104,6 @@
         "image": "https://randomuser.me/api/portraits/women/72.jpg"
       },
       "body": "<p>asdasd</p><p>asdasd</p>"
-    },
-    {
-      "id": "da99982e-3358-4592-8488-ea7b58bfc7c1",
-      "date": "2015-06-16T07:53:11+0200",
-      "votes": 0,
-      "user": {
-        "name": "Furman Dickens",
-        "image": "https://randomuser.me/api/portraits/women/74.jpg"
-      },
-      "body": "<p>asd</p>"
     }
   ],
   "files": [

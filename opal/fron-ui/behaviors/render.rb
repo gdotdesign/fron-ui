@@ -13,8 +13,9 @@ module UI
       # @param base [Fron::Component] The includer
       def self.included(base)
         base.register self, [:render]
-        base.define_method :render do
+        base.define_method :render do |&block|
           @render_proc.call
+          block.call if block
         end
       end
 

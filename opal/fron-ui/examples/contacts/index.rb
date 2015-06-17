@@ -14,18 +14,14 @@ class Item < UI::Container
 
   tag 'ui-item[tabindex=0]'
 
-  component :image, :img
+  component :image, UI::Image, width: 2.em, height: 2.em
   component :name, UI::Label
 
   style padding: -> { (theme.spacing / 2).em },
         lineHeight: 2.em,
         transition: 'border 200ms',
         borderLeft: '0em solid transparent',
-        img: {
-          borderRadius: -> { theme.border_radius.em },
-          width: 2.em,
-          height: 2.em
-        },
+        'ui-loader' => { fontSize: 0.6.em },
         '&.selected' => {
           borderLeft: -> { "0.4em solid #{colors.primary}" }
         },
@@ -67,8 +63,11 @@ class Details < UI::Box
   include UI::Behaviors::Confirmation
   include UI::Behaviors::Serialize
   include UI::Behaviors::Actions
+  include UI::Behaviors::Rest
 
   tag 'ui-details'
+
+  rest url: 'http://localhost:3000/contacts'
 
   style 'ui-image' => { margin: -> { theme.spacing.em },
                         borderRadius: 0.5.em,
@@ -78,6 +77,7 @@ class Details < UI::Box
         'ui-container ui-container' => { maxWidth: 30.em },
         'ui-label' => { fontWeight: 600 },
         'input' => { fontSize: 1.2.em },
+        'ui-loader' => { fontSize: 2.em },
         '&.empty' => {
           '> ui-container, > ui-button' => {
             display: :none
@@ -111,19 +111,27 @@ class Details < UI::Box
 
   confirmation :destroy!, 'Are you sure you want to remove this contact?'
 
-  on :change, :update
+  on :change, :save
 
-  def destroy!
-    Main.storage.remove data[:id]
-    trigger :refresh
-    load({})
-    render
+  def load(id)
+    request :get, id do |data|
+      super data
+      render
+    end
   end
 
-  def update
-    Main.storage.set data[:id], data
-    render
-    trigger :refresh
+  def save
+    update data do
+      @data.merge! data
+      render
+      trigger :refresh
+    end
+  end
+
+  def destroy!
+    destroy do
+      trigger :refresh
+    end
   end
 
   def render
@@ -136,8 +144,11 @@ end
 class Main < UI::Container
   include UI::Behaviors::Actions
   include UI::Behaviors::Render
+  include UI::Behaviors::Rest
 
   extend Forwardable
+
+  rest url: 'http://localhost:3000/contacts'
 
   component :sidebar, Sidebar, flex: '0 0 20em'
   component :details, Details, flex: 1
@@ -155,35 +166,49 @@ class Main < UI::Container
 
   on :selected_change, :select
   on :input, 'ui-sidebar input', :render
-  on :refresh, :render
+  on :refresh, :refresh
 
   def initialize
     super
     self[:direction] = :row
-    render
+    @items = []
+    refresh
   end
 
   def add
-    id = SecureRandom.uuid
-    storage.set id, id: id
-    render!
-    @sidebar.select id
+    data = {
+      id: SecureRandom.uuid
+    }
+
+    create data do |item|
+      puts item
+      refresh do
+        load item[:id]
+      end
+    end
   end
 
   def select
-    @selected = @sidebar.selected.data[:id]
-    @details.load storage.get(@selected)
-    @details.render
+    load @sidebar.selected.data[:id]
+  end
+
+  def load(id)
+    @details.load id
+    # @selected = @sidebar.selected.data[:id]
+    # @details.render
+  end
+
+  def refresh
+    all do |items|
+      @items = items
+      render { yield if block_given? }
+    end
   end
 
   def render!
-    @sidebar.items = storage.all.select { |item| item[:name].to_s.match Regexp.new(@sidebar.input.value || '.*', 'i') }
-    @sidebar.select @selected
-    @details.render
-  end
-
-  def self.storage
-    @storage ||= Storage.new 'contacts'
+    @sidebar.items = @items.select { |item| item[:name].to_s.match Regexp.new(@sidebar.input.value || '.*', 'i') }
+    # @sidebar.select @selected
+    # @details.render
   end
 end
 
