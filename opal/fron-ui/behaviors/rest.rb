@@ -73,6 +73,7 @@ module UI
             yield response_json(response) if block_given?
           else
             raise_error :wrong_status, response_json(response)['error']
+            yield nil
           end
         end
       end

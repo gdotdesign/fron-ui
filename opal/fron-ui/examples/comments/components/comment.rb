@@ -1,5 +1,6 @@
 module Examples
   class Comments < UI::Container
+    # Comment
     class Comment < UI::Container
       # Includes
       include UI::Behaviors::Confirmation

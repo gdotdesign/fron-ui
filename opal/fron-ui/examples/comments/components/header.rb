@@ -1,5 +1,6 @@
 module Examples
   class Comments < UI::Container
+    # Comment header
     class Header < UI::Container
       # Tagname
       tag 'ui-comment-header'

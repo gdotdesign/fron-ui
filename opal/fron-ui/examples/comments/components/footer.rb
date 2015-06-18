@@ -1,5 +1,6 @@
 module Examples
   class Comments < UI::Container
+    # Comment footer
     class Footer < UI::Container
       # Tagname
       tag 'ui-comment-footer'

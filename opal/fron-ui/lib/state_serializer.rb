@@ -14,7 +14,7 @@
 class StateSerializer
   # MAP of encoding / decodings for classes
   MAP = {
-    NilClass => { encode: -> (item) { '' } },
+    NilClass => { encode: -> { '' } },
     String => { encode: -> (item) { `escape(#{item})` } },
     Numeric => { encode: -> (item) { item.to_s } },
     Integer => { encode: -> (item) { item.to_s },

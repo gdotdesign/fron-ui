@@ -4,6 +4,7 @@ require_relative 'comment'
 require_relative 'list'
 
 module Examples
+  # Comments example
   class Comments < UI::Container
     # Includes
     include UI::Behaviors::Actions

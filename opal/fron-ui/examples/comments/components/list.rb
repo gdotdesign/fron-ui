@@ -1,5 +1,6 @@
 module Examples
   class Comments < UI::Container
+    # Comment List
     class List < Collection
       # Tagname
       tag 'ui-comments-list'

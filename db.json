@@ -1,27 +1,6 @@
 {
   "contacts": [
     {
-      "id": "eb31ef2c-191b-4b1d-abd8-f2af6cfb8701",
-      "name": "Gusztáv Szikszai",
-      "email": "cyber.gusztav@gmail.com",
-      "address": "Asd",
-      "phone": "Asd"
-    },
-    {
-      "id": "fb0a3a88-8132-4e0c-bd9d-7a2e7160e762",
-      "name": "a",
-      "email": 26710,
-      "address": null,
-      "phone": null
-    },
-    {
-      "id": "095a3e79-6930-4d3e-937f-a97146aad8df",
-      "name": "asd",
-      "email": "asd12123asd",
-      "address": "sdasd",
-      "phone": "asd"
-    },
-    {
       "id": "28e5a800-0006-413e-8aac-0a0dcf0f427d",
       "name": "Tony Stark",
       "email": "tony@star",
@@ -29,7 +8,18 @@
       "phone": "a012340"
     },
     {
-      "id": "614d3c1d-b386-4d1a-9438-786f253b6f5c"
+      "id": "073f3c48-74d6-433b-b9d1-6f60225efecb",
+      "name": "asd",
+      "email": "cyber.gusztav@gmail.com",
+      "address": null,
+      "phone": null
+    },
+    {
+      "id": "4f537f84-5718-41f5-98cc-97186b9b4d5a",
+      "name": "xxx",
+      "email": "xxx",
+      "address": null,
+      "phone": null
     }
   ],
   "todos": [
@@ -56,12 +46,12 @@
     {
       "id": "86b74f49-316b-4394-8f31-a00ad4b4fa2d",
       "text": "asd",
-      "done": true
+      "done": false
     },
     {
       "id": "23386ac4-fd72-4d7b-97f3-538519b56237",
       "text": "sd",
-      "done": false
+      "done": true
     },
     {
       "id": "73acd3ad-2f46-4a5a-849e-651512358ae9",

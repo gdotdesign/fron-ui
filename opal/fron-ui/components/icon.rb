@@ -4,9 +4,9 @@ module UI
   # @author Gusztáv Szikszai
   # @since 0.1.0
   class Icon < Fron::Component
-    tag 'ui-icon.fa'
+    tag 'ui-icon'
 
-    stylesheet '//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'
+    # stylesheet '//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'
 
     style '&[class^=ion]' => { justifyContent: :center,
                                display: 'inline-flex',

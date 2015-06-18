@@ -31,9 +31,14 @@ module UI
       def select(child)
         return unless child
         return if selected == child
-        Array(selected).each { |item| item.remove_class :selected } if selected && !multiple
+        deselect
         child.toggle_class :selected, multiple ? nil : true
         trigger :selected_change
+      end
+
+      # Deselects all selected children
+      def deselect
+        Array(selected).each { |item| item.remove_class :selected } if selected && !multiple
       end
 
       # Selects the first child
