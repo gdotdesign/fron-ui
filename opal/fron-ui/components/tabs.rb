@@ -30,7 +30,7 @@ module UI
       # Renders the component
       def render
         self.tab_id = @data[:id]
-        self.text = @data[:name]
+        self.text = @data[:title]
       end
     end
 
@@ -108,8 +108,9 @@ module UI
     # @param tab [UI::Tabs::Tab, Fron::Component] The tab
     def select(tab)
       return unless tab
+      return if active_tab == tab
       active_tab.remove_class(:active) if active_tab
-      handles.select handles.find("[tab_id='#{tab[:tab]}']")
+      handles.select handles.find("[tab_id='#{tab[:tab_id]}']")
       tab.add_class(:active)
     end
 
@@ -117,7 +118,7 @@ module UI
     #
     # @return [UI::Tabs::Tab, Fron::Component] The tab
     def active_tab
-      find('[tab].active')
+      children.find { |child| child.has_class(:active) }
     end
 
     # Returns the tab by the given id
@@ -126,13 +127,13 @@ module UI
     #
     # @return [UI::Tabs::Tab, Fron::Component] The tab
     def find_by_id(id)
-      find("[tab='#{id}']")
+      children.find { |child| child[:tab_id] == id }
     end
 
     # Updates tab handles to reflect the content.
     def update_tabs
       return unless @handles
-      handles.items = tabs.map { |item| { id: item[:tab], name: item[:tab] } }.uniq
+      handles.items = tabs.map { |item| { id: item[:tab_id], title: item[:tab_title] } }.uniq
       return if handles.selected || handles.children.empty?
       handles.select_first
       select_tab
@@ -142,7 +143,7 @@ module UI
     #
     # @return [Array<UI::Tabs::Tab>] The tabs
     def tabs
-      find_all('[tab]')
+      find_all('[tab_id][tab_title]')
     end
   end
 end

@@ -53,7 +53,8 @@ class FileTab < UI::Container
   on :change, :save
 
   def render
-    self[:tab] = @data[:filename]
+    self[:tab_id] = @data[:id]
+    self[:tab_title] = @data[:filename]
     @textarea.value = @data[:content].to_s
   end
 
@@ -88,24 +89,19 @@ class Handle < UI::Tabs::Handle
 
   def render
     self.tab_id = @data[:id]
-    @span.text = @data[:name]
+    @span.text = @data[:title]
   end
 end
 
 class Main < UI::Container
+  include UI::Behaviors::Actions
   include UI::Behaviors::State
-
-  style padding: -> { theme.spacing.em },
-        boxSizing: 'border-box',
-        height: '100vh',
-        'ui-box:first-child' => {
-          flex: '0 0 10em'
-        }
+  include UI::Behaviors::Rest
 
   component :container, UI::Container, direction: :row, flex: 1 do
     component :sidebar, UI::Box do
       component :title, UI::Title, text: 'Files', direction: :row do
-        component :button, UI::Button, type: :success, shape: :square do
+        component :button, UI::Button, type: :success, shape: :square, action: :add do
           component :icon, UI::Icon, glyph: :plus
         end
       end
@@ -116,19 +112,19 @@ class Main < UI::Container
     end
   end
 
-  include UI::Behaviors::Rest
-
   rest url: URL
+
+  style padding: -> { theme.spacing.em },
+        boxSizing: 'border-box',
+        height: '100vh',
+        'ui-box:first-child' => {
+          flex: '0 0 10em'
+        }
 
   on :click, 'item', :open
   on :close_tab, :close
 
   state_changed :state_changed
-
-  def initialize
-    super
-    @container.sidebar.list.refresh
-  end
 
   def state_changed
   end
@@ -137,9 +133,21 @@ class Main < UI::Container
     @container.content.tabs.find_by_id(event.target.tab_id).remove!
   end
 
+  def refresh
+    @container.sidebar.list.refresh
+  end
+
+  def add
+    name = prompt 'Name:'
+    return if name.to_s.strip.empty?
+    create id: SecureRandom.uuid, filename: name do
+      refresh
+    end
+  end
+
   def open(event)
     request :get, event.target.data[:id] do |data|
-      current = @container.content.tabs.find_by_id(data[:filename])
+      current = @container.content.tabs.find_by_id(data[:id])
       break @container.content.tabs.select current if current
       tab = FileTab.new
       tab.data = data
@@ -150,5 +158,6 @@ class Main < UI::Container
 end
 
 main = Main.new
+main.refresh
 
 DOM::Document.body << main

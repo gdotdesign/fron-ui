@@ -87,7 +87,7 @@ class Posts < UI::Container
         component :icon, UI::Icon, glyph: :edit
         component :span, :span, text: 'Edit'
       end
-      component :button, UI::Button, action: :destroy do
+      component :button, UI::Button, action: :confirm_destroy!, type: :danger do
         component :icon, UI::Icon, glyph: 'trash-b'
         component :span, :span, text: 'Delete'
       end
@@ -212,6 +212,7 @@ class Main < UI::Container
   include UI::Behaviors::Actions
   include UI::Behaviors::Rest
   include UI::Behaviors::State
+  include UI::Behaviors::Confirmation
 
   rest url: 'http://localhost:3000/posts'
 
@@ -229,6 +230,8 @@ class Main < UI::Container
 
   state_changed :state_changed
 
+  confirmation :destroy!, 'Are you sure you want to remove this post?'
+
   def state_changed
     id = state.to_h[:id]
     if id && id != ''
@@ -244,7 +247,7 @@ class Main < UI::Container
     self.state = state.to_h.merge!(id: '')
   end
 
-  def destroy
+  def destroy!
     request :delete, @content.posts.selected.data[:id] do
       @content.posts.refresh
     end
