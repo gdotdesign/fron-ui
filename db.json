@@ -1,23 +1,9 @@
 {
   "contacts": [
     {
-      "id": "28e5a800-0006-413e-8aac-0a0dcf0f427d",
-      "name": "Tony Stark",
-      "email": "tony@star",
-      "address": "asd",
-      "phone": "a012340"
-    },
-    {
       "id": "073f3c48-74d6-433b-b9d1-6f60225efecb",
       "name": "asd",
       "email": "cyber.gusztav@gmail.com",
-      "address": null,
-      "phone": null
-    },
-    {
-      "id": "4f537f84-5718-41f5-98cc-97186b9b4d5a",
-      "name": "xxx",
-      "email": "xxx",
       "address": null,
       "phone": null
     }
@@ -29,29 +15,14 @@
       "done": true
     },
     {
-      "id": "e6016bc2-a35d-4f9e-a332-765f7090efb9",
-      "text": "asd",
-      "done": false
-    },
-    {
-      "id": "22f06b9a-79c8-4c5d-a4e3-ad1263c920a9",
-      "text": "asd",
-      "done": true
-    },
-    {
       "id": "cf3cbf62-bcd6-48ad-8db7-bb1caa5e8029",
       "text": "asd",
-      "done": false
+      "done": true
     },
     {
       "id": "86b74f49-316b-4394-8f31-a00ad4b4fa2d",
       "text": "asd",
       "done": true
-    },
-    {
-      "id": "23386ac4-fd72-4d7b-97f3-538519b56237",
-      "text": "sd",
-      "done": false
     },
     {
       "id": "73acd3ad-2f46-4a5a-849e-651512358ae9",
@@ -65,6 +36,11 @@
     },
     {
       "id": "00613730-0617-4bc6-b2d1-096fbe922e85",
+      "text": "asd",
+      "done": false
+    },
+    {
+      "id": "71336bf6-0bbc-46b1-b743-7620e7699375",
       "text": "asd",
       "done": false
     }
@@ -99,18 +75,42 @@
         "image": "https://randomuser.me/api/portraits/women/72.jpg"
       },
       "body": "<p>asdasd</p><p>asdasd</p>"
+    },
+    {
+      "id": "3081cf67-8850-4253-86a0-823be113d900",
+      "date": "2015-06-28T07:13:15+0200",
+      "votes": 0,
+      "user": {
+        "name": "Nicolas Bins",
+        "image": "https://randomuser.me/api/portraits/men/52.jpg"
+      },
+      "body": "<p>Testing...</p>"
+    },
+    {
+      "id": "7c46fdce-75a0-47cd-91a0-b9604f21e525",
+      "date": "2015-07-07T14:56:07+0200",
+      "votes": 2,
+      "user": {
+        "name": "Korey Jacobs",
+        "image": "https://randomuser.me/api/portraits/women/0.jpg"
+      },
+      "body": "<p>adasda</p>"
     }
   ],
   "files": [
     {
       "id": "asd",
       "filename": "test.csv",
-      "content": "This is a textarea here where you can edit things...."
+      "content": "This is a textarea here where you can edit things....asdas\nasd\nasd\nasd\nas\ndas\nd"
     },
     {
       "id": "asad",
       "filename": "test2.csv",
       "content": "This is some text heree...."
+    },
+    {
+      "id": "8cd890af-8806-4d58-a383-7e1216fda140",
+      "filename": "asdasd"
     }
   ],
   "posts": [
@@ -118,21 +118,6 @@
       "title": "Some post title....",
       "id": 1,
       "body": "You're live! Nice. We've put together a little post to introduce you to the Ghost editor and get you started. You can manage your content by signing in to the admin area at `<your blog URL>/ghost/`. When you arrive, you can select this post from a list on the left and see a preview of it on the right. Click the little pencil icon at the top of the preview to edit this post and read the next section!\n\n## Getting Started\n\nGhost uses something called Markdown for writing. Essentially, it's a shorthand way to manage your post formatting as you write!\n\nWriting in Markdown is really easy. In the left hand panel of Ghost, you simply write as you normally would. Where appropriate, you can use *shortcuts* to **style** your content. For example, a list:\n\n* Item number one\n* Item number two\n    * A nested item\n* A final item\n\nor with numbers!\n\n1. Remember to buy some milk\n2. Drink the milk\n3. Tweet that I remembered to buy the milk, and drank it\n\n### Links\n\nWant to link to a source? No problem. If you paste in a URL, like http://ghost.org - it'll automatically be linked up. But if you want to customise your anchor text, you can do that too! Here's a link to [the Ghost website](http://ghost.org). Neat.\n\n### What about Images?\n\nImages work too! Already know the URL of the image you want to include in your article? Simply paste it in like this to make it show up:\n\nNot sure which image you want to use yet? That's ok too. Leave yourself a descriptive placeholder and keep writing. Come back later and drag and drop the image in to upload:\n\n### Quoting\n\nSometimes a link isn't enough, you want to quote someone on what they've said. It was probably very wisdomous. Is wisdomous a word? Find out in a future release when we introduce spellcheck! For now - it's definitely a word.\n\n> Wisdomous - it's definitely a word.\n\n### Working with Code\n\nGot a streak of geek? We've got you covered there, too. You can write inline `<code>` blocks really easily with back ticks. Want to show off something more comprehensive? 4 spaces of indentation gets you there.\n\n    .awesome-thing {\n        display: block;\n        width: 100%;\n    }\n\n### Ready for a Break? \n\nThrow 3 or more dashes down on any new line and you've got yourself a fancy new divider. Aw yeah.\n\n---\n\n### Advanced Usage\n\nThere's one fantastic secret about Markdown. If you want, you can write plain old HTML and it'll still work! Very flexible.\n\nThat should be enough to get you started. Have fun - and let us know what you think :)"
-    },
-    {
-      "title": "An other postasdasdasd",
-      "body": "sadWith the body of the something....",
-      "id": 2
-    },
-    {
-      "title": "asd",
-      "body": "asdasdasd",
-      "id": 4
-    },
-    {
-      "title": "asdasd",
-      "body": "asdasd",
-      "id": 5
     },
     {
       "title": "Test Post",
@@ -145,21 +130,6 @@
       "id": 10
     },
     {
-      "title": "asda",
-      "body": "sdasdasdasdasd\nasd\nasd\nsa\nsd\nasd\nsas\nd\nsad\nsa\nd\na\nd\n\n\nasdasd\nas\nd\nas\nd\n\n\nasdasd",
-      "id": 14
-    },
-    {
-      "title": "",
-      "body": "",
-      "id": 15
-    },
-    {
-      "title": "",
-      "body": "",
-      "id": 16
-    },
-    {
       "title": "Test post #301",
       "body": "this is a textarea thingy....",
       "id": 17
@@ -170,14 +140,19 @@
       "id": 18
     },
     {
-      "title": "",
-      "body": "",
-      "id": 19
-    },
-    {
       "title": "sadasd",
       "body": "asdasdasdasda",
       "id": 20
+    },
+    {
+      "title": "Test",
+      "body": null,
+      "id": 21
+    },
+    {
+      "title": "sadasdasdasd",
+      "body": "asdaasdasdasd\nasd\nasd\nasd\nasd\nasd\n\nHello there,,,,",
+      "id": 22
     }
   ]
 }

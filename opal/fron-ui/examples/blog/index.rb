@@ -36,16 +36,10 @@ class List < UI::List
   end
 end
 
-class Header < UI::Container
+class Header < UI::Box
   tag 'ui-header[direction=row]'
 
-  style height: -> { 3.em },
-        lineHeight: -> { 3.em },
-        background: -> { colors.primary },
-        color: -> { readable_color(colors.primary) },
-        '> *' => {
-          padding: -> { "0 #{theme.spacing.em}" }
-        }
+  style '> *' => { padding: -> { "0 #{theme.spacing.em}" } }
 
   component :brand, 'ui-brand', text: 'Blog'
   component :posts, UI::Action, text: 'Content', action: :content
@@ -57,11 +51,7 @@ class Posts < UI::Container
 
   tag 'ui-posts'
 
-  style padding: -> { (theme.spacing * 2).em },
-        'ui-container:last-of-type ui-icon' => { marginRight: -> { theme.spacing.em } },
-        'ui-container:last-of-type' => {
-          marginLeft: -> { (theme.spacing * 2).em }
-        },
+  style 'ui-box:last-of-type ui-icon' => { marginRight: -> { theme.spacing.em } },
         'ui-body' => { overflow: :auto },
         'ui-title' => {
           flex: '0 0 2em',
@@ -72,16 +62,16 @@ class Posts < UI::Container
           }
         }
 
-  component :box, UI::Container, flex: '0 0 15em' do
+  component :box, UI::Box, flex: '0 0 15em' do
     component :title, UI::Title, text: 'Posts', direction: :row do
-      component :button, UI::Button, type: :success, shape: :square do
+      component :button, UI::Button, type: :success, shape: :square, action: :create do
         component :icon, UI::Icon, glyph: :plus
       end
     end
     component :list, List, base: Item, flex: 1
   end
 
-  component :preview, UI::Container, flex: 1 do
+  component :preview, UI::Box, flex: 1 do
     component :title, UI::Title, direction: :row  do
       component :button, UI::Button, action: :edit do
         component :icon, UI::Icon, glyph: :edit
@@ -113,12 +103,13 @@ class Posts < UI::Container
 
   def selected=(data)
     @preview.title.text = data[:title]
-    @preview.body.html = `marked(#{data[:body]}, { gfm: true, breaks: true })`
+    @preview.body.html = `marked(#{data[:body].to_s}, { gfm: true, breaks: true })`
   end
 end
 
 class Form < UI::Container
   include UI::Behaviors::Serialize
+  include UI::Behaviors::Actions
   include UI::Behaviors::Rest
 
   extend Forwardable
@@ -127,20 +118,14 @@ class Form < UI::Container
 
   rest url: 'http://localhost:3000/posts'
 
-  component :title, UI::Input, name: :title
-  component :container, UI::Container, flex: 1, direction: :row, compact: true do
-    component :textarea, UI::Textarea, name: :body
-    component :preview, UI::Base, flex: 1 do
-      component :div, :div
-    end
-  end
-
   style 'input' => { fontSize: 2.em,
                      flex: '0 0 auto',
+                     borderRadius: 0,
                      borderBottom: -> { "#{theme.border_size.em} solid #{dampen colors.background, 0.05}" } },
-        'ui-container' => {
+        'ui-container:first-of-type' => {
           position: :relative,
-          paddingLeft: '50%'
+          paddingLeft: '50%',
+          marginTop: '0 !important'
         },
         'ui-base, textarea' => {
           boxSizing: 'border-box',
@@ -173,9 +158,19 @@ class Form < UI::Container
           height: '100%'
         }
 
+  component :title, UI::Input, name: :title, placeholder: 'Post title...'
+  component :container, UI::Container, flex: 1, direction: :row, compact: true do
+    component :textarea, UI::Textarea, name: :body, placeholder: 'Post body...', spellcheck: false
+    component :preview, UI::Base, flex: 1 do
+      component :div, :div
+    end
+  end
+  component :statusbar, UI::Container, direction: :row, align: :end, flex: '0 0 auto' do
+    component :button, UI::Button, text: 'Save', action: :save
+  end
+
   def_delegators :container, :preview, :textarea
 
-  on :change, :save
   on :keyup, :render
 
   def initialize
@@ -189,16 +184,27 @@ class Form < UI::Container
     preview.scroll_top = preview.scroll_height * (textarea.scroll_top / textarea.scroll_height)
   end
 
-  def load(id)
-    request :get, id do |data|
-      super data
+  def load(id, defaults = { title: '', body: '' })
+    if id
+      request :get, id do |data|
+        super data
+        render
+        yield if block_given?
+      end
+    else
+      super defaults
       render
+      yield if block_given?
     end
   end
 
   def save
-    update data do
-      trigger :refresh
+    if data[:id]
+      update data
+    else
+      create data do |item|
+        trigger :created, id: item[:id]
+      end
     end
   end
 
@@ -216,26 +222,28 @@ class Main < UI::Container
 
   rest url: 'http://localhost:3000/posts'
 
-  tag 'main[compact=true]'
+  tag 'main'
 
   style height: '100vh',
         boxSizing: 'border-box',
-        fontSize: 14.px
+        fontSize: 14.px,
+        padding: -> { theme.spacing.em }
 
   component :header, Header
   component :content, UI::Container, direction: :row, flex: 1, compact: true do
-    component :posts, Posts, flex: 1, compact: true, direction: :row
-    component :form, Form, flex: 1, compact: true
+    component :posts, Posts, flex: 1, direction: :row
+    component :form, Form, flex: 1
   end
 
   state_changed :state_changed
 
   confirmation :destroy!, 'Are you sure you want to remove this post?'
 
+  on :created, :created
+
   def state_changed
-    id = state.to_h[:id]
-    if id && id != ''
-      load(id)
+    if state.key?(:id)
+      load(state[:id])
     else
       @content.posts.refresh
       @content.posts.show
@@ -243,8 +251,12 @@ class Main < UI::Container
     end
   end
 
+  def state
+    super.to_h
+  end
+
   def content
-    self.state = state.to_h.merge!(id: '')
+    self.state = {}
   end
 
   def destroy!
@@ -254,20 +266,22 @@ class Main < UI::Container
   end
 
   def edit
-    self.state = state.to_h.merge!(id: @content.posts.selected.data[:id])
+    self.state = state.merge!(id: @content.posts.selected.data[:id])
   end
 
   def load(id)
-    @content.form.load id
-    @content.posts.hide
-    @content.form.show
+    @content.form.load id do
+      @content.posts.hide
+      @content.form.show
+    end
   end
 
   def create
-    data = { title: '', body: '' }
-    request :post, '', data do |item|
-      load item[:id]
-    end
+    self.state = { id: nil }
+  end
+
+  def created(event)
+    self.state = { id: event.id }
   end
 end
 

@@ -14,7 +14,7 @@ module UI
     style overflow: :auto,
           display: :block,
           '> *' => { display: :block,
-                     '&:nth-child(even)' => { background: -> { dampen colors.background, 0.025 } } },
+                     '& + *' => { borderTop: -> { "1px solid #{dampen colors.background, 0.025}" } } },
           '&:empty' => { padding: -> { theme.spacing.em },
                          justifyContent: :center,
                          alignItems: :center,
