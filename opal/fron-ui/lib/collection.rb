@@ -9,7 +9,7 @@ require 'fron-ui/lib/record'
 #
 # @author Gusztáv Szikszai
 # @since 0.1.0
-class Collection < Fron::Component
+class Collection < UI::Base
   # Record
   class Record < Fron::Component
     include ::Record

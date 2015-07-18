@@ -32,7 +32,6 @@ module UI
                                  display: 'inline-flex',
                                  alignItems: :center,
                                  padding: '0' },
-          '&[disabled]' => { opacity: 0.4 },
           '> *' => { pointerEvents: :none }
 
     Fron::Sheet.helper.colors.to_h.keys.each do |type|

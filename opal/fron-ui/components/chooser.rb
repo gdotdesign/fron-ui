@@ -75,11 +75,13 @@ module UI
                    :select_first, :select_last
 
     style position: :relative,
-          input: { cursor: :pointer },
+          input: { cursor: :pointer,
+                   width: '100%' },
           'ui-dropdown' => { left: 0,
                              right: 0 },
           '&:not([focused]):after,
            &:not([searchable]):after' => { background: -> { "linear-gradient(90deg, transparent, #{colors.input} 70%)" },
+                                           pointerEvents: :none,
                                            position: :absolute,
                                            content: '""',
                                            width: 4.em,
@@ -102,6 +104,7 @@ module UI
       self.searchable = true
       @input.on(:focus) do
         self[:focused] = ''
+        show_items
         empty_input
       end
       @input.on(:blur) do
@@ -134,8 +137,8 @@ module UI
     #
     # @param items [Array<Hash>] The items
     def items=(items)
+      items = items.each_with_index.map { |item, index| { id: index, value: item } } unless items[0].is_a?(Hash)
       list.items = items
-      filter
     end
 
     # Empties the input
@@ -149,6 +152,8 @@ module UI
     def selected_changed
       return if searchable
       update_input
+      trigger :change
+      @input.blur unless multiple
     end
 
     # Updates the input text with
@@ -182,6 +187,16 @@ module UI
       else
         selected.value
       end
+    end
+
+    def value=(new_value)
+      values = Array(new_value)
+      return if Array(value) == values
+      list.deselect
+      values.each do |val|
+        list.select list.children.find { |child| child.value == val }
+      end
+      update_input
     end
   end
 end

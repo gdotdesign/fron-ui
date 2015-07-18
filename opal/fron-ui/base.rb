@@ -5,7 +5,8 @@ module UI
     tag 'ui-base'
 
     style '&[disabled]' => { pointerEvents: :none,
-                             userSelect: :none }
+                             userSelect: :none,
+                             opacity: 0.4 }
 
     attribute_accessor :tabindex
 

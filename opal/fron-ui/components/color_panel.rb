@@ -62,9 +62,15 @@ module UI
     # @param event [DOM::Event] The event
     def change(event)
       event.stop
-      @hue = @hued.value_y * 360
-      @value = (1 - @rect.value_y) * 100
-      @saturation = @rect.value_x * 100
+      hue = @hued.value_y * 360
+      value = (1 - @rect.value_y) * 100
+      saturation = @rect.value_x * 100
+      return if hue == @hue &&
+                value == @value &&
+                saturation == @saturation
+      @hue = hue
+      @value = value
+      @saturation = saturation
       render
       trigger :change
     end

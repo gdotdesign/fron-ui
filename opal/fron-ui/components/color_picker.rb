@@ -75,8 +75,10 @@ module UI
     #
     # @param value [String] The CSS color (hex or named)
     def value=(value)
+      return if @input.value == value
       @input.value = value
       update_dropdown
+      trigger :change
     end
 
     private

@@ -16,7 +16,7 @@ module UI
   #
   # @author Gusztáv Szikszai
   # @since 0.1.0
-  class NumberRange < Fron::Component
+  class NumberRange < Base
     # Input component
     class Input < Fron::Component
       tag 'ui-number-range-input'
@@ -97,7 +97,9 @@ module UI
     #
     # @param value [Float] The value
     def value=(value)
-      @value = value.to_f.clamp(min, max)
+      value = value.to_f.clamp(min, max)
+      return if @value == value
+      @value = value
       @input.text = format "%.#{round}f", @value
       trigger 'change'
     end

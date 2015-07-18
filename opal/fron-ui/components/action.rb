@@ -4,7 +4,7 @@ module UI
   #
   # @author Gusztáv Szikszai
   # @since 0.1.0
-  class Action < Fron::Component
+  class Action < Base
     include UI::Behaviors::Action
 
     tag 'ui-action'
