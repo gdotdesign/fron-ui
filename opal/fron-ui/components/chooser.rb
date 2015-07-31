@@ -24,7 +24,11 @@ module UI
 
       # Renders the item
       def render
-        self.text = @data[:value]
+        self.text = label
+      end
+
+      def label
+        @data[:value]
       end
 
       # Retunrs the value
@@ -139,6 +143,7 @@ module UI
     def items=(items)
       items = items.each_with_index.map { |item, index| { id: index, value: item } } unless items[0].is_a?(Hash)
       list.items = items
+      update_input
     end
 
     # Empties the input
@@ -160,7 +165,7 @@ module UI
     # the selected items values
     def update_input
       timeout(320) { show_items }
-      @input.value = Array(value).join(', ')
+      @input.value = Array(label).join(', ')
     end
 
     # Shows the items
@@ -168,10 +173,10 @@ module UI
       list.children.each { |item| item.remove_class :hidden }
     end
 
-    # Filters the items by the input value
+    # Filters the items by the input label
     def filter
       list.children.each do |item|
-        item.toggle_class :hidden, !(item.value =~ Regexp.new(@input.value, 'i'))
+        item.toggle_class :hidden, !(item.label =~ Regexp.new(@input.value, 'i'))
       end
     end
 
@@ -179,14 +184,22 @@ module UI
     #
     # @return The value
     def value
+      selected_items(:value)
+    end
+
+    def selected_items(property)
       selected = list.selected
       return nil unless selected
       if selected.is_a?(Array)
         return nil if selected.empty?
-        selected.map(&:value)
+        selected.map { |item| item.send(property) }
       else
-        selected.value
+        selected.send(property)
       end
+    end
+
+    def label
+      selected_items(:label)
     end
 
     def value=(new_value)

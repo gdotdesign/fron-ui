@@ -22,7 +22,7 @@ QualityControl.tasks += %w(
   rubycritic:coverage
 )
 
-html = -> (file) { "<body><script src='/assets/#{file}.js'></script></body>" }
+html = -> (file) { "<body><script src='/assets/#{file}.js'></script><script>Opal.modules[\"#{file}\"](Opal)</script></body>" }
 
 task :examples do
   opal = Opal::Server.new do |s|

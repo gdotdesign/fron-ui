@@ -35,6 +35,7 @@ module UI
           borderRadius: -> { theme.border_radius.em },
           padding: -> { (theme.spacing * 1.25).em },
           background: -> { colors.input },
+          display: :block,
           minWidth: 18.em,
           'ui-label' => { textAlign: :center,
                           fontWeight: 700 },

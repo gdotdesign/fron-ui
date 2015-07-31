@@ -24,7 +24,7 @@ class StateSerializer
                decode: -> (str) { str.to_f },
                match: /^[0-9]+\.[0-9]+$/ },
     Hash => { encode: -> (item) { '(' + item.map { |key, value| "#{encode(key)}:#{encode(value)}" }.join(',') + ')' },
-              match: /^\([^\)]+\)$/,
+              match: /^\([^\)]*\)$/,
               recursive: /\(([^()])*\)/,
               decode: lambda do |str|
                 str[1..-2].split(',').each_with_object({}) do |item, memo|

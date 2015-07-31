@@ -8,10 +8,6 @@ class ThemeRoller < UI::Box
 
   component :title, UI::Title, text: 'Theme Roller', align: :center
 
-  style position: :absolute,
-        right: 1.5.em,
-        top: 1.5.em
-
   on :change, :set
 
   # Initializes the theme roller by

@@ -82,7 +82,7 @@ class Collection < UI::Base
   def render_items
     @items.reverse_each_with_index do |item, index|
       # Skip if item is already in
-      next if item.parent
+      next if item.parent && item.index == index
 
       next_item = @items[index + 1]
       if next_item

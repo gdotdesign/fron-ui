@@ -22,16 +22,22 @@ module UI
           fontFamily: -> { theme.font_family },
           '&[direction=column]' => {
             flexDirection: :column,
-
             '&:not([compact]) > * + *' => {
               marginTop: -> { theme.spacing.em }
             }
+          },
+          '&[align=center]' => {
+            justifyContent: 'center'
+          },
+          '&[align=end]' => {
+            justifyContent: 'flex-end'
           },
           '&[direction=row]:not([compact]) > * + *' => {
             marginLeft: -> { theme.spacing.em }
           }
 
     attribute_accessor :direction
+    attribute_accessor :align
 
     # Initializes the container by setting
     # default value for direction to column.

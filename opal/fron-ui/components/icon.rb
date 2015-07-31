@@ -3,7 +3,7 @@ module UI
   #
   # @author Gusztáv Szikszai
   # @since 0.1.0
-  class Icon < Fron::Component
+  class Icon < UI::Base
     tag 'ui-icon'
 
     stylesheet '//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'
@@ -20,7 +20,12 @@ module UI
     #
     # @param value [String] The glyph
     def glyph=(value)
+      self[:glyph] = value
       self[:class] = "ion-#{value}"
+    end
+
+    def glyph
+      self[:glyph]
     end
   end
 end
