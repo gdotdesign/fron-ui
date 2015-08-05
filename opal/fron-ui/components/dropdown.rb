@@ -28,8 +28,6 @@ module UI
           '&[horizontal=left]' => { right: 0 },
           '&[horizontal=right]' => { left: 0 }
 
-    on :mousedown, :stop
-
     transition :show, duration: '320ms',
                       frames: { '0%' =>   { opacity: 0, transform: 'translateY(0.5em)' },
                                 '100%' => { opacity: 1, transform: 'translateY(0)' } }
@@ -37,15 +35,6 @@ module UI
     transition :hide, duration: '320ms',
                       frames: { '0%' =>   { opacity: 1, transform: 'translateY(0)' },
                                 '100%' => { opacity: 0, transform: 'translateY(0.5em)' } }
-
-    # Stops the event on mousedown
-    #
-    # :reek:FeatureEnvy
-    #
-    # @param event [DOM::Event] The event
-    def stop(event)
-      event.prevent_default
-    end
 
     # Opens the component:
     #
