@@ -91,7 +91,8 @@ module UI
                                            width: 4.em,
                                            bottom: 0,
                                            right: 0,
-                                           top: 0 }
+                                           top: 0 },
+          '&[focused]:after' => { top: 0.15.em, right: 0.15.em, bottom: 0.15.em }
 
     keydown :esc,  :blur
     keydown :up,   :intend_previous

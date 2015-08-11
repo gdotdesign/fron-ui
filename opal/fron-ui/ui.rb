@@ -18,7 +18,7 @@ Fron::Sheet.helpers do
 
   def theme
     @theme ||= OpenStruct.new font_family: 'Open Sans, sans-serif',
-                              focus_box_shadow: -> { "0 0 0 2px #{dampen(colors.focus, 0.4)}" },
+                              focus_box_shadow: -> { "0 0 0 2px #{dampen(colors.focus, 0.4)} inset" },
                               border_radius: 0.15,
                               border_size: 0.2,
                               spacing: 0.75,
