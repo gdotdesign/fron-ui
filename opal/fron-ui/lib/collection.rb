@@ -44,6 +44,7 @@ class Collection < UI::Base
   # @param data [Array<Hash>] The data
   def diff_items(data)
     fail 'Not array given for collection!' unless data.is_a?(Array)
+    return if @items.map(&:data) == data
 
     # Get IDS
     new_ids = data.map do |item|
@@ -87,9 +88,7 @@ class Collection < UI::Base
       next_item = @items[index + 1]
       if next_item
         # If there is a nex item isert before it
-        next_id = next_item.data[key]
-        el = @items.find { |element| element.data[key] == next_id }
-        insert_before item, el
+        insert_before item, next_item
       else
         # Else append at the end
         item >> self
