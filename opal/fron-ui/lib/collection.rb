@@ -44,7 +44,6 @@ class Collection < UI::Base
   # @param data [Array<Hash>] The data
   def diff_items(data)
     fail 'Not array given for collection!' unless data.is_a?(Array)
-    return if @items.map(&:data) == data
 
     # Get IDS
     new_ids = data.map do |item|
