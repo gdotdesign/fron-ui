@@ -38,12 +38,24 @@ class Collection < UI::Base
     @key || :id
   end
 
+  def same?(data)
+    current = @items.map(&:data)
+    return false if current.length != data.length
+    data.each_with_index do |item, index|
+      current_item = current[index]
+      return false if item[key] != current_item[key]
+      return false if item != current_item
+    end
+    true
+  end
+
   # Diffs and patches existings items
   # with the given data.
   #
   # @param data [Array<Hash>] The data
   def diff_items(data)
     fail 'Not array given for collection!' unless data.is_a?(Array)
+    return if same?(data)
 
     # Get IDS
     new_ids = data.map do |item|
