@@ -92,7 +92,18 @@ module UI
                                            bottom: 0,
                                            right: 0,
                                            top: 0 },
-          '&[focused]:after' => { top: 0.15.em, right: 0.15.em, bottom: 0.15.em }
+          '&[focused]:after' => { top: 0.15.em, right: 0.15.em, bottom: 0.15.em },
+          '&:before' => { borderStyle: :solid,
+                          position: :absolute,
+                          marginTop: -0.3.em,
+                          content: "''",
+                          top: '50%',
+                          height: 0,
+                          width: 0,
+                          borderColor: 'currentColor transparent transparent transparent',
+                          borderWidth: '0.4em 0.35em 0 0.35em',
+                          right: 0.75.em,
+                          zIndex: 1 }
 
     keydown :esc,  :blur
     keydown :up,   :intend_previous
