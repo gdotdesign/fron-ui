@@ -98,9 +98,9 @@ module UI
     # @param value [Float] The value
     def value=(value)
       value = value.to_f.clamp(min, max)
+      @input.text = format "%.#{round}f", value
       return if @value == value
       @value = value
-      @input.text = format "%.#{round}f", @value
       trigger 'change'
     end
 
