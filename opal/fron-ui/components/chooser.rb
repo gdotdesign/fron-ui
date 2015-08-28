@@ -51,7 +51,11 @@ module UI
             color: -> { readable_color colors.input },
             overflow: :auto,
             '> *.selected' => { background: -> { colors.primary },
-                                color: -> { readable_color colors.primary } }
+                                color: -> { readable_color colors.primary },
+                                '&:first-child' => { borderTopLeftRadius: :inherit,
+                                                     borderTopRightRadius: :inherit },
+                                '&:last-child' => { borderBottomLeftRadius: :inherit,
+                                                    borderBottomRightRadius: :inherit } }
 
       # Selects the currently intended item
       def select_intended
