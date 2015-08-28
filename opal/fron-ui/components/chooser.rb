@@ -79,12 +79,15 @@ module UI
                    :select_first, :select_last
 
     style position: :relative,
+          color: -> { readable_color colors.input },
           input: { cursor: :pointer,
                    width: '100%' },
           'ui-dropdown' => { left: 0,
                              right: 0 },
           '&:not([focused]):after,
            &:not([searchable]):after' => { background: -> { "linear-gradient(90deg, transparent, #{colors.input} 70%)" },
+                                           borderBottomRightRadius: :inherit,
+                                           borderTopRightRadius: :inherit,
                                            pointerEvents: :none,
                                            position: :absolute,
                                            content: '""',
@@ -97,6 +100,7 @@ module UI
                           position: :absolute,
                           marginTop: -0.3.em,
                           content: "''",
+                          opacity: 0.5,
                           top: '50%',
                           height: 0,
                           width: 0,

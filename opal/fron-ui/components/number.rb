@@ -68,6 +68,7 @@ module UI
                                    position: :absolute,
                                    marginTop: -0.3.em,
                                    content: "''",
+                                   opacity: 0.5,
                                    top: '50%',
                                    height: 0,
                                    width: 0 },
