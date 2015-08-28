@@ -3,6 +3,7 @@ require 'ostruct'
 require 'fron'
 require 'color'
 
+require_tree './fron-ui/fonts'
 require 'fron-ui/ui'
 require 'fron-ui/base'
 

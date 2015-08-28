@@ -37,5 +37,8 @@ Fron::Sheet.helpers do
 end
 
 DOM::Document.body.style.display = :none
-Fron::Sheet.stylesheet '//fonts.googleapis.com/css?family=Open+Sans:400,600,700'
+
+style = DOM::Element.new('style')
+style.text = OPEN_SANS + "\n" + ION_ICONS
+DOM::Document.head << style
 Fron::Sheet.add_rule 'body', { margin: 0, display: 'block !important', background: -> { colors.body }, color: -> { readable_color colors.body } }, '0'
