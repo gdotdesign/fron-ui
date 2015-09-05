@@ -152,7 +152,9 @@ module UI
     #
     # @param event [Event] The event
     def keydown(event)
-      event.prevent_default if event.key == :enter
+      return unless event.key == :enter
+      event.prevent_default
+      @input.blur
     end
 
     # Runs when the element is blurred. Sets the value form
@@ -191,7 +193,7 @@ module UI
     #
     # @return [Boolean] True if the position is in the region otherwise false.
     def in_select_region?(position)
-      (left + width / 2 - position).abs <= 50
+      (left + width / 2 - position).abs <= width / 4.5
     end
   end
 end
