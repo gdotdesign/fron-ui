@@ -99,13 +99,13 @@ module UI
     # Update the value of the input
     # from the color panel.
     def update_input
-      @input.value = '#' + color_panel.color.hex.upcase
+      @input.value = color_panel.to_css
       render
     end
 
     # Renders the rectange
     def render
-      @div.style.background = '#' + color_panel.color.hex.upcase
+      @div.style.background = color_panel.to_css
     end
   end
 end
