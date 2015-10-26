@@ -137,7 +137,25 @@ CHOOSER_ITEMS = [
   { id: 'en', value: 'English' },
   { id: 'hu', value: 'Hungarian' },
   { id: 'fr', value: 'French' },
-  { id: 'gr', value: 'German' }
+  { id: 'gr', value: 'German' },
+  { id: 'aar', value: 'Afar' },
+  { id: 'abk', value: 'Abkhazian' },
+  { id: 'afr', value: 'Afrikaans' },
+  { id: 'aka', value: 'Akan' },
+  { id: 'amh', value: 'Amharic' },
+  { id: 'ara', value: 'Arabic' },
+  { id: 'arg', value: 'Aragonese' },
+  { id: 'asm', value: 'Assamese' },
+  { id: 'ava', value: 'Avaric' },
+  { id: 'ave', value: 'Avestan' },
+  { id: 'aym', value: 'Aymara' },
+  { id: 'aze', value: 'Azerbaijani' },
+  { id: 'bak', value: 'Bashkir' },
+  { id: 'bam', value: 'Bambara' },
+  { id: 'bel', value: 'Belarusian' },
+  { id: 'ben', value: 'Bengali' },
+  { id: 'bih', value: 'Bihari' },
+  { id: 'bis', value: 'Bislama' }
 ]
 
 Fron::Sheet.add_rule 'body', { margin: 0, fontSize: 16.px }, '0'
