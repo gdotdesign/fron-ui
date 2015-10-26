@@ -64,6 +64,9 @@ module UI
     def initialize
       super
       @input.on(:focus) { render }
+      @dropdown.on :mousedown do |event|
+        event.prevent_default
+      end
       self.value = Date.today
     end
 

@@ -30,7 +30,7 @@ module UI
       # @param child [Fron::Component] The child
       def select(child)
         return unless child
-        return if selected == child
+        return deselect if selected == child && !multiple
         deselect
         child.toggle_class :selected, multiple ? nil : true
         trigger :selected_change
