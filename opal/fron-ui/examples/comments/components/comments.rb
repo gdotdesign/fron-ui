@@ -34,7 +34,7 @@ module Examples
 
     # Components
     component :form, UI::Container do
-      component :title, UI::Title, text: 'Leave a comment'
+      component :title, UI::Title, text: 'Leave a comment', flex: '0 0 auto'
       component :box, UI::Container, direction: :row do
         component :image, UI::Image, src: Lorem.avatar, width: 4.em, height: 4.em
         component :input, UI::Textarea, spellcheck: false

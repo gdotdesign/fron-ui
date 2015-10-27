@@ -1,3 +1,5 @@
+require 'promise'
+
 module UI
   module Behaviors
     # Behavior for giving a component REST methods.
@@ -29,7 +31,7 @@ module UI
       #
       # @yield The updated data
       def update(data, &block)
-        request :put, @data[:id], data, &block
+        request :patch, @data[:id], data, &block
       end
 
       # Destroyes the model
@@ -65,17 +67,21 @@ module UI
       #
       # @yield [Hash] The returned data
       def request(method, path, params = {})
+        promise = Promise.new
         req = create_request path
         req.request method.upcase, params do |response|
           if response.status == 0
-            raise_error :no_connection, "Could not connect to: #{req.url}"
+            raise_error :no_connection, "Could not connect to: #{req.url}", promise
           elsif (200..300).cover?(response.status)
-            yield response_json(response) if block_given?
+            data =  response_json(response)
+            promise.resolve data
+            yield data if block_given?
           else
-            raise_error :wrong_status, response_json(response)['error']
+            raise_error :wrong_status, response_json(response)['error'], promise
             yield nil
           end
         end
+        promise
       end
 
       private
@@ -84,7 +90,8 @@ module UI
       #
       # @param type [Symbol] The type
       # @param message [String] The message
-      def raise_error(type, message)
+      def raise_error(type, message, promise)
+        promise.reject message
         UI::Behaviors::Rest.trigger type, message
         UI::Behaviors::Rest.trigger :error, [type, message]
         warn message
