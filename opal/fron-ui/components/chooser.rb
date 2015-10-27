@@ -71,7 +71,7 @@ module UI
 
     component :input, UI::Input
     component :dropdown, UI::Dropdown do
-      component :list, List, base: Item
+      component :list, List, base: Item, deselectable: true
     end
 
     dropdown :input, :dropdown
@@ -80,7 +80,7 @@ module UI
     def_delegators :input, :placeholder, :placeholder=, :blur
     def_delegators :list, :base, :base=, :key, :key=, :multiple, :multiple=,
                    :intend_next, :intend_previous, :select_intended, :items,
-                   :select_first, :select_last
+                   :select_first, :select_last, :deselectable, :deselectable=
 
     style position: :relative,
           color: -> { readable_color colors.input },

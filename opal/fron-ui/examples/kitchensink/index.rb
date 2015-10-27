@@ -177,7 +177,7 @@ data = [
   { id: 'UI::Calendar' },
   { id: 'UI::ColorPanel' },
   { id: 'UI::Slider' },
-  { id: 'UI::Chooser', args: { items: CHOOSER_ITEMS, placeholder: 'Choose language...' }, options: { disabled: :checkbox, multiple: :checkbox, placeholder: :input, searchable: :checkbox } },
+  { id: 'UI::Chooser', args: { items: CHOOSER_ITEMS, placeholder: 'Choose language...' }, options: { disabled: :checkbox, multiple: :checkbox, placeholder: :input, searchable: :checkbox, deselectable: :checkbox } },
   { id: 'UI::Loader', args: { loading: true } },
   { id: 'UI::Image', args: { src: 'http://m3.i.pbase.com/o6/90/547190/1/116543443.KT2b8KYm.IMG_9562.jpg', width: 800.px, height: 533.px } },
   { id: 'UI::Progress', args: { value: 0.1 } },
