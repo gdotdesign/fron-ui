@@ -229,7 +229,7 @@ module UI
     end
 
     def value=(new_value)
-      return if has_attribute(:focused)
+      return if attribute?(:focused)
       values = Array(new_value)
       return if Array(value) == values
       list.deselect
