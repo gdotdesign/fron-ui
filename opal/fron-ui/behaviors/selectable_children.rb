@@ -30,15 +30,14 @@ module UI
       # @param child [Fron::Component] The child
       def select(child)
         return unless child
-        return deselect if selected == child && !multiple
-        deselect
-        child.toggle_class :selected, multiple ? nil : true
+        deselect if !multiple && selected != child
+        child.toggle_class :selected
         trigger :selected_change
       end
 
       # Deselects all selected children
       def deselect
-        Array(selected).each { |item| item.remove_class :selected } if selected && !multiple
+        Array(selected).each { |item| item.remove_class :selected }
       end
 
       # Selects the first child
