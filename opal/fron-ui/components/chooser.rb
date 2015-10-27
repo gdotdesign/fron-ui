@@ -98,13 +98,12 @@ module UI
                                            position: :absolute,
                                            content: '""',
                                            width: 4.em,
-                                           bottom: 0,
-                                           right: 0,
-                                           top: 0 },
-          '&[focused]:after' => { top: 0.15.em, right: 0.15.em, bottom: 0.15.em },
+                                           bottom: 0.15.em,
+                                           right: 0.15.em,
+                                           top: 0.15.em },
           '&:before' => { borderStyle: :solid,
                           position: :absolute,
-                          marginTop: -0.3.em,
+                          marginTop: -0.2.em,
                           content: "''",
                           opacity: 0.5,
                           top: '50%',
@@ -229,6 +228,7 @@ module UI
     end
 
     def value=(new_value)
+      return if attribute?(:focused)
       values = Array(new_value)
       return if Array(value) == values
       list.deselect
