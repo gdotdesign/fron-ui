@@ -108,6 +108,7 @@ module UI
                           opacity: 0.5,
                           top: '50%',
                           height: 0,
+                          pointerEvents: :none,
                           width: 0,
                           borderColor: 'currentColor transparent transparent transparent',
                           borderWidth: '0.4em 0.35em 0 0.35em',
