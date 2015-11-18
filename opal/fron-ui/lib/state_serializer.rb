@@ -23,9 +23,9 @@ class StateSerializer
     Float => { encode: -> (item) { item.to_s },
                decode: -> (str) { str.to_f },
                match: /^[0-9]+\.[0-9]+$/ },
-    Hash => { encode: -> (item) { '(' + item.map { |key, value| "#{encode(key)}:#{encode(value)}" }.join(',') + ')' },
-              match: /^\([^\)]*\)$/,
-              recursive: /\(([^()])*\)/,
+    Hash => { encode: -> (item) { '{' + item.map { |key, value| "#{encode(key)}:#{encode(value)}" }.join(',') + '}' },
+              match: /^\{[^\}]*\}$/,
+              recursive: /\{([^{}])*\}/,
               decode: lambda do |str|
                 str[1..-2].split(',').each_with_object({}) do |item, memo|
                   key, value = item.split(':')
@@ -34,7 +34,7 @@ class StateSerializer
               end
             },
     Array => { encode: -> (array) { "[#{array.map { |item| encode(item) }.join(',')}]" },
-               decode: -> (str)  { str[1..-2].split(',').map { |item| decode(item) } },
+               decode: -> (str) { str[1..-2].split(',').map { |item| decode(item) } },
                recursive: /\[([^\[\]])*\]/,
                match: /^\[[^\]]*\]$/ }
   }
