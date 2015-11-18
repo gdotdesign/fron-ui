@@ -37,8 +37,11 @@ module UI
       # @param new_state The new state
       def state=(new_state)
         return if state == new_state
-        DOM::Window.state = '?' + StateSerializer.encode(new_state)
+        path = yield if block_given?
+        DOM::Window.state = path.to_s + '?' + StateSerializer.encode(new_state)
       end
+
+      alias_method :set_state, :state=
     end
   end
 end
