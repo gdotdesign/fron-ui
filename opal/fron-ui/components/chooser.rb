@@ -91,7 +91,7 @@ module UI
                              maxHeight: 300.px,
                              overflowY: :auto },
           '&:not([focused]):after,
-           &:not([searchable]):after' => { background: -> { "linear-gradient(90deg, transparent, #{colors.input} 70%)" },
+           &:not([searchable]):after' => { background: -> { "linear-gradient(90deg, #{rgba(colors.input, 0)}, #{colors.input} 70%)" },
                                            borderBottomRightRadius: :inherit,
                                            borderTopRightRadius: :inherit,
                                            pointerEvents: :none,
