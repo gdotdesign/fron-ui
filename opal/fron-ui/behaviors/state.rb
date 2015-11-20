@@ -31,6 +31,8 @@ module UI
       def state
         search = `location.search`[1..-1]
         StateSerializer.decode(`window.atob(#{search})`)
+      rescue
+        ''
       end
 
       # Sets the state
