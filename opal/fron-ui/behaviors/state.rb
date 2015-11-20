@@ -29,7 +29,8 @@ module UI
       #
       # @return The state
       def state
-        StateSerializer.decode(`location.search`[1..-1])
+        search = `location.search`[1..-1]
+        StateSerializer.decode(`window.atob(#{search})`)
       end
 
       # Sets the state
@@ -38,7 +39,8 @@ module UI
       def state=(new_state)
         return if state == new_state
         path = yield if block_given?
-        DOM::Window.state = path.to_s + '?' + StateSerializer.encode(new_state)
+        hash = `window.btoa(#{StateSerializer.encode(new_state)})`
+        DOM::Window.state = path.to_s + '?' + hash
       end
 
       alias_method :set_state, :state=
