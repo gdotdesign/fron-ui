@@ -24,7 +24,9 @@ module UI
       # @param event [DOM::Event] The event
       def on_transition_end(event)
         options = @transitions[event.animationName]
-        send options[:callback] if options[:callback] && respond_to?(options[:callback])
+        send options[:callback] if options &&
+                                   options[:callback] &&
+                                   respond_to?(options[:callback])
         @transition_callback.call if @transition_callback
       end
 
