@@ -661,7 +661,13 @@ InlineLexer.prototype.output = function(src) {
     // code
     if (cap = this.rules.code.exec(src)) {
       src = src.substring(cap[0].length);
-      out += this.renderer.codespan(escape(cap[2], true));
+      var code;
+      if(this.options.highlight) {
+        code = this.options.highlight(cap[2])
+      } else {
+        escape(cap[2], true)
+      }
+      out += this.renderer.codespan(code);
       continue;
     }
 
