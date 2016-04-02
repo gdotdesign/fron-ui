@@ -36,9 +36,5 @@ Fron::Sheet.helpers do
   end
 end
 
-DOM::Document.body.style.display = :none
-
-style = DOM::Element.new('style')
-style.text = OPEN_SANS + "\n" + ION_ICONS
-DOM::Document.head << style
+Fron::Sheet.additional_styles = OPEN_SANS + "\n" + ION_ICONS
 Fron::Sheet.add_rule 'body', { margin: 0, display: 'block !important', background: -> { colors.body }, color: -> { readable_color colors.body } }, '0'

@@ -18,6 +18,8 @@ class Collection < UI::Base
   attr_reader :items
   attr_writer :base, :key
 
+  ensure_styles!
+
   # Initializes the collection
   def initialize
     super
