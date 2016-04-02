@@ -16,6 +16,8 @@ module Examples
 
       def_delegators :list, :items, :items=, :selected, :deselect
 
+      ensure_styles!
+
       # Selects the item with the given id
       #
       # @param id [String] The ID

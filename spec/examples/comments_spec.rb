@@ -42,7 +42,7 @@ describe Examples::Comments do
   context 'Voting up' do
     let(:item) { comment.find('[action=vote_up]') }
     it 'should increase the count' do
-      comment.should receive(:request).with(:put,
+      comment.should receive(:request).with(:patch,
                                             '0',
                                             hash_including(votes: 1)).and_yield(items[0].merge(votes: 1))
       expect {
@@ -54,7 +54,7 @@ describe Examples::Comments do
   context 'Voting down' do
     let(:item) { comment.find('[action=vote_down]') }
     it 'should decrease the count' do
-      comment.should receive(:request).with(:put,
+      comment.should receive(:request).with(:patch,
                                             '0',
                                             hash_including(votes: -1)).and_yield(items[0].merge(votes: -1))
       expect {

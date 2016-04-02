@@ -16,6 +16,7 @@ class StateSerializer
   MAP = {
     NilClass => { encode: -> { '' } },
     String => { encode: -> (item) { `escape(#{item})` } },
+    Number => { encode: -> (item) { item.to_s } },
     Numeric => { encode: -> (item) { item.to_s } },
     Integer => { encode: -> (item) { item.to_s },
                  decode: -> (str) { str.to_i },
@@ -75,7 +76,7 @@ class StateSerializer
     #
     # @return [type] [description]
     def encode(data)
-      fail "Cannot serialize #{data.class}, there is no implementation!" unless map[data.class]
+      raise "Cannot serialize #{data.class}, there is no implementation!" unless map[data.class]
       instance_exec data, &map[data.class].encode
     end
 

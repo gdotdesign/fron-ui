@@ -161,3 +161,4 @@ main = Main.new
 main.refresh
 
 DOM::Document.body << main
+Fron::Sheet.render_style_tag

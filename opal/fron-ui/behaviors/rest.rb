@@ -91,7 +91,7 @@ module UI
       # @param type [Symbol] The type
       # @param message [String] The message
       def raise_error(type, message, promise)
-        promise.reject message
+        promise.reject(message)
         UI::Behaviors::Rest.trigger type, message
         UI::Behaviors::Rest.trigger :error, [type, message]
         warn message

@@ -127,9 +127,7 @@ module UI
     # up not bubbling events on the input
     def initialize
       super
-      @dropdown.on :mousedown do |event|
-        event.prevent_default
-      end
+      @dropdown.on :mousedown, &:prevent_default
 
       self.searchable = true
       @input.on(:focus) do

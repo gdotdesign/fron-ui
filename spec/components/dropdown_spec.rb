@@ -1,14 +1,6 @@
 require 'spec_helper'
 
 describe UI::Dropdown do
-  describe '#stop' do
-    let(:event) { double }
-    it 'should stop the event' do
-      event.should receive(:prevent_default)
-      subject.stop event
-    end
-  end
-
   describe '#open' do
     it 'should add open class' do
       expect {

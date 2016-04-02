@@ -5,7 +5,7 @@ module Examples
       include UI::Behaviors::Action
       include ::Record
 
-      tag 'ui-item[tabindex=0]'
+      tag 'ui-item'
 
       component :image, UI::Image, width: 2.em, height: 2.em
       component :name, UI::Label
@@ -25,6 +25,7 @@ module Examples
       # Initializes the item by setting the direction
       def initialize
         super
+        self[:tabindex] = 0
         self[:direction] = :row
       end
 

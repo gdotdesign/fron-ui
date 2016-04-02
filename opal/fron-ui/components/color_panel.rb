@@ -2,12 +2,13 @@ require 'fron-ui/components/container'
 require 'fron-ui/components/drag'
 
 require 'native'
-require 'math'
 
-class Color::RGB
-  def css_rgba(alpha)
-    alpha = format('%.1f', alpha)
-    "rgba(#{red.round},#{green.round},#{blue.round},#{alpha})"
+module Color
+  class RGB
+    def css_rgba(alpha)
+      alpha = format('%.1f', alpha)
+      "rgba(#{red.round},#{green.round},#{blue.round},#{alpha})"
+    end
   end
 end
 
@@ -169,17 +170,17 @@ module UI
       x = c * (1 - ((h / 60).modulo(2) - 1).abs)
       m = v - c
 
-      r, g, b = if (0...60).include?(h)
+      r, g, b = if (0...60).cover?(h)
                   [c, x, 0]
-                elsif (60...120).include?(h)
+                elsif (60...120).cover?(h)
                   [x, c, 0]
-                elsif (120...180).include?(h)
+                elsif (120...180).cover?(h)
                   [0, c, x]
-                elsif (180...240).include?(h)
+                elsif (180...240).cover?(h)
                   [0, x, c]
-                elsif (240...300).include?(h)
+                elsif (240...300).cover?(h)
                   [x, 0, c]
-                elsif (300..360).include?(h)
+                elsif (300..360).cover?(h)
                   [c, 0, x]
                 end
 
@@ -210,7 +211,7 @@ module UI
       self.hue = if delta == 0
                    0
                  elsif cmax == r
-                   60 * (((g - b) / delta).modulo(6))
+                   60 * ((g - b) / delta).modulo(6)
                  elsif cmax == g
                    60 * (((b - r) / delta) + 2)
                  elsif cmax == b

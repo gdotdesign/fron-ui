@@ -34,6 +34,7 @@ describe TestClasses::Rest do
         subject.should receive(:warn)
         request.should receive(:request).and_yield error_resp
         subject.request :get, '', {}
+        nil
       end
     end
 
@@ -46,7 +47,7 @@ describe TestClasses::Rest do
 
     describe '#update' do
       it 'should update the model' do
-        request.should receive(:request).with(:PUT,
+        request.should receive(:request).with(:PATCH,
                                               name: 'test').and_yield resp
         subject.update name: 'test'
       end

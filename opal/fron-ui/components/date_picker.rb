@@ -64,9 +64,7 @@ module UI
     def initialize
       super
       @input.on(:focus) { render }
-      @dropdown.on :mousedown do |event|
-        event.prevent_default
-      end
+      @dropdown.on :mousedown, &:preventDefault
       self.value = Date.today
     end
 
@@ -75,11 +73,11 @@ module UI
     #
     # @param event [DOM::Event] The event
     def next(event)
-      if event.shift?
-        self.value = @value.next_month
-      else
-        self.value = @value + 1
-      end
+      self.value = if event.shift?
+                     @value.next_month
+                   else
+                     @value + 1
+                   end
     end
 
     # Selects the previous date, if shift is down
@@ -87,11 +85,11 @@ module UI
     #
     # @param event [DOM::Event] The event
     def prev(event)
-      if event.shift?
-        self.value = @value.prev_month
-      else
-        self.value = @value - 1
-      end
+      self.value = if event.shift?
+                     @value.prev_month
+                   else
+                     @value - 1
+                   end
     end
 
     # Sets the value of the field

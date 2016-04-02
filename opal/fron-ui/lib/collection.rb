@@ -54,13 +54,13 @@ class Collection < UI::Base
   #
   # @param data [Array<Hash>] The data
   def diff_items(data)
-    fail 'Not array given for collection!' unless data.is_a?(Array)
+    raise 'Not array given for collection!' unless data.is_a?(Array)
     return if same?(data)
 
     # Get IDS
     new_ids = data.map do |item|
       # Raise error if the item doesn't have a key
-      fail "No key(#{key}) found or nil for #{item}!" unless item[key]
+      raise "No key(#{key}) found or nil for #{item}!" unless item[key]
       item[key]
     end
     old_ids = @items.map { |model| model.data[key] }
@@ -113,7 +113,7 @@ class Collection < UI::Base
   #
   # @return [Fron::Component] The item
   def create_item(data)
-    fail 'Base class does not include ::Record!' if @base && !@base.include?(::Record)
+    raise 'Base class does not include ::Record!' if @base && !@base.include?(::Record)
     item = (@base || Record).new
     item.data = data
     item

@@ -1,28 +1,24 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'quality_control'
-require 'quality_control/rubycritic'
-require 'quality_control/rubocop'
-require 'quality_control/yard'
-require 'quality_control/opal_rspec'
+require 'opal/rspec/rake_task'
 require 'rack'
 require 'fron_ui'
 
 Bundler::GemHelper.install_tasks
 
-QualityControl::Rubycritic.directories += Dir.glob('opal/*/*') - ['opal/fron-ui/examples']
-QualityControl::Yard.threshold = 99
-QualityControl::OpalRspec.files = %r{^opal\/fron-ui\/.*\.rb}
-QualityControl::OpalRspec.threshold = 99
-
-QualityControl.tasks += %w(
-  syntax:ruby
-  documentation:coverage
-  opal:rspec:coverage
-  rubycritic:coverage
-)
-
 html = -> (file) { "<body><script src='/assets/#{file}.js'></script><script>Opal.modules[\"#{file}\"](Opal)</script></body>" }
+
+Opal::RSpec::RakeTask.new(:spec) do |_, task|
+  task.files = FileList[ARGV[1] || 'spec/**/*_spec.rb']
+  task.timeout = 120_000
+end
+
+desc 'Run CI Tasks'
+task :ci do
+  sh 'SPEC_OPTS="--color" rake spec'
+  sh 'rubocop lib opal spec'
+  sh 'rubycritic lib opal --mode-ci -s 94 --no-browser'
+end
 
 task :examples do
   opal = Opal::Server.new do |s|

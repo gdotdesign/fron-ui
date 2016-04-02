@@ -1,10 +1,12 @@
 source 'https://rubygems.org'
 gemspec
 
-gem 'quality_control', github: 'gdotdesign/quality-control', ref: 'next'
-gem 'rake', '~> 10.4.2'
-gem 'execjs', '~> 2.4.0'
+gem 'rake', '~> 11.1'
+gem 'execjs', '~> 2.6'
+gem 'rubocop', '~> 0.39.0'
+gem 'rubycritic', '~> 2.8'
+gem 'yard', '~> 0.8.7.6'
 
 # Gemspec deps
-gem 'fron', github: 'digitalnatives/fron', branch: 'next-version'
+gem 'fron', path: '../fron'
 gem 'color', github: 'gdotdesign/color', branch: '1.6.1'

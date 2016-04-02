@@ -51,7 +51,7 @@ module UI
       trigger :change
     end
 
-    alias_method :value=, :checked=
-    alias_method :value, :checked
+    alias value= checked=
+    alias value checked
   end
 end

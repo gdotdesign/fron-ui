@@ -42,7 +42,7 @@ module UI
     # * sets the *position* attribute to either top or bottom depending
     #   where is more space in the screen
     def open
-      self[:vertical] =  position?(:top, :scroll_y, :innerHeight) ? :top : :bottom
+      self[:vertical] = position?(:top, :scroll_y, :innerHeight) ? :top : :bottom
       self[:horizontal] = position?(:left, :scroll_x, :innerWidth) ? :left : :right
       add_class 'open'
       transition! :show

@@ -45,7 +45,7 @@ module UI
         DOM::Window.state = path.to_s + '?' + hash
       end
 
-      alias_method :set_state, :state=
+      alias set_state state=
     end
   end
 end

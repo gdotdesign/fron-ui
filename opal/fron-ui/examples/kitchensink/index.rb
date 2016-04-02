@@ -190,3 +190,4 @@ main.container.sidebar.list.items = data
 main.container.sidebar.list.select main.container.sidebar.list.children.last
 
 DOM::Document.body << main
+Fron::Sheet.render_style_tag

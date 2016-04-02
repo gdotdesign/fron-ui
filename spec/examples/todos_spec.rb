@@ -23,7 +23,7 @@ describe Examples::Todos do
 
   context 'Checking an item' do
     it 'should update it' do
-      expect(item).to receive(:request).with(:put, 1, done: true).and_yield
+      expect(item).to receive(:request).with(:patch, 1, done: true).and_yield
       item.checkbox.trigger :click
     end
   end

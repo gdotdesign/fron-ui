@@ -41,7 +41,7 @@ module UI
       self[:tabindex] ||= 0
     end
 
-    alias_method :value, :value_x
-    alias_method :value=, :value_x=
+    alias value value_x
+    alias value= value_x=
   end
 end

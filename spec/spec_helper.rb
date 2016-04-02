@@ -15,7 +15,6 @@
   window.debounce = function(fn){ return fn }
 }
 
-require 'rspec_coverage_helper'
 require 'fron_ui'
 require 'fron/event_mock'
 
@@ -25,9 +24,9 @@ class FakeRequest
   end
 
   def request(method, params = {})
-    fail ['Tried to make a request in test environment!',
-          "To: #{method.upcase} - #{@url}",
-          "With: #{params}"].join("\n")
+    raise ['Tried to make a request in test environment!',
+           "To: #{method.upcase} - #{@url}",
+           "With: #{params}"].join("\n")
   end
 end
 

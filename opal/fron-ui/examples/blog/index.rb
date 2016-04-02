@@ -72,7 +72,7 @@ class Posts < UI::Container
   end
 
   component :preview, UI::Box, flex: 1 do
-    component :title, UI::Title, direction: :row  do
+    component :title, UI::Title, direction: :row do
       component :button, UI::Button, action: :edit do
         component :icon, UI::Icon, glyph: :edit
         component :span, :span, text: 'Edit'
@@ -118,10 +118,10 @@ class Form < UI::Container
 
   rest url: 'http://localhost:3000/posts'
 
-  style 'input' => { fontSize: 2.em,
-                     flex: '0 0 auto',
-                     borderRadius: 0,
-                     borderBottom: -> { "#{theme.border_size.em} solid #{dampen colors.background, 0.05}" } },
+  style 'input[type=text]' => { fontSize: 2.em,
+                                flex: '0 0 auto',
+                                borderRadius: 0,
+                                borderBottom: -> { "#{theme.border_size.em} solid #{dampen colors.background, 0.05}" } },
         'ui-container:first-of-type' => {
           position: :relative,
           paddingLeft: '50%',
@@ -285,4 +285,5 @@ class Main < UI::Container
   end
 end
 
+Fron::Sheet.render_style_tag
 DOM::Document.body << Main.new

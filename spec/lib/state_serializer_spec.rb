@@ -5,7 +5,7 @@ describe StateSerializer do
 
   context 'Recursive structures' do
     it 'should decode' do
-      data = described_class.decode '(key1:value,key2:[value,value2,(key3:value2,key4:[value7])])'
+      data = described_class.decode '{key1:value,key2:[value,value2,{key3:value2,key4:[value7]}]}'
       data.should eq key1: 'value', key2: ['value', 'value2', { key3: 'value2', key4: ['value7'] }]
     end
   end

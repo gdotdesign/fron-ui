@@ -16,5 +16,5 @@ Gem::Specification.new do |s|
   s.require_paths  = ['lib']
 
   # s.add_runtime_dependency 'fron', '0.2.0rc1'
-  # s.add_development_dependency 'opal-rspec', '~> 0.4.0'
+  s.add_development_dependency 'opal-rspec', '~> 0.5.0'
 end

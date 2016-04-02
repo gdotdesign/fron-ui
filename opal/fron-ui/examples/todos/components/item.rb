@@ -78,7 +78,7 @@ module Examples
 
       # @!method done?
       #   Returns true if the item is in done state false if not
-      alias_method :done?, :checked
+      alias done? checked
     end
   end
 end
