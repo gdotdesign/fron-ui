@@ -77,7 +77,7 @@ module UI
     dropdown :input, :dropdown
 
     def_delegators :dropdown, :list
-    def_delegators :input, :placeholder, :placeholder=, :blur
+    def_delegators :input, :placeholder, :placeholder=, :blur, :active?, :focus
     def_delegators :list, :base, :base=, :key, :key=, :multiple, :multiple=,
                    :intend_next, :intend_previous, :select_intended, :items,
                    :select_first, :select_last, :deselectable, :deselectable=
@@ -118,10 +118,10 @@ module UI
     keydown :esc,  :blur
     keydown :up,   :intend_previous
     keydown :down, :intend_next
-    keydown [:enter, :space], :select_intended
 
     on :input, :filter
     on :selected_change, :selected_changed
+    on :keydown, :keydown
 
     # Initilaizes the component, setting
     # up not bubbling events on the input
@@ -139,6 +139,12 @@ module UI
         remove_attribute :focused
         update_input
       end
+    end
+
+    def keydown(event)
+      return unless [:space, :enter].include?(event.key)
+      result = select_intended
+      event.stop if result
     end
 
     # Sets the searchable value, by setting

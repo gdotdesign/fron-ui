@@ -6,7 +6,7 @@ module UI
     # @since 0.1.0
     module Keydown
       class << self
-        TYPES = %w(keyup, keydown)
+        TYPES = %w(keyup keydown)
 
         # Sets up the behavior.
         #

@@ -35,6 +35,7 @@ module UI
         deselect if !multiple && selected != child
         child.toggle_class :selected
         trigger :selected_change
+        true
       end
 
       # Deselects all selected children

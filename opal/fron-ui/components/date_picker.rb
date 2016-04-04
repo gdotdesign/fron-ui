@@ -18,6 +18,7 @@ module UI
   class DatePicker < Base
     include UI::Behaviors::Keydown
     include UI::Behaviors::Dropdown
+    extend Forwardable
 
     attr_reader :value
 
@@ -50,6 +51,8 @@ module UI
       component :calendar, UI::Calendar
     end
 
+    def_delegators :input, :active?, :focus, :blur
+
     on :click,  'td[date]', :select
     on :change, 'input',    :changed
     on :rendered, :render
@@ -64,7 +67,7 @@ module UI
     def initialize
       super
       @input.on(:focus) { render }
-      @dropdown.on :mousedown, &:preventDefault
+      @dropdown.on :mousedown, &:prevent_default
       self.value = Date.today
     end
 
@@ -96,11 +99,19 @@ module UI
     #
     # @param date [Date] The date
     def value=(date)
+      date = parse_date(date)
+      raise "Supplied value '#{date}' is not a date or cound't be coerced into one!" unless date.is_a?(Date)
       changed = @value != date
       @value = date
       @input.value = @value.strftime
       @dropdown.calendar.render @value
       trigger :change if changed
+    end
+
+    def parse_date(raw)
+      Date.parse(raw)
+    rescue
+      raw
     end
 
     # Selects the clicked td

@@ -5,7 +5,7 @@ module UI
   # @author Gusztáv Szikszai
   # @since  0.1.0
   class Input < Base
-    tag 'input[type=text]'
+    tag 'input'
 
     attribute_accessor :placeholder
     attribute_accessor :readonly, default: false

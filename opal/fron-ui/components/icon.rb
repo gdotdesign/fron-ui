@@ -6,13 +6,13 @@ module UI
   class Icon < UI::Base
     tag 'ui-icon'
 
-    style '&[class^=ion]' => { justifyContent: :center,
-                               display: 'inline-flex',
-                               alignItems: :center,
-                               fontWeight: :normal,
-                               '&:not([clickable])' => { pointerEvents: :none },
-                               '&[clickable]' => { cursor: :pointer,
-                                                   '&:hover' => { color: -> { colors.focus } } } }
+    style justifyContent: :center,
+          display: 'inline-flex',
+          alignItems: :center,
+          fontWeight: :normal,
+          '&:not([clickable])' => { pointerEvents: :none },
+          '&[clickable]' => { cursor: :pointer,
+                              '&:hover' => { color: -> { colors.focus } } }
 
     # Sets the glyph
     #

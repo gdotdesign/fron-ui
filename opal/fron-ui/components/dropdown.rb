@@ -10,7 +10,7 @@ module UI
   class Dropdown < Container
     include UI::Behaviors::Transition
 
-    tag 'ui-dropdown[direction=column]'
+    tag 'ui-dropdown'
 
     style boxShadow: '0 0.3em 0.625em -0.3em rgba(0,0,0,0.75)',
           transition: 'opacity 320ms, transform 320ms',
