@@ -53,7 +53,6 @@ module UI
     on :input,     :input
     on :mousemove, :on_mouse_move
     on :mousedown, :on_mouse_down
-    on 'attribute:changed', :reset_value
 
     attribute_accessor :step,  default: 1,                coerce: :to_f
     attribute_accessor :round, default: 1,                coerce: :to_f
@@ -85,6 +84,10 @@ module UI
       @input.on(:blur) { blur }
       self.value = 0
       setup_drag
+    end
+
+    def _attribute_changed
+      reset_value
     end
 
     # Returns the value of the field

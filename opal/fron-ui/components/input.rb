@@ -7,6 +7,8 @@ module UI
   class Input < Base
     tag 'input'
 
+    defaults type: 'text'
+
     attribute_accessor :placeholder
     attribute_accessor :readonly, default: false
 

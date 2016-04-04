@@ -28,7 +28,9 @@ module UI
 
     CHECKER = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wkUCDAEK+8FsQAAADNJREFUKM9jPHPmDAM2YGxsjFWciYFEMKqBGMD4//9/rBJnz54d8p7G5TecGhgZGQfIDwBAQAuAAa2FpwAAAABJRU5ErkJggg=='
 
-    tag 'ui-color-wheel[direction=column]'
+    tag 'ui-color-wheel'
+
+    defaults direction: :column
 
     style borderRadius: -> { theme.border_radius.em },
           padding: -> { (theme.spacing * 2).em },
