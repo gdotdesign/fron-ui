@@ -15,7 +15,13 @@ module UI
         base.on :webkitAnimationEnd, :on_transition_end
         base.on :oanimationend, :on_transition_end
         base.on :MSAnimationEnd, :on_transition_end
-        base.register self, [:transition]
+        base.meta_def :transition do |animation_name, options|
+          name = "#{tagname}-#{animation_name}"
+          Fron::Sheet.add_animation name, options[:frames]
+          @registry << { method: Transition.method(:init_transition),
+                         args: [name, options],
+                         id: SecureRandom.uuid }
+        end
       end
 
       # Handles animation end events, and
@@ -34,10 +40,9 @@ module UI
       # the stylesheet.
       #
       # @param item [Hash] The item data
-      def self.transition(item)
-        name = "#{tag}-#{item[:args][0]}"
+      def self.init_transition(item)
+        name = item[:args][0]
         options = item[:args][1]
-        Fron::Sheet.add_animation name, options[:frames]
         @transitions ||= {}
         @transitions[name] = options
       end
