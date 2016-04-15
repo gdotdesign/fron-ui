@@ -78,7 +78,7 @@ module UI
             yield data if block_given?
           else
             raise_error :wrong_status, response_json(response)['error'], promise
-            yield nil
+            yield nil if block_given?
           end
         end
         promise
@@ -94,7 +94,6 @@ module UI
         promise.reject(message)
         UI::Behaviors::Rest.trigger type, message
         UI::Behaviors::Rest.trigger :error, [type, message]
-        warn message
       end
 
       # Tries to parse the json response,
