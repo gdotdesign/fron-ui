@@ -30,6 +30,7 @@ class Collection < UI::Base
   #
   # @param data [Array<Hash>] The data
   def items=(data)
+    @base_items = data
     diff_items data
   end
 
@@ -119,5 +120,19 @@ class Collection < UI::Base
     item = (@base || Record).new
     item.data = data
     item
+  end
+
+  def count
+    @items.count
+  end
+
+  def filter(regexp)
+    new_items = @base_items.select do |item|
+      raise "Cannot filter collection #{self} because item #{@base}
+             does not implement #match?"unless @base.respond_to?(:match?)
+      @base.match?(regexp, item)
+    end
+    diff_items new_items
+    @items.each { |item| item.filter(regexp) if item.respond_to?(:filter) }
   end
 end
