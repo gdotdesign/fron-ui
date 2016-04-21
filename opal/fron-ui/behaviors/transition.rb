@@ -17,9 +17,10 @@ module UI
         base.on :MSAnimationEnd, :on_transition_end
         base.meta_def :transition do |animation_name, options|
           name = "#{tagname}-#{animation_name}"
+          options[:animation_name] = name
           Fron::Sheet.add_animation name, options[:frames]
           @registry << { method: Transition.method(:init_transition),
-                         args: [name, options],
+                         args: [animation_name, options],
                          id: SecureRandom.uuid }
         end
       end
@@ -51,9 +52,10 @@ module UI
       #
       # @param name [String] The name of the transition
       def transition!(name, &block)
-        name = "#{tag}-#{name}"
         options = @transitions[name]
-        @style.animation = [name, options[:duration], options[:delay], 'both'].join(' ')
+        @style.animation = [options[:animation_name],
+                            options[:duration],
+                            options[:delay], 'both'].join(' ')
         @transition_callback = block
       end
     end
