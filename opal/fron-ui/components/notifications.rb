@@ -32,6 +32,7 @@ module UI
                         frames: { '0%' =>   { opacity: 0 },
                                   '100%' => { opacity: 1 } },
                         callback: :hide
+
       transition :hide, duration: '500ms',
                         delay: '3s',
                         frames: { '0%' => { opacity: 1 },
