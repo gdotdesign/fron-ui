@@ -23,6 +23,7 @@ module UI
           border: 0,
           '&:focus' => {
             boxShadow: -> { theme.focus_box_shadow.call },
+            borderColor: :transparent,
             outline: :none
           }
   end
