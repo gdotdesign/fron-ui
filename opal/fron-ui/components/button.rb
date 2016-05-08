@@ -45,5 +45,17 @@ module UI
       super
       self[:type] ||= :primary
     end
+
+    def loading!(text = '')
+      @_text = self.text
+      self.text = text
+      self.disabled = true
+    end
+
+    def reset!
+      self.disabled = false
+      self.text = @_text
+      @_text = nil
+    end
   end
 end
