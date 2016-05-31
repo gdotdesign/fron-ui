@@ -74,7 +74,7 @@ module UI
             raise_error :no_connection, "Could not connect to: #{req.url}", promise
           elsif (200..300).cover?(response.status)
             data =  response_json(response)
-            promise.resolve data
+            promise.resolve data unless promise.realized?
             yield data if block_given?
           else
             raise_error :wrong_status, response_json(response)['error'], promise
@@ -91,7 +91,7 @@ module UI
       # @param type [Symbol] The type
       # @param message [String] The message
       def raise_error(type, message, promise)
-        promise.reject(message)
+        promise.reject(message) unless promise.realized?
         UI::Behaviors::Rest.trigger type, message
         UI::Behaviors::Rest.trigger :error, [type, message]
       end
