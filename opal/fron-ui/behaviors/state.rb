@@ -38,11 +38,16 @@ module UI
       # Sets the state
       #
       # @param new_state The new state
-      def state=(new_state)
+      def state=(new_state, options = {})
         return if state == new_state
         path = yield if block_given?
         hash = `window.btoa(#{StateSerializer.encode(new_state)})`
-        DOM::Window.state = path.to_s + '?' + hash
+        new_url = path.to_s + '?' + hash
+        if options.to_h[:replace]
+          DOM::Window.replace_state new_url
+        else
+          DOM::Window.state = new_url
+        end
       end
 
       alias set_state state=
