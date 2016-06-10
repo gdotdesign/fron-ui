@@ -27,7 +27,7 @@ module UI
 
       def update_act(type, *args)
         raise "There is no update with the name #{type}!" unless @acts[type]
-        updated_data = @acts[type].call(*args)
+        updated_data = @acts[type].call(*(args + [data]))
         raise "Update didn't return a hash insted I got #{udpated_data}!" unless updated_data.is_a?(Hash)
         data.merge! updated_data
       end
