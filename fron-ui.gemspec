@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.test_files     = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths  = ['lib']
 
-  s.add_runtime_dependency 'fron', '1.0.0rc1'
+  s.add_runtime_dependency 'fron', '1.0.0rc2'
   s.add_runtime_dependency 'color', '1.8'
   s.add_development_dependency 'opal-rspec', '~> 0.5.0'
 end
