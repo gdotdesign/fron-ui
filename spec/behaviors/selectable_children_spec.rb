@@ -4,9 +4,9 @@ module TestClasses
   class SelectableChildren < Fron::Component
     include UI::Behaviors::SelectableChildren
 
-    component :first, 'span First'
-    component :second, 'span Second'
-    component :third, 'span Third'
+    component :first, :span, text: 'First'
+    component :second, :span, text: 'Second'
+    component :third, :span, text: 'Third'
   end
 end
 

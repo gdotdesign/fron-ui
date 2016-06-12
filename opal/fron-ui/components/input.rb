@@ -5,7 +5,9 @@ module UI
   # @author Gusztáv Szikszai
   # @since  0.1.0
   class Input < Base
-    tag 'input[type=text]'
+    tag 'input'
+
+    defaults type: 'text'
 
     attribute_accessor :placeholder
     attribute_accessor :readonly, default: false
@@ -21,6 +23,7 @@ module UI
           border: 0,
           '&:focus' => {
             boxShadow: -> { theme.focus_box_shadow.call },
+            borderColor: :transparent,
             outline: :none
           }
   end

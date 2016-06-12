@@ -18,7 +18,7 @@ Fron::Sheet.helpers do
 
   def theme
     @theme ||= OpenStruct.new font_family: 'Open Sans, sans-serif',
-                              focus_box_shadow: -> { "0 0 0 0.11em #{dampen(colors.focus, 0.4)}" },
+                              focus_box_shadow: -> { "0 0 0 2px #{dampen(colors.focus, 0.4)} inset" },
                               border_radius: 0.15,
                               border_size: 0.2,
                               spacing: 0.75,
@@ -36,5 +36,5 @@ Fron::Sheet.helpers do
   end
 end
 
-Fron::Sheet.stylesheet '//fonts.googleapis.com/css?family=Open+Sans:400,600,700'
-Fron::Sheet.add_rule 'body', { margin: 0, background: -> { colors.body }, color: -> { readable_color colors.body } }, '0'
+Fron::Sheet.additional_styles = OPEN_SANS + "\n" + ION_ICONS
+Fron::Sheet.add_rule 'body', { margin: 0, display: 'block !important', background: -> { colors.body }, color: -> { readable_color colors.body } }, '0'

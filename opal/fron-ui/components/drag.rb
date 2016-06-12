@@ -1,5 +1,5 @@
 module UI
-  # Bi-directoional input component.
+  # Base component for handling drags.
   #
   # @see UI::ColorPanel
   # @see UI::Slider

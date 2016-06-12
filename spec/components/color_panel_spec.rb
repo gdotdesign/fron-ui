@@ -8,8 +8,8 @@ describe UI::ColorPanel do
   context 'Changing the fields' do
     it 'should update the color' do
       expect(subject.hued).to receive(:value_y).and_return 0.5
-      expect(subject.rect).to receive(:value_y).and_return 0.5
-      expect(subject.rect).to receive(:value_x).and_return 0.5
+      expect(subject.recta).to receive(:value_y).and_return 0.5
+      expect(subject.recta).to receive(:value_x).and_return 0.5
 
       subject.hued.trigger :change
 
@@ -28,14 +28,14 @@ describe UI::ColorPanel do
 
   describe '#value=' do
     it 'should set the value_y of rect' do
-      subject.rect.should receive(:value_y=).with(0.5)
+      subject.recta.should receive(:value_y=).with(0.5)
       subject.value = 50
     end
   end
 
   describe '#saturation=' do
     it 'should set the value_y of rect' do
-      subject.rect.should receive(:value_x=).with(0.5)
+      subject.recta.should receive(:value_x=).with(0.5)
       subject.saturation = 50
     end
   end

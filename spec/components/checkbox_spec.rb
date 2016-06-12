@@ -5,11 +5,6 @@ describe UI::Checkbox do
     subject[:tabindex].should eq '0'
   end
 
-  it 'should have unique id' do
-    subject.input[:id].should_not be_nil
-    subject.input[:id].should eq subject.label[:for]
-  end
-
   describe '#action' do
     it 'should toggle' do
       expect {

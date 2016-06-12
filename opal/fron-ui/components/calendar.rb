@@ -15,7 +15,7 @@ module UI
     tag 'ui-calendar'
 
     component :header, UI::Container, direction: :row do
-      component :icon,  UI::Icon,  glyph: 'arrow-left-b',  clickable: true, action: :prev_month
+      component :icon,  UI::Icon,  glyph: 'arrow-left-b', clickable: true, action: :prev_month
       component :label, UI::Label, flex: 1
       component :icon,  UI::Icon,  glyph: 'arrow-right-b', clickable: true, action: :next_month
     end
@@ -35,6 +35,7 @@ module UI
           borderRadius: -> { theme.border_radius.em },
           padding: -> { (theme.spacing * 1.25).em },
           background: -> { colors.input },
+          display: :block,
           minWidth: 18.em,
           'ui-label' => { textAlign: :center,
                           fontWeight: 700 },
@@ -45,7 +46,7 @@ module UI
                               borderBottomStyle: :solid },
           table: { borderSpacing: 0.4.em,
                    'td[date]' => { background: -> { dampen colors.input, 0.05 },
-                                   color: -> { readable_color(dampen colors.input, 0.05) } },
+                                   color: -> { readable_color(dampen(colors.input, 0.05)) } },
                    'th' => { fontSize: 0.8.em,
                              padding: -> { "#{theme.spacing.em} 0" },
                              opacity: 0.6 },
@@ -112,6 +113,8 @@ module UI
 
     # Cell for the calendar body
     class Td < Fron::Component
+      tag 'td'
+
       # Initialize the cell with the day
       #
       # @param day [Date] The day

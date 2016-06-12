@@ -29,10 +29,9 @@ module UI
           '&[shape=square]' => { minWidth: -> { theme.size.em },
                                  height: -> { theme.size.em },
                                  justifyContent: :center,
+                                 display: 'inline-flex',
                                  alignItems: :center,
-                                 display: :flex,
                                  padding: '0' },
-          '&[disabled]' => { opacity: 0.4 },
           '> *' => { pointerEvents: :none }
 
     Fron::Sheet.helper.colors.to_h.keys.each do |type|
@@ -45,6 +44,18 @@ module UI
     def initialize
       super
       self[:type] ||= :primary
+    end
+
+    def loading!(text = '')
+      @_text = self.text
+      self.text = text
+      self.disabled = true
+    end
+
+    def reset!
+      self.disabled = false
+      self.text = @_text
+      @_text = nil
     end
   end
 end

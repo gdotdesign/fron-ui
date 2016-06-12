@@ -43,23 +43,15 @@ module UI
                                   opacity: 0 } },
           '&:focus label' => { boxShadow: -> { theme.focus_box_shadow.call } }
 
+    on :click, :action
+
     # Toggles the checkbox
     def action
       self.checked = !checked
       trigger :change
     end
 
-    # Initializes the check box
-    # * Sets the tabindex
-    # * Adds unique id for the label to work
-    def initialize
-      super
-      id = `Math.uuid(5)`
-      @input[:id]   = id
-      @label[:for]  = id
-    end
-
-    alias_method :value=, :checked=
-    alias_method :value, :checked
+    alias value= checked=
+    alias value checked
   end
 end

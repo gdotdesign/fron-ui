@@ -18,7 +18,7 @@ describe UI::ColorPicker do
       it 'should_not set the value' do
         expect {
           subject.value = :asd
-        }.not_to change { subject.input.value }
+        }.to change { subject.input.value }.from('#FFFFFF').to('rgba(255,255,255,0.0)')
       end
     end
   end

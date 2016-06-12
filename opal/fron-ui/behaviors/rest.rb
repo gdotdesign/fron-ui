@@ -1,3 +1,5 @@
+require 'promise'
+
 module UI
   module Behaviors
     # Behavior for giving a component REST methods.
@@ -7,6 +9,8 @@ module UI
     # @author Gusztáv Szikszai
     # @since 0.1.0
     module Rest
+      extend Fron::Eventable
+
       # Sets up the behavior.
       #
       # @param base [Fron::Component] The includer
@@ -27,7 +31,7 @@ module UI
       #
       # @yield The updated data
       def update(data, &block)
-        request :put, @data[:id], data, &block
+        request :patch, @data[:id], data, &block
       end
 
       # Destroyes the model
@@ -46,6 +50,13 @@ module UI
         request :post, '', data, &block
       end
 
+      # Returns all recrods
+      #
+      # @yieldreturn [Array<Hash>] The recrods
+      def all(&block)
+        request :get, '', &block
+      end
+
       # Makes a requests to server
       #
       # :reek:FeatureEnvy
@@ -56,17 +67,46 @@ module UI
       #
       # @yield [Hash] The returned data
       def request(method, path, params = {})
+        promise = Promise.new
         req = create_request path
         req.request method.upcase, params do |response|
-          if (200..300).cover?(response.status)
-            yield response.json if block_given?
+          if response.status == 0
+            raise_error :no_connection, "Could not connect to: #{req.url}", promise
+          elsif (200..300).cover?(response.status)
+            data =  response_json(response)
+            promise.resolve data unless promise.realized?
+            yield data if block_given?
           else
-            warn response.json['error']
+            raise_error :wrong_status, response_json(response)['error'], promise
+            yield nil if block_given?
           end
         end
+        promise
       end
 
       private
+
+      # Raises an error on the parent class.
+      #
+      # @param type [Symbol] The type
+      # @param message [String] The message
+      def raise_error(type, message, promise)
+        promise.reject(message) unless promise.realized?
+        UI::Behaviors::Rest.trigger type, message
+        UI::Behaviors::Rest.trigger :error, [type, message]
+      end
+
+      # Tries to parse the json response,
+      # raises error if it's invalid.
+      #
+      # @param response [Fron::Response] The response
+      #
+      # @return [Hash] The parsed data
+      def response_json(response)
+        response.json
+      rescue StandardError
+        raise_error :invalid_json, 'Invalid JSON data!'
+      end
 
       # Creates a request object
       #

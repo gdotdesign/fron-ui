@@ -15,6 +15,7 @@ module UI
       def self.included(base)
         base.on :click, :on_select
         base.attribute_accessor :multiple, default: false
+        base.attribute_accessor :deselectable, default: false
         base.style '> *' => { cursor: :pointer }
       end
 
@@ -30,9 +31,16 @@ module UI
       # @param child [Fron::Component] The child
       def select(child)
         return unless child
-        Array(selected).each { |item| item.remove_class :selected } if selected && !multiple
-        child.toggle_class :selected, multiple ? nil : true
+        return if !deselectable && selected == child
+        deselect if !multiple && selected != child
+        child.toggle_class :selected
         trigger :selected_change
+        true
+      end
+
+      # Deselects all selected children
+      def deselect
+        Array(selected).each { |item| item.remove_class :selected }
       end
 
       # Selects the first child
@@ -49,7 +57,8 @@ module UI
       #
       # @return [Fron::Component] The child
       def selected
-        selected = children.find_all { |child| child.has_class :selected }
+        selected = children.select { |child| child.has_class :selected }
+        return nil if selected.empty?
         return selected.first if selected.count == 1
         selected
       end

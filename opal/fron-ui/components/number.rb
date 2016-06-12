@@ -16,7 +16,7 @@ module UI
   #
   # @author Gusztáv Szikszai
   # @since 0.1.0
-  class NumberRange < Fron::Component
+  class NumberRange < Base
     # Input component
     class Input < Fron::Component
       tag 'ui-number-range-input'
@@ -53,7 +53,6 @@ module UI
     on :input,     :input
     on :mousemove, :on_mouse_move
     on :mousedown, :on_mouse_down
-    on 'attribute:changed', :reset_value
 
     attribute_accessor :step,  default: 1,                coerce: :to_f
     attribute_accessor :round, default: 1,                coerce: :to_f
@@ -68,6 +67,7 @@ module UI
                                    position: :absolute,
                                    marginTop: -0.3.em,
                                    content: "''",
+                                   opacity: 0.5,
                                    top: '50%',
                                    height: 0,
                                    width: 0 },
@@ -86,6 +86,10 @@ module UI
       setup_drag
     end
 
+    def _attribute_changed
+      reset_value
+    end
+
     # Returns the value of the field
     #
     # @return [Float] The value of the field
@@ -93,11 +97,17 @@ module UI
       @value.to_f
     end
 
+    def _value(value)
+      value = value.to_f.clamp(min, max)
+      return if @value == value
+      @value = value
+    end
+
     # Sets the value of the field
     #
     # @param value [Float] The value
     def value=(value)
-      @value = value.to_f.clamp(min, max)
+      _value value
       @input.text = format "%.#{round}f", @value
       trigger 'change'
     end
@@ -136,6 +146,7 @@ module UI
     # caret jumping in chrome.
     def input
       @input.html = '&#xfeff;' if text.strip == ''
+      _value @input.html
     end
 
     # Runs when key is pressed. Prevents hitting the enter key.
@@ -144,7 +155,9 @@ module UI
     #
     # @param event [Event] The event
     def keydown(event)
-      event.prevent_default if event.key == :enter
+      return unless event.key == :enter
+      event.prevent_default
+      @input.blur
     end
 
     # Runs when the element is blurred. Sets the value form
@@ -183,7 +196,7 @@ module UI
     #
     # @return [Boolean] True if the position is in the region otherwise false.
     def in_select_region?(position)
-      (left + width / 2 - position).abs <= 50
+      (left + width / 2 - position).abs <= width / 4.5
     end
   end
 end

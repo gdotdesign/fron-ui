@@ -1,5 +1,10 @@
 module UI
   module Behaviors
+    # Behavior for handling intent for selecting
+    # elements.
+    #
+    # @author Gusztáv Szikszai
+    # @since 0.1.0
     module IntendableChildren
       # Sets up the behavior:
       #

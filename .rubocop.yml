@@ -33,3 +33,6 @@ PerceivedComplexity:
 
 ClassLength:
   Enabled: false
+
+MutableConstant:
+  Enabled: false
