@@ -1,14 +1,8 @@
-GIT
-  remote: git://github.com/gdotdesign/color.git
-  revision: 8f752af6949949e48e2187efc648b8760f8d0f74
-  branch: 1.6.1
-  specs:
-    color (1.6.1)
-
 PATH
   remote: .
   specs:
     fron-ui (1.0.0rc1)
+      color (= 1.8)
       fron (= 1.0.0rc1)
 
 GEM
@@ -24,6 +18,7 @@ GEM
       virtus (~> 1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
+    color (1.8)
     colorize (0.7.7)
     concurrent-ruby (1.0.1)
     descendants_tracker (0.0.4)
@@ -98,7 +93,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  color!
   execjs (~> 2.6)
   fron-ui!
   opal-rspec (~> 0.5.0)
