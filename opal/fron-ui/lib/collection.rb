@@ -129,7 +129,7 @@ class Collection < UI::Base
   def filter(regexp)
     new_items = @base_items.select do |item|
       raise "Cannot filter collection #{self} because item #{@base}
-             does not implement #match?"unless @base.respond_to?(:match?)
+             does not implement #match?" unless @base.respond_to?(:match?)
       @base.match?(regexp, item)
     end
     diff_items new_items

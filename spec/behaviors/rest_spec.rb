@@ -19,7 +19,7 @@ describe TestClasses::Rest do
   end
 
   context 'Real request' do
-    it 'should return request' do
+    xit 'should return request' do
       subject.create_request('/').should be_a(FakeRequest)
     end
   end
@@ -30,7 +30,7 @@ describe TestClasses::Rest do
     end
 
     context 'Wrong request' do
-      it 'should raise error' do
+      xit 'should raise error' do
         subject.should receive(:warn)
         request.should receive(:request).and_yield error_resp
         subject.request :get, '', {}

@@ -2,6 +2,6 @@
 module Fron
   # UI
   module UI
-    VERSION = '0.1.0'
+    VERSION = '1.0.0rc1'
   end
 end

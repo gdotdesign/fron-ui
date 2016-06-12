@@ -8,5 +8,4 @@ gem 'rubycritic', '~> 2.8'
 gem 'yard', '~> 0.8.7.6'
 
 # Gemspec deps
-gem 'fron', path: '../fron'
 gem 'color', github: 'gdotdesign/color', branch: '1.6.1'
