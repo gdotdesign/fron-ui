@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fron-ui (1.0.0rc4)
+    fron-ui (1.0.0rc5)
       color (= 1.8)
       fron (= 1.0.0rc2)
 
