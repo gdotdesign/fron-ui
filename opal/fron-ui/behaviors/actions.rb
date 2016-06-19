@@ -7,17 +7,13 @@ module UI
     # @author Gusztáv Szikszai
     # @since  0.1.0
     module Actions
-      IS_TOUCH = `'ontouchstart' in window && !window._phantom`
-
-      METHOD = IS_TOUCH ? :touchstart : :click
-
       # Sets up the behavior:
       #
       # * Sets up event for the action
       #
       # @param base [Fron::Component] The includer
       def self.included(base)
-        base.on METHOD, '[action]', :handle_action
+        base.on :click, '[action]', :handle_action
       end
 
       private
