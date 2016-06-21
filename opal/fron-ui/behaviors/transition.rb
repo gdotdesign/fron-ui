@@ -30,6 +30,7 @@ module UI
       #
       # @param event [DOM::Event] The event
       def on_transition_end(event)
+        return unless @transitions
         options = @transitions[event.animationName.split('-').last]
         send options[:callback] if options &&
                                    options[:callback] &&
