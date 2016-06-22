@@ -195,6 +195,7 @@ module UI
     # the selected items values
     def update_input
       timeout(320) { show_items }
+      return if searchable && DOM::Document.active_element == @input
       @input.value = Array(label).join(', ')
     end
 
