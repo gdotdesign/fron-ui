@@ -91,7 +91,7 @@ class Collection < UI::Base
     end
 
     # Keep the order of the original items
-    @items.sort_by! { |item| new_ids.index item[key] }
+    @items.sort_by! { |item| new_ids.index item.data[key] }
     render_items
   end
 
