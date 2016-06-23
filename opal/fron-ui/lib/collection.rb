@@ -66,7 +66,11 @@ class Collection < UI::Base
       raise "No key(#{key}) found or nil for #{item}!" unless item[key]
       item[key]
     end
+
     old_ids = @items.map { |model| model.data[key] }
+    new_ids = data.map { |item| item[key] }
+
+    map = data.each_with_object({}) { |item, memo| memo[item[key]] = item }
 
     # Delete old items
     @items.reject! do |model|
@@ -77,7 +81,7 @@ class Collection < UI::Base
 
     # Update exsisting items
     @items.each do |model|
-      model.data = data.find { |item| item[key] == model.data[key] }
+      model.data = map[model.data[key]]
     end
 
     # Create new items
@@ -87,7 +91,7 @@ class Collection < UI::Base
     end
 
     # Keep the order of the original items
-    @items.sort_by! { |item| data.find_index { |model| model[key] == item.data[key] } }
+    @items.sort_by! { |item| new_ids.index item[key] }
     render_items
   end
 
