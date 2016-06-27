@@ -26,5 +26,10 @@ module UI
             borderColor: :transparent,
             outline: :none
           }
+
+    def value=(new_value)
+      return if value == new_value
+      super new_value
+    end
   end
 end
