@@ -206,8 +206,9 @@ module UI
 
     # Filters the items by the input label
     def filter
+      regexp = Regexp.new(@input.value.to_s, 'i')
       list.children.each do |item|
-        item.toggle_class :hidden, !(item.label =~ Regexp.new(@input.value, 'i'))
+        item.toggle_class :hidden, !(item.label =~ regexp)
       end
     end
 
